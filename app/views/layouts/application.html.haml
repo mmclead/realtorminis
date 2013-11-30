@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+%head
+  %meta(charset="utf-8")
+  %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
+  %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+  = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+  = javascript_include_tag 'application', "data-turbolinks-track" => true 
+  = twitter_bootstrap_stylesheet_link_tag :netdna, "data-turbolinks-track" => true 
+  = twitter_bootstrap_javascript_include_tag :netdna, "data-turbolinks-track" => true 
+  = csrf_meta_tags
+
+%body
+  #page_container
+    %header#header
+      = render 'layouts/header'
+    %section#page
+      .container
+        -if notice.present?
+          %p.notice.text-warning.well= notice
+        -if alert.present?
+          %p.alert.text-danger.well= alert
+        = yield
+    
+    %footer
+      = render 'layouts/footer'
