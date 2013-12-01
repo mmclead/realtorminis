@@ -1,10 +1,8 @@
 Realtorminis::Application.routes.draw do
-  get "users/index"
-  get "users/show"
-  get "page/home"
-  get "page/about"
-  get "page/pricing"
-  get "page/contact"
+  get "/home", to: 'page#home', as: 'home'
+  get "/about", to: 'page#about', as: 'about'
+  get "/pricing", to: 'page#pricing', as: 'pricing'
+  get "/contact", to: 'page#contact', as: 'contact'
   
 
   devise_for :users
@@ -17,6 +15,7 @@ Realtorminis::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'page#home'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
