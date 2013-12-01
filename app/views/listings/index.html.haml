@@ -1,0 +1,31 @@
+%h1 Listing listings
+
+%table
+  %tr
+    %th Index
+    %th Show
+    %th New
+    %th Create
+    %th Edit
+    %th Update
+    %th Destroy
+    %th
+    %th
+    %th
+
+  - @listings.each do |listing|
+    %tr
+      %td= listing.index
+      %td= listing.show
+      %td= listing.new
+      %td= listing.create
+      %td= listing.edit
+      %td= listing.update
+      %td= listing.destroy
+      %td= link_to 'Show', listing
+      %td= link_to 'Edit', edit_user_listing_path(listing)
+      %td= link_to 'Destroy', listing, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Listing', new_user_listing_path(@user)

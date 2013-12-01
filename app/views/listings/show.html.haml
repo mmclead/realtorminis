@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Index:
+  = @listing.index
+%p
+  %b Show:
+  = @listing.show
+%p
+  %b New:
+  = @listing.new
+%p
+  %b Create:
+  = @listing.create
+%p
+  %b Edit:
+  = @listing.edit
+%p
+  %b Update:
+  = @listing.update
+%p
+  %b Destroy:
+  = @listing.destroy
+
+= link_to 'Edit', edit_listing_path(@listing)
+\|
+= link_to 'Back', listings_path

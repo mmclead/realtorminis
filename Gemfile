@@ -38,6 +38,7 @@ gem 'haml-rails'
 gem 'twitter-bootstrap-rails-cdn'
 gem 'fog'
 gem 'unf'
+gem 'simple_form'
 
 
 

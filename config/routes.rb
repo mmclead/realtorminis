@@ -1,4 +1,5 @@
 Realtorminis::Application.routes.draw do
+
   get "/home", to: 'page#home', as: 'home'
   get "/about", to: 'page#about', as: 'about'
   get "/pricing", to: 'page#pricing', as: 'pricing'
@@ -7,8 +8,9 @@ Realtorminis::Application.routes.draw do
 
   devise_for :users
 
-
-  resources :users, only: [:index, :show]
+  resources :users, only: [:index, :show] do
+    resources :listings
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,0 +1,27 @@
+= simple_form_for ([@user,@listing]) do |f|
+  - if @listing.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@listing.errors.count, "error")} prohibited this listing from being saved:"
+      %ul
+        - @listing.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.input :address, label: "What's the address?"
+  = f.input :title, label: "What title do you want at the top of the listing?", hint: "Something like \"One of a kind home in quaint neighborhood\""
+  .input-group
+    = f.input :price
+    %span.input-group-btn>
+      %i.glyphicon.glyphicon-usd
+  = f.input :bedrooms
+  = f.input :bathrooms
+  = f.input :sq_ft
+  = f.input :sold
+  = f.input :short_description
+  = f.input :description  
+
+  = f.input :web_address
+
+
+
+  .actions
+    = f.submit 'Save'

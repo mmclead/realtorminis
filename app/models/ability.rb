@@ -10,6 +10,8 @@ class Ability
     else
       can :manage, User, id: user.id
       cannot :index, User
+      can :manage, Listing, user_id: user.id
+      
 
     end
     #
