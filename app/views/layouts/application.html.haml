@@ -8,19 +8,16 @@
   = twitter_bootstrap_stylesheet_link_tag :netdna, "data-turbolinks-track" => true 
   = twitter_bootstrap_javascript_include_tag :netdna, "data-turbolinks-track" => true 
   = csrf_meta_tags
-
 %body
   #page_container
+
     %header#header
       = render user_signed_in? ? 'layouts/user/header' : 'layouts/header'
 
     %section#page
       .container
-        -if notice.present?
-          %p.notice.text-warning.well= notice
-        -if alert.present?
-          %p.alert.text-danger.well= alert
+        =render 'layouts/notices'
         = yield
-    
+
     %footer
       = render user_signed_in? ? 'layouts/user/footer' : 'layouts/footer'

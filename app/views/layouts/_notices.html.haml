@@ -1,0 +1,10 @@
+-if notice.present?
+  .alert.alert-warning.fade.in
+    %button.close{:type => 'button', :data => {:dismiss => 'alert'} }
+      ×
+    = notice
+-if alert.present?
+  .alert.alert-danger.fade.in
+    %button.close{:type => 'button', :data => {:dismiss => 'alert'} }
+      ×
+  = alert
