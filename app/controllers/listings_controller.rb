@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
   load_and_authorize_resource :user
-  load_and_authorize_resource through: :user, shallow: true
+  load_and_authorize_resource through: :user, shallow: true, except: [:create, :update]
 
   # GET /listings
   # GET /listings.json
@@ -24,10 +24,11 @@ class ListingsController < ApplicationController
   # POST /listings.json
   def create
     @listing = Listing.new(listing_params)
+    @listing.user = @user
 
     respond_to do |format|
       if @listing.save
-        format.html { redirect_to @listing, notice: 'Listing was successfully created.' }
+        format.html { redirect_to [@user, @listing], notice: 'Listing was successfully created.' }
         format.json { render action: 'show', status: :created, location: @listing }
       else
         format.html { render action: 'new' }
@@ -64,6 +65,6 @@ class ListingsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
-      params.require(:listing).permit(:address, :title, :price, :bedrooms, :bathrooms, :sq_ft, :sold,:short_description,:description,:web_address)
+      params.require(:listing).permit(:address, :title, :price, :bedrooms, :bathrooms, :sq_ft, :sold, :short_description, :description, :web_address)
     end
 end
