@@ -1,31 +1,45 @@
-%h1 Listing listings
+%h1 
+  Current Listings
+  = link_to 'New Listing', new_user_listing_path(@user), class: "btn btn-primary"
 
-%table
-  %tr
-    %th Index
-    %th Show
-    %th New
-    %th Create
-    %th Edit
-    %th Update
-    %th Destroy
-    %th
-    %th
-    %th
 
-  - @listings.each do |listing|
+%table.table.table-striped
+  %thead
     %tr
-      %td= listing.index
-      %td= listing.show
-      %td= listing.new
-      %td= listing.create
-      %td= listing.edit
-      %td= listing.update
-      %td= listing.destroy
-      %td= link_to 'Show', listing
-      %td= link_to 'Edit', edit_user_listing_path(listing)
-      %td= link_to 'Destroy', listing, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %th address
+      %th title
+      %th price
+      %th bedrooms
+      %th bathrooms
+      %th sq_ft
+      %th sold
+      %th short_description
+      %th description
+      %th web_address
+      %th 
+  %tbody
+    - @listings.each do |listing|
+      %tr
+        %td= listing.address
+        %td= listing.title
+        %td= listing.price
+        %td= listing.bedrooms
+        %td= listing.bathrooms
+        %td= listing.sq_ft
+        %td= listing.sold
+        %td= listing.short_description
+        %td= listing.description
+        %td= listing.web_address
+        %td 
+          .btn-group
+            =link_to 'See Listing', [@user,listing], {class: 'btn btn-default'}              
+            %button{type: 'button', class: "btn btn-default dropdown-toggle", data: {toggle: 'dropdown'}}
+              %span.caret
+              %span.sr-only Toggle Dropdown
+            %ul.dropdown-menu{role: 'menu'}
+              %li= link_to 'Edit', edit_user_listing_path(@user, listing)
+              %li= link_to 'Remove', [@user,listing], :method => :delete, :data => { :confirm => 'Are you sure?' }
+
 
 %br
 
-= link_to 'New Listing', new_user_listing_path(@user)

@@ -1,27 +1,44 @@
-%p#notice= notice
-
-%p
-  %b Index:
-  = @listing.index
-%p
-  %b Show:
-  = @listing.show
-%p
-  %b New:
-  = @listing.new
-%p
-  %b Create:
-  = @listing.create
-%p
-  %b Edit:
-  = @listing.edit
-%p
-  %b Update:
-  = @listing.update
-%p
-  %b Destroy:
-  = @listing.destroy
-
-= link_to 'Edit', edit_listing_path(@listing)
-\|
-= link_to 'Back', listings_path
+.row-fluid
+  .col-md-12
+    %h1= @listing.address
+.clearfix
+.row-fluid
+  .col-md-4
+    %p
+      %b address:
+      = @listing.address
+    %p
+      %b title:
+      = @listing.title
+    %p
+      %b price:
+      = @listing.price
+    %p
+      %b bedrooms:
+      = @listing.bedrooms
+    %p
+      %b bathrooms:
+      = @listing.bathrooms
+    %p
+      %b sq_ft:
+      = @listing.sq_ft
+    %p
+      %b sold:
+      = @listing.sold
+    %p
+      %b short_description:
+      = @listing.short_description
+    %p
+      %b description:
+      = @listing.description
+    %p
+      %b web_address:
+      = @listing.web_address
+  .col-md-8
+    =render 'preview'
+.clearfix
+.row-fluid
+  .col-md-12.well
+    = link_to 'Edit', edit_user_listing_path(@user.id,@listing.id)
+    \|
+    = link_to 'Back', user_listings_path(@user)

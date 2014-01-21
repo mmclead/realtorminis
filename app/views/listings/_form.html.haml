@@ -8,20 +8,19 @@
 
   = f.input :address, label: "What's the address?"
   = f.input :title, label: "What title do you want at the top of the listing?", hint: "Something like \"One of a kind home in quaint neighborhood\""
-  .input-group
-    = f.input :price
-    %span.input-group-btn>
-      %i.glyphicon.glyphicon-usd
-  = f.input :bedrooms
-  = f.input :bathrooms
-  = f.input :sq_ft
-  = f.input :sold
-  = f.input :short_description
-  = f.input :description  
-
-  = f.input :web_address
+  = f.input :price, input_html: { style: "width:20%;"} 
+  = f.input :bedrooms, collection: 0..20, label: "How many bedrooms?", input_html: { style: "width:20%;"}
+  = f.input :bathrooms, collection: 0..20, label: "How many bathrooms?", input_html: { style: "width:20%;"}
+  = f.input :sq_ft, label: "How many square feet?", input_html: { style: "width:20%;"}
+  = f.input :sold if @listing.id
+  = f.input :short_description, hint: "This should be one or two sentences."
+  = f.input :description, hint: "Here is where you put the full description."
+  = f.input :web_address, hint: "If you want a custom URL you can let us know what you'd like it to be right here."
 
 
+  
 
-  .actions
-    = f.submit 'Save'
+  <hr>
+  .actions.well
+    = f.submit 'Save', {class: 'btn btn-success'}
+
