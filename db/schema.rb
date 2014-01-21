@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131201001607) do
+ActiveRecord::Schema.define(version: 20131202073641) do
 
   create_table "listings", force: true do |t|
     t.string   "address"
@@ -30,6 +30,15 @@ ActiveRecord::Schema.define(version: 20131201001607) do
   end
 
   add_index "listings", ["user_id"], name: "index_listings_on_user_id"
+
+  create_table "photos", force: true do |t|
+    t.string   "photo"
+    t.integer  "listing_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "photos", ["listing_id"], name: "index_photos_on_listing_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false
