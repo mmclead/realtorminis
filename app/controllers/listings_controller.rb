@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
   load_and_authorize_resource :user
-  load_and_authorize_resource through: :user, shallow: true, except: [:create, :update]
+  load_and_authorize_resource through: :user, shallow: true
 
   # GET /listings
   # GET /listings.json
@@ -10,6 +10,7 @@ class ListingsController < ApplicationController
   # GET /listings/1
   # GET /listings/1.json
   def show
+    @files = []
   end
 
   # GET /listings/new
@@ -41,8 +42,8 @@ class ListingsController < ApplicationController
   # PATCH/PUT /listings/1.json
   def update
     respond_to do |format|
-      if @listing.update(listing_params)
-        format.html { redirect_to @listing, notice: 'Listing was successfully updated.' }
+      if @listing.update_attributes(listing_params)
+        format.html { redirect_to [@user, @listing], notice: 'Listing was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
