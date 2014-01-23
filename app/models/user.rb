@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
 
 
   has_many :listings, dependent: :destroy
+
+  mount_uploader :profile_pic, ProfileUploader
+  mount_uploader :logo, LogoUploader
 end
 
 

@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(version: 20131202073641) do
     t.datetime "confirmation_sent_at"
     t.boolean  "admin",                  default: false
     t.string   "unconfirmed_email"
+    t.string   "profile_pic"
+    t.string   "logo"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
