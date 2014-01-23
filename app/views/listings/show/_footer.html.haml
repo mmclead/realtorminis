@@ -1,0 +1,22 @@
+#footer.black-textured-background 
+  .container
+    .row.hidden-xs
+      .col-md-3
+        %h5 POWERED BY REALTOR MINIS
+      .col-md-9.text-right
+        %h5 
+          Sell your listings faster.
+          = mail_to "contact@realtorminis.com" do
+            %button.btn.btn-xs.btn-warning
+              CONTACT US TODAY
+
+    .row.visible-xs.text-center
+      .col-xs-12
+        %h5 POWERED BY REALTOR MINIS
+      .col-xs-12
+        %h5
+          Sell your listings faster.
+        %h5
+          = mail_to "contact@realtorminis.com" do
+            %button.btn.btn-sm.btn-warning
+              CONTACT US TODAY

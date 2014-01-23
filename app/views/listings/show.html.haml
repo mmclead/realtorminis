@@ -1,44 +1,26 @@
-.row-fluid
-  .col-md-12
-    %h1= @listing.address
-.clearfix
-.row-fluid
-  .col-md-4
-    %p
-      %b address:
-      = @listing.address
-    %p
-      %b title:
-      = @listing.title
-    %p
-      %b price:
-      = @listing.price
-    %p
-      %b bedrooms:
-      = @listing.bedrooms
-    %p
-      %b bathrooms:
-      = @listing.bathrooms
-    %p
-      %b sq_ft:
-      = @listing.sq_ft
-    %p
-      %b sold:
-      = @listing.sold
-    %p
-      %b short_description:
-      = @listing.short_description
-    %p
-      %b description:
-      = @listing.description
-    %p
-      %b web_address:
-      = @listing.web_address
-  .col-md-8
-    =render 'preview'
-.clearfix
-.row-fluid
-  .col-md-12.well
-    = link_to 'Edit', edit_user_listing_path(@user.id,@listing.id)
-    \|
-    = link_to 'Back', user_listings_path(@user)
+%head
+  %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0"}
+
+=render 'listings/show/footer'
+
+.jumbotron.textured-backgound.add-shadow
+  .text-center.img-center
+    %h2= @listing.title
+      
+    =render 'listings/show/details_banner'
+    =render 'listings/show/video'
+    
+    %h3= @listing.address
+    
+.dark-textured-background
+  =render 'listings/show/navigation'
+  .container
+    .row
+      .col-md-10
+        =render 'listings/show/mobile_contact'
+        =render 'listings/show/photos'
+        =render 'listings/show/info'
+        =render 'listings/show/contact_footer'
+      .col-md-2
+        =render 'listings/show/contact'
+    

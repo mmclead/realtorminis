@@ -1,0 +1,38 @@
+#contact.affix.affix-top.hidden-xs.hidden-sm{data: {offsetTop: "3"}}
+  .panel.panel-danger
+    .panel-heading
+      <strong> Contact Listing Agent </strong>
+    .panel-body
+      <address>
+      =image_tag @user.profile_pic, width: "200"
+      <br>
+      <strong>
+      =@user.name
+      </strong><br>
+      <small>=@user.tag_line</small><br>
+      <small>
+      =link_to @user.web_site
+      <hr>
+
+      =mail_to @user.contact_email
+      <br>
+      =@user.phone_number 
+      Mobile<br>
+      <small>DRE# 
+      =@user.dre_number
+      </small><br>
+      </address>
+      .img-center
+        =image_tag @user.logo, width: "150"
+
+    .panel-footer
+
+      .fb-share-button{data: {href: "#{request.original_url}", type: "button"}}
+      
+      %a{href: "#{request.original_url}", class: "twitter-share-button align-bottom", data: {via: "RealtorMinis", count: "none"}}
+        Tweet
+
+:javascript
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+
+

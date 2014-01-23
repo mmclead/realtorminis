@@ -1,0 +1,8 @@
+%nav.navbar.navbar-default.navbar-fixed-bottom.square.visible-xs.visible-sm.short-nav{:role => "navigation"}  
+  =link_to '#contact', class: "navbar-link navbar-right" do 
+    %button.btn.btn-sm.btn-danger
+      Contact Listing Agent
+  %div.align-bottom
+    .fb-share-button{data: {href: "#{request.original_url}", type: "button"}}
+    %a{href: "#{request.original_url}", class: "twitter-share-button align-bottom navbar-link", data: {via: "RealtorMinis", count: "none"}}
+      Tweet
