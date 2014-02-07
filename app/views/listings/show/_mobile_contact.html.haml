@@ -1,5 +1,5 @@
 .visible-xs.visible-sm
-  .panel.panel-danger
+  .panel.panel-default
     .panel-heading
       %h2#contact
         Contact Listing Agent
@@ -11,11 +11,11 @@
         <small>The Real Estate Insider</small>
       <hr>
       %h4
-        = link_to "Call Listing Agent", "tel:+18185355337", class: "btn btn-lg btn-danger"
+        = link_to "Call Listing Agent", "tel:+18185355337", class: "btn btn-lg"
         =mail_to "Getzels@GetzelsHomes.com"
         <br>
         <small>DRE# 018849497</small><br>
-        =image_tag(image_url('BHHSCP-Horizontal-Wide-Black-icon.png'), width: "150")
+        =image_tag @user.logo, width: "150"
       </address>
       
     .panel-footer

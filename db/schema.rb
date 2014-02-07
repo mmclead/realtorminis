@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140121061922) do
+ActiveRecord::Schema.define(version: 20140203044801) do
 
   create_table "listings", force: true do |t|
     t.string   "address"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20140121061922) do
     t.string   "contact_email"
     t.string   "phone_number"
     t.string   "dre_number"
+    t.string   "tag_line"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

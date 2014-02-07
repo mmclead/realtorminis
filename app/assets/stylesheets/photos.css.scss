@@ -1,0 +1,76 @@
+/* ---------------------- PHOTO GRID ---------------------- */
+
+ul#grid {
+  padding: 0;
+  list-style: none;
+  margin: 20px auto 0;
+  width: 960px;  
+  }
+
+#grid li {
+  float: left;
+  padding: 0;
+  margin: 0 5px 10px 5px;
+  } 
+
+#grid li a {
+  display: block;
+  }
+
+#grid li img {
+  padding: 5px;
+  border: 1px solid #cccccc;
+/*  border-radius: 8px 8px 8px 8px; */
+  background:#F8F8F8;
+  background:rgba(255, 255, 255, 0.7);
+  width: 128px;
+    height: 128px;
+  }
+
+#grid li a:hover img {
+opacity:0.3; filter:alpha(opacity=30);
+  }
+
+#grid li input {
+  width: 20px;
+}
+
+grid_display {
+  padding: 20px;
+  margin-left: auto; margin-right: auto;  margin-top:50px; margin-bottom:0;
+  /*background-color: #ffd7ce;*/
+  width: 513px; 
+
+  /*these two properties will be inherited by .grid_display h2 and .grid_display p */
+  font-family: 'GraublauWeb', arial, serif; 
+  text-align: center;
+  }  
+
+div.grid_display h2 {
+  padding: 0; margin: 0;
+  clear: both;
+  font-size: 35px;
+  font-weight: normal;
+  color: #ffffff;
+  background: none;
+  font-family: 'GraublauWeb', arial, serif;  
+
+  /* reset for cascade effects that are trickling down from other h2's */
+  text-transform: none;
+  letter-spacing: normal;
+  }
+
+.grid_display p {
+  margin:0; padding: 0;
+  font-size: 15px;
+  color: #58595b;
+  }
+
+.full_display{
+  padding: 5px;
+  border: 1px solid #cccccc;
+  background:#F8F8F8;
+  background:rgba(255, 255, 255, 0.7);
+}
+
+/*--------------------- THE END ---------------------*/

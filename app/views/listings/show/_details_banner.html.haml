@@ -1,16 +1,19 @@
-%nav.navbar.navbar-default.square.navbar-danger
+%nav.navbar.navbar-default.square
   .container
     %ul.nav-justified.nav
       %li
-        Price
-        = @listing.price
+        <strong>Price: </strong>
+        %br
+        = number_to_currency(@listing.price, precision: 0)
       %li
-        Bedrooms
+        <strong>Bedrooms: </strong>
+        %br
         = @listing.bedrooms
       %li
-        Bathrooms
+        <strong>Bathrooms: </strong>
+        %br
         = @listing.bathrooms
       %li
-        Square Feet
+        <strong>Sq Ft: </strong>
+        %br
         = @listing.sq_ft
-        

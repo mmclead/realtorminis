@@ -10,7 +10,7 @@ class ListingsController < ApplicationController
   # GET /listings/1
   # GET /listings/1.json
   def show
-    @files = []
+    @photos = @listing.photos
   end
 
   # GET /listings/new
@@ -26,7 +26,6 @@ class ListingsController < ApplicationController
   def create
     @listing = Listing.new(listing_params)
     @listing.user = @user
-
     respond_to do |format|
       if @listing.save
         format.html { redirect_to [@user, @listing], notice: 'Listing was successfully created.' }

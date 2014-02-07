@@ -8,6 +8,7 @@
   = twitter_bootstrap_stylesheet_link_tag :netdna, "data-turbolinks-track" => true 
   = twitter_bootstrap_javascript_include_tag :netdna, "data-turbolinks-track" => true 
   = csrf_meta_tags
+  %title= yield :title
 %body
   #page_container
 

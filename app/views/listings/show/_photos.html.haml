@@ -1,4 +1,4 @@
-.panel.panel-danger
+.panel.panel-default
   .panel-heading
     %h2#photos
       Photographs
@@ -7,13 +7,13 @@
     #main-carousel.carousel.slide
       .hidden-xs
         %ol.carousel-indicators
-          -@files.each_with_index do |file, i|
+          -@photos.each_with_index do |photo, i|
             %li{:class => "#{ i==0 ? 'active' : '' }", :data => {:target => "#main-carousel", :slideTo => "#{i}" } }
 
       .carousel-inner.photo-slides
-        -@files.each_with_index do |file, i|
+        -@photos.each_with_index do |photo, i|
           .item.img-center{:class => "#{ i==0 ? 'active' : '' }"}
-            =image_tag(image_url("https://d2a87i39r9jceq.cloudfront.net/12230+Cantura+St.+Studio+City/#{file[0]}"), height: 500)
+            =image_tag(image_url("https://d2a87i39r9jceq.cloudfront.net/#{photo.photo.path}"), height: 500)
 
       %a.left.carousel-control{href: "#main-carousel", :data => {slide: "prev"} }
         %span.icon-prev
@@ -33,7 +33,7 @@
 
 
     .panel-group#accordian
-      .panel.panel-danger
+      .panel.panel-default
         .panel-heading
           %h3#allphotos.panel-title
             %a{ href: "#collapseOne", data:{toggle: "collapse", parent: "#accordian"} }
@@ -44,15 +44,15 @@
           #panel-body.dark-panel-body
             #links
               .hidden-xs
-                -@files.each do |file|
+                -@photos.each do |photo|
                   .square-image
-                    =link_to image_url("https://d2a87i39r9jceq.cloudfront.net/12230+Cantura+St.+Studio+City/#{file[0]}") do
-                      =image_tag(image_url("https://d2a87i39r9jceq.cloudfront.net/12230+Cantura+St.+Studio+City/#{file[1]}"))
+                    =link_to image_url("https://d2a87i39r9jceq.cloudfront.net/#{photo.photo.path}") do
+                      =image_tag(image_url("https://d2a87i39r9jceq.cloudfront.net/#{photo.photo.thumb.path}"))
               .visible-xs 
-                -@files.each do |file|
+                -@photos.each do |photo|
                   .img-responsive.centered-and-spaced
-                    =link_to image_url("https://d2a87i39r9jceq.cloudfront.net/12230+Cantura+St.+Studio+City/#{file[0]}") do
-                      =image_tag(image_url("https://d2a87i39r9jceq.cloudfront.net/12230+Cantura+St.+Studio+City/#{file[1]}"))
+                    =link_to image_url("https://d2a87i39r9jceq.cloudfront.net/#{photo.photo.path}") do
+                      =image_tag(image_url("https://d2a87i39r9jceq.cloudfront.net/#{photo.photo.thumb.path}"))
 
     :javascript
       document.getElementById('links').onclick = function (event) {

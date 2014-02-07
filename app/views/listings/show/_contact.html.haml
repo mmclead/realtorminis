@@ -1,7 +1,7 @@
-#contact.affix.affix-top.hidden-xs.hidden-sm{data: {offsetTop: "3"}}
-  .panel.panel-danger
-    .panel-heading
-      <strong> Contact Listing Agent </strong>
+#contact.affix.affix-top.hidden-xs.hidden-sm{data: {offsetTop: "5"}}
+  .panel.panel-default
+    .panel-heading.panel-title
+      <h5> Contact Listing Agent </h5>
     .panel-body
       <address>
       =image_tag @user.profile_pic, width: "200"
@@ -9,7 +9,9 @@
       <strong>
       =@user.name
       </strong><br>
-      <small>=@user.tag_line</small><br>
+      <small>
+      =@user.tag_line
+      </small><br>
       <small>
       =link_to @user.web_site
       <hr>

@@ -1,0 +1,10 @@
+%h1
+  = @listing.address
+  = link_to 'See all photos', listing_photos_path, :class => 'btn btn-default btn-sm'
+
+= image_tag @photo.photo.url.to_s, class: 'full_display'
+%h2
+  = @photo.filename
+  = link_to "Delete Photo", listing_photo_path(@listing, @photo), :method => "delete", data:  {confirm: "#{t("web-app-theme.confirm", :default => "Are you sure?")}"}, :class => 'btn btn-danger btn-sm'
+%br
+

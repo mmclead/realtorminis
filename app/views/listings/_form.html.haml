@@ -12,7 +12,6 @@
   = f.input :bedrooms, collection: 0..20, label: "How many bedrooms?", input_html: { style: "width:20%;"}
   = f.input :bathrooms, collection: 0..20, label: "How many bathrooms?", input_html: { style: "width:20%;"}
   = f.input :sq_ft, label: "How many square feet?", input_html: { style: "width:20%;"}
-  = f.input :sold if @listing.id
   = f.input :short_description, hint: "This should be one or two sentences."
   = f.input :description, hint: "Here is where you put the full description."
   = f.input :web_address, hint: "If you want a custom URL you can let us know what you'd like it to be right here."
