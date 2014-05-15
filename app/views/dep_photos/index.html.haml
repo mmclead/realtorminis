@@ -1,0 +1,21 @@
+%h1
+  Listing Photos: 
+  = @listing.title
+
+%br
+
+%p This is the Photos (Index Action) page. To view/edit a photo, hover over and click on the thumbnail.
+
+%br
+
+= link_to 'Back', listing_path(@listing)
+|
+= link_to 'Upload Photos', new_listing_photo_path(@listing)
+
+%br
+#listing
+  %ul#grid
+    - @photos.each do |pic|
+      %li
+        = link_to image_tag(pic.photo.url(:thumb).to_s), listing_photo_path(@listing,pic)
+        = link_to 'Remove', listing_photo_path(@listing, pic.id), data: { confirm: "Delete this photo?" }, :method => 'delete'

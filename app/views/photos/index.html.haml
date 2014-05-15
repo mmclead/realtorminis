@@ -1,21 +1,34 @@
-%h1
-  Listing Photos: 
-  = @listing.title
+%div{:style => 'padding: 10px;'}
+  %h2 Upload file(s)
+  = s3_cors_fileupload_form_tag :id => 'fileupload'
+  
+  .javascript-templates
+    = render 'template_upload'
+    = render 'template_download'
+    = render 'template_uploaded'
 
-%br
-
-%p This is the Photos (Index Action) page. To view/edit a photo, hover over and click on the thumbnail.
-
-%br
-
-= link_to 'Back', listing_path(@listing)
-|
-= link_to 'Upload Photos', new_listing_photo_path(@listing)
-
-%br
-#listing
-  %ul#grid
-    - @photos.each do |pic|
-      %li
-        = link_to image_tag(pic.photo.url(:thumb).to_s), listing_photo_path(@listing,pic)
-        = link_to 'Remove', listing_photo_path(@listing, pic.id), data: { confirm: "Delete this photo?" }, :method => 'delete'
+:javascript
+  $(function () {
+    // Initialize the jQuery File Upload widget:
+    $('#fileupload').fileupload({
+      dataType: 'xml',
+      sequentialUploads: true
+    });
+    
+    // Load existing files:
+    $.getJSON('/photos', function (files) {
+      $.each(files, function(index, value) { 
+        $('#upload_files tbody').append(tmpl('template-uploaded', value));
+      });
+    });
+  });
+  
+  // used by the jQuery File Upload
+  var fileUploadErrors = {
+    maxFileSize: 'File is too big',
+    minFileSize: 'File is too small',
+    acceptFileTypes: 'Filetype not allowed',
+    maxNumberOfFiles: 'Max number of files exceeded',
+    uploadedBytes: 'Uploaded bytes exceed file size',
+    emptyResult: 'Empty file upload result'
+  };

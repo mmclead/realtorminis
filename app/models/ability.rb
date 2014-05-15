@@ -11,7 +11,7 @@ class Ability
       can :manage, User, id: user.id
       cannot :index, User
       can :manage, Listing, user_id: user.id
-      can :manage, Photo
+      can :manage, Photo, listing: {user_id: user.id}
       
 
     end
