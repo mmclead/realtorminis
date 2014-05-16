@@ -11,13 +11,12 @@ Realtorminis::Application.routes.draw do
     resources :listings
   end
 
-  resources :listings do    
+  resources :listings do 
+    resources :photos, :only => [:index, :create, :destroy] do
+      get :generate_key, :on => :collection
+    end   
   end
-
-  resources :photos, :only => [:index, :create, :destroy] do
-    get :generate_key, :on => :collection
-  end
-
+  
   root 'page#home'
 
 end
