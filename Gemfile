@@ -28,6 +28,7 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
 gem 'unf'
+gem 'aws-s3', github: 'fnando/aws-s3'
 gem 's3_cors_fileupload'
 gem 'simple_form'
 

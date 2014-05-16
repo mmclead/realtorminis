@@ -4,7 +4,7 @@
       Home Description
   .panel-body
     .lead
-      = simple_format(@listing.short_description)
+      = simple_format(@listing.short_description, wrapper_tag: "p")
     .well
-      = simple_format(@listing.description) 
+      = simple_format(@listing.description, wrapper_tag: "p") 
         
