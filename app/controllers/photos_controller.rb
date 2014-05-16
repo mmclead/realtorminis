@@ -1,4 +1,7 @@
 class PhotosController < ApplicationController
+
+  load_and_authorize_resource :listing
+
   # GET /photos
   # GET /photos.json
   def index
@@ -45,10 +48,10 @@ class PhotosController < ApplicationController
 
   # used for s3_uploader
   def generate_key
-    uid = SecureRandom.uuid.gsub(/-/,'')
+    uid = @listing.address.parameterize + "-" + params[:count] + File.extname(params[:filename])
 
     render json: {
-      key: "uploads/#{uid}/#{params[:filename]}",
+      key: "listings/#{@listing.id}/photos/#{uid}",
       success_action_redirect: "/"
     }
   end

@@ -14,6 +14,7 @@ var s3_upload_hash = {};
 
 $(function() {
   var listing_id = $('#current_id').data('id');
+  var photo_count = parseInt($('#current_id').data('photo-count'));
   // hit the controller for info when the file comes in
   $('#fileupload').bind('fileuploadadd', function (e, data) {
       var content_type = data.files[0].type;
@@ -27,6 +28,7 @@ $(function() {
                                       content_type: content_type
                                     };
       });
+      photo_count +=1
   });
 
   // this gets triggered right before a file is about to be sent (and have their form action submitted)
