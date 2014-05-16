@@ -6,7 +6,7 @@
       %span.preview
         {% if (o.image == true) { %}
         %a{:download => "{%=o.name%}", :href => "{%=o.url%}", :title => "{%=o.name%}", :"data-gallery" => ''}
-          %img{:src => "{%=o.url%}", :style => 'width:80px; height:56px;'}
+          %img{:src => "{%=o.url%}", :style => 'width:80px;'}
         {% } %}
     %td
       %p.name
