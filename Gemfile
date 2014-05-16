@@ -9,6 +9,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
   gem 'debugger'
+  gem 'dotenv-rails'
 end
 
 gem 'sass-rails', '~> 4.0.0'
