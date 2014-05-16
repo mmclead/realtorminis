@@ -7,6 +7,8 @@
     = render 'template_download'
     = render 'template_uploaded'
 
+#current_id{data: {id: "#{@listing.id}", photo_count: "#{@listing.photos.size+1}"}}
+
 :javascript
   $(function () {
     // Initialize the jQuery File Upload widget:
@@ -16,7 +18,7 @@
     });
     
     // Load existing files:
-    $.getJSON('/photos', function (files) {
+    $.getJSON("/listings/#{@listing.id}/photos", function (files) {
       $.each(files, function(index, value) { 
         $('#upload_files tbody').append(tmpl('template-uploaded', value));
       });

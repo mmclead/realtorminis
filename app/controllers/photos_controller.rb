@@ -2,7 +2,7 @@ class PhotosController < ApplicationController
   # GET /photos
   # GET /photos.json
   def index
-    @photos = Photo.all
+    @photos = @listing.photos
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,9 +13,8 @@ class PhotosController < ApplicationController
   # POST /photos
   # POST /photos.json
   def create
-    # this line allows for compatibility with `ProtectedAttributes` or `StrongParameters`
-    parameters = params.require(:photo).permit(:url, :bucket, :key)
-    @photo = Photo.new(parameters)
+    @photo = @listing.photos.new(photo_params)
+
     respond_to do |format|
       if @photo.save
         format.html {
@@ -34,7 +33,7 @@ class PhotosController < ApplicationController
   # DELETE /photos/1
   # DELETE /photos/1.json
   def destroy
-    @photo = Photo.find(params[:id])
+    @photo = @listing.photos.find(params[:id])
     @photo.destroy
 
     respond_to do |format|
@@ -53,4 +52,10 @@ class PhotosController < ApplicationController
       success_action_redirect: "/"
     }
   end
+
+  private
+    
+    def photo_params
+      params.require(:photo).permit(:url, :bucket, :key, :listing_id)
+    end
 end

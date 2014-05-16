@@ -13,12 +13,13 @@
 var s3_upload_hash = {};
 
 $(function() {
+  var listing_id = $('#current_id').data('id');
   // hit the controller for info when the file comes in
   $('#fileupload').bind('fileuploadadd', function (e, data) {
       var content_type = data.files[0].type;
       var file_name = data.files[0].name;
-
-      $.getJSON('/photos/generate_key.json', {filename: file_name}, function(data) {
+      
+      $.getJSON('/listings/'+listing_id+'/photos/generate_key.json', {filename: file_name, count: photo_count}, function(data) {
         // Now that we have our data, we add it to the global s3_upload_hash so that it can be
         // accessed (in the fileuploadsubmit callback) prior to being submitted
         s3_upload_hash[file_name] = {
@@ -49,7 +50,7 @@ $(function() {
       //    <ETag>"c7902ef289687931f34f92b65afda320"</ETag>
       //  </PostResponse>
 
-      $.post('/photos.json',
+      $.post('/listings/'+listing_id+'/photos.json',
           {
             'photo[url]': $(data.result).find('Location').text(),
             'photo[bucket]': $(data.result).find('Bucket').text(),
