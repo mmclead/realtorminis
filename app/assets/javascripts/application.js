@@ -15,3 +15,4 @@
 //= require turbolinks
 //= require s3_cors_fileupload
 //= require s3_uploads
+//= require listings

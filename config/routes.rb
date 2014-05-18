@@ -9,6 +9,7 @@ Realtorminis::Application.routes.draw do
 
   resources :users, only: [:index, :show] do
     resources :listings
+    resources :sites
   end
 
   resources :listings do 
