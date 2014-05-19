@@ -8,6 +8,9 @@ gem 'rails', '~> 4.1.1'
 group :development, :test do 
   gem 'sqlite3'
   gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'factory_girl_rails'
+  gem 'faker'
   gem 'debugger'
   gem 'dotenv-rails'
 end
