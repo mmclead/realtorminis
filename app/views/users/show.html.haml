@@ -1,2 +1,4 @@
-%h1 Users#show
-%p Find me in app/views/users/show.html.haml
+%h1 My Profile
+
+- @profile_attributes.each do|profile_attribute|
+  = render partial: 'profile_row', locals: {profile_attribute: profile_attribute}

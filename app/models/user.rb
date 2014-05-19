@@ -6,9 +6,19 @@ class User < ActiveRecord::Base
 
 
   has_many :listings, dependent: :destroy
+  has_many :sites, dependent: :destroy
 
   mount_uploader :profile_pic, ProfileUploader
   mount_uploader :logo, LogoUploader
+
+  def profile_hash 
+    profile_attribute_list.inject({}) {|hash, attribute| hash[attribute] = self.send(attribute); hash}
+  end
+
+
+  def profile_attribute_list
+    ["name", "web_site", "contact_email", "phone_number", "dre_number", "tag_line"]
+  end
 end
 
 
