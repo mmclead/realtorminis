@@ -8,6 +8,7 @@ Realtorminis::Application.routes.draw do
   devise_for :users
 
   resources :users, only: [:index, :show] do
+    resource :profile
     resources :listings
     resources :sites
   end

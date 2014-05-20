@@ -1,4 +1,9 @@
 %h1 My Profile
 
-- @profile_attributes.each do|profile_attribute|
-  = render partial: 'profile_row', locals: {profile_attribute: profile_attribute}
+#logo_and_profile.col-md-2
+  = image_tag @profile.profile_pic.url, alt: "#{@profile.name} Profile Picture", class: 'profile-pic img-rounded', id: 'user_profile_pic'
+  = image_tag @profile.logo.url, alt: "#{@profile.name} Logo", class: 'logo img-rounded', id: 'user_logo'
+
+#profile_information.col-md-10
+  - @profile_attributes.each do|profile_attribute|
+    = render partial: 'profile_row', locals: {profile_attribute: profile_attribute}

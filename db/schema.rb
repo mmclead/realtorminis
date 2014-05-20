@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140519070028) do
+ActiveRecord::Schema.define(version: 20140520063807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,22 @@ ActiveRecord::Schema.define(version: 20140519070028) do
 
   add_index "photos", ["listing_id"], name: "index_photos_on_listing_id", using: :btree
 
+  create_table "profiles", force: true do |t|
+    t.integer  "user_id"
+    t.string   "profile_pic"
+    t.string   "logo"
+    t.string   "name"
+    t.string   "web_site"
+    t.string   "contact_email"
+    t.string   "phone_number"
+    t.string   "dre_number"
+    t.text     "tag_line"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
+
   create_table "sites", force: true do |t|
     t.string   "custom_url"
     t.string   "bucket"
@@ -80,14 +96,6 @@ ActiveRecord::Schema.define(version: 20140519070028) do
     t.datetime "confirmation_sent_at"
     t.boolean  "admin",                  default: false
     t.string   "unconfirmed_email"
-    t.string   "profile_pic"
-    t.string   "logo"
-    t.string   "name"
-    t.string   "web_site"
-    t.string   "contact_email"
-    t.string   "phone_number"
-    t.string   "dre_number"
-    t.string   "tag_line"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
