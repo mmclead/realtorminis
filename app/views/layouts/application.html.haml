@@ -3,12 +3,8 @@
   %meta(charset="utf-8")
   %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
   %meta(name="viewport" content="width=device-width, initial-scale=1.0")
-  = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
-  = javascript_include_tag 'application', "data-turbolinks-track" => true 
-  = twitter_bootstrap_stylesheet_link_tag :netdna, "data-turbolinks-track" => true 
-  = twitter_bootstrap_javascript_include_tag :netdna, "data-turbolinks-track" => true 
   = csrf_meta_tags
-  = yield :javascript_includes
+  
   %title= yield :title
 %body
   #page_container
@@ -23,3 +19,8 @@
 
     %footer
       = render user_signed_in? ? 'layouts/user/footer' : 'layouts/footer'
+
+  = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+  = javascript_include_tag 'application', "data-turbolinks-track" => true 
+  = twitter_bootstrap_stylesheet_link_tag :netdna, "data-turbolinks-track" => true 
+  = twitter_bootstrap_javascript_include_tag :netdna, "data-turbolinks-track" => true 

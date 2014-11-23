@@ -42,15 +42,17 @@ class ListingsController < ApplicationController
   # PATCH/PUT /listings/1
   # PATCH/PUT /listings/1.json
   def update
-    puts params
-    debugger
     respond_to do |format|
       if @listing.update_attributes(listing_params)
+        debugger
         format.html { redirect_to [@user, @listing], notice: 'Listing was successfully updated.' }
+        debugger
         format.json { head :no_content }
+        format.js {head :no_content, status: :success }
       else
         format.html { render action: 'edit' }
         format.json { render json: @listing.errors, status: :unprocessable_entity }
+        format.js { render json: @listing.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -68,7 +70,6 @@ class ListingsController < ApplicationController
   private
     
     def listing_params
-      debugger
       params.require(:listing).permit(:address, :title, :price, :bedrooms, :bathrooms, :sq_ft, :sold, :short_description, :description, :web_address, :user, :user_id, :active)
     end
 end
