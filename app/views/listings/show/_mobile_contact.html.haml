@@ -1,29 +1,31 @@
-.visible-xs.visible-sm
-  .panel.panel-default
-    .panel-heading
-      %h2#contact
-        Contact Listing Agent
-    .panel-body.text-center.lead
-      <address>
-      = link_to image_tag(image_url("https://s3.amazonaws.com/media.realtorminis.com/realtors/getzels-logo-flat.jpg"), width: "200"), "http://www.getzelshomes.com"
+.panel.panel-default
+  .panel-heading
+    %h2#contact
+      Contact Listing Agent
+  .panel-body.text-center.lead
+    %address
+      .profile_image
+        = image_tag @profile.profile_pic, class: "img-responsive"
       %h2 
-        Nathaniel Pitchon-Getzels <br>
-        <small>The Real Estate Insider</small>
-      <hr>
-      %h4
-        = link_to "Call Listing Agent", "tel:+18185355337", class: "btn btn-lg"
-        =mail_to "Getzels@GetzelsHomes.com"
-        <br>
-        <small>DRE# 018849497</small><br>
-        =image_tag @user.logo, width: "150"
-      </address>
-      
-    .panel-footer
+        = @profile.name
+        %br
+        %small=@profile.tag_line
+      %hr
+      %p= link_to "Call Listing Agent", "tel:+#{@profile.phone_number}", class: "btn btn-lg"
+      %p=mail_to @profile.contact_email
+      %p.small
+        DRE# 
+        =@profile.dre_number
 
-      .fb-share-button{data: {href: "http://www.12230canturast.com", type: "button"}}
-      
-      %a{href: "http://www.12230canturast.com", class: "twitter-share-button align-bottom", data: {via: "GetzelsHomes", count: "none"}}
-        Tweet
+      .profile_image
+        =image_tag @profile.logo, class: "img-responsive"
+    
+  .panel-footer
+
+    .fb-share-button{data: {href: "@listing_url", type: "button"}}
+    
+    %a{href: "#{listing_url}", class: "twitter-share-button align-bottom", data: {via: "GetzelsHomes", count: "none"}}
+      Tweet
 
 :javascript
   !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');

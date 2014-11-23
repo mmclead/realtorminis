@@ -10,6 +10,8 @@ class ListingsController < ApplicationController
   # GET /listings/1
   # GET /listings/1.json
   def show
+    @profile = @user.profile
+    @listing_url = @listing.web_address || request.original_url 
     @photos = @listing.photos
   end
 
@@ -41,6 +43,7 @@ class ListingsController < ApplicationController
   # PATCH/PUT /listings/1.json
   def update
     puts params
+    debugger
     respond_to do |format|
       if @listing.update_attributes(listing_params)
         format.html { redirect_to [@user, @listing], notice: 'Listing was successfully updated.' }
@@ -65,6 +68,7 @@ class ListingsController < ApplicationController
   private
     
     def listing_params
+      debugger
       params.require(:listing).permit(:address, :title, :price, :bedrooms, :bathrooms, :sq_ft, :sold, :short_description, :description, :web_address, :user, :user_id, :active)
     end
 end

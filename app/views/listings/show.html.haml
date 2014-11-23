@@ -3,7 +3,6 @@
   =content_for :title, @listing.title
   =stylesheet_link_tag 'templates/default'
 
-=render 'listings/show/footer'
 
 .jumbotron.textured-backgound
   .text-center.img-center
@@ -18,11 +17,11 @@
   =render 'listings/show/navigation'
   .container
     .row
-      .col-md-10
-        =render 'listings/show/mobile_contact'
+      .col-md-12
+        
         =render 'listings/show/photos'
         =render 'listings/show/info'
+        =render 'listings/show/mobile_contact'
         =render 'listings/show/contact_footer'
-      .col-md-2
-        =render 'listings/show/contact'
-    
+
+=render 'listings/show/footer'

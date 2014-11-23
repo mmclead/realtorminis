@@ -6,6 +6,7 @@ class PhotosController < ApplicationController
   # GET /photos.json
   def index
     @photos = @listing.photos
+    @photo_count = @listing.photos.unscoped.count+1
 
     respond_to do |format|
       format.html # index.html.erb
@@ -48,7 +49,7 @@ class PhotosController < ApplicationController
 
   # used for s3_uploader
   def generate_key
-    uid = @listing.address.parameterize + "-" + params[:count] + File.extname(params[:filename])
+    uid = @listing.address.parameterize + "-#{params[:count]}" + File.extname(params[:filename])
 
     render json: {
       key: "listings/#{@listing.id}/photos/#{uid}",

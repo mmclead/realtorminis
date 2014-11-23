@@ -18,6 +18,8 @@ class Photo < ActiveRecord::Base
   # cleanup; destroy corresponding file on S3
   after_destroy { s3_object.try(:delete) }
 
+  default_scope { where(deleted: false) }
+
   def to_jq_upload
     { 
       'id' => id,
@@ -51,4 +53,9 @@ class Photo < ActiveRecord::Base
   end
   #---- end S3 related methods -----
 
+  def destroy
+    self.deleted = true
+    self.deleted_at = Time.now
+    self.save
+  end
 end

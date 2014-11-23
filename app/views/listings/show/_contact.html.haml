@@ -4,28 +4,28 @@
       <h5> Contact Listing Agent </h5>
     .panel-body
       <address>
-      =image_tag @user.profile_pic, width: "200"
+      =image_tag @profile.profile_pic, width: "200"
       <br>
-      <strong>
-      =@user.name
+      <strong>€
+      =@profile.name
       </strong><br>
       <small>
-      =@user.tag_line
+      =@profile.tag_line
       </small><br>
       <small>
-      =link_to @user.web_site
+      =link_to @profile.web_site
       <hr>
 
-      =mail_to @user.contact_email
+      =mail_to @profile.contact_email
       <br>
-      =@user.phone_number 
+      =@profile.phone_number 
       Mobile<br>
       <small>DRE# 
-      =@user.dre_number
+      =@profile.dre_number
       </small><br>
       </address>
       .img-center
-        =image_tag @user.logo, width: "150"
+        =image_tag @profile.logo, width: "150"
 
     .panel-footer
 
