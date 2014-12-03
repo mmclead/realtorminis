@@ -23,7 +23,7 @@
         %td= listing.bathrooms
         %td= listing.sq_ft
         %td= listing.web_address
-        %td= link_to 'Make Listing Live', user_listing_path(@user, listing, {listing:{active: true}}), remote: true, method: :patch, id: 'make_live_button', class: 'btn', :data => { :confirm => 'Are you sure?' }
+        %td= active_status(listing)
         %td 
           .btn-group
             =link_to 'See Listing', [@user,listing], {class: 'btn btn-default'}              

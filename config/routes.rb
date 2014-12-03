@@ -1,5 +1,8 @@
 Realtorminis::Application.routes.draw do
 
+  root 'static_pages#index'
+  get 'static_pages/index'
+
   get "/home", to: 'page#home', as: 'home'
   get "/about", to: 'page#about', as: 'about'
   get "/pricing", to: 'page#pricing', as: 'pricing'
@@ -19,6 +22,5 @@ Realtorminis::Application.routes.draw do
     end   
   end
   
-  root 'page#home'
 
 end

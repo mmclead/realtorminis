@@ -13,7 +13,7 @@
       = render user_signed_in? ? 'layouts/user/header' : 'layouts/header'
 
     %section#page
-      .container
+      .container-fluid
         =render 'layouts/notices'
         = yield
 

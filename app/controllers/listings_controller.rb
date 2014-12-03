@@ -44,9 +44,7 @@ class ListingsController < ApplicationController
   def update
     respond_to do |format|
       if @listing.update_attributes(listing_params)
-        debugger
         format.html { redirect_to [@user, @listing], notice: 'Listing was successfully updated.' }
-        debugger
         format.json { head :no_content }
         format.js {head :no_content, status: :success }
       else

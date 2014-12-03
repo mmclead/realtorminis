@@ -24,9 +24,9 @@ gem 'aws-s3', github: 'fnando/aws-s3'
 gem 's3_cors_fileupload'
 gem 'simple_form'
 gem 'twitter-bootstrap-rails-cdn'
+gem 'friendly_id', '~> 5.0.0'
 
 gem 'pg'
-# gem 'unicorn'
 gem 'thin'
 
 gem 'rails_12factor', group: :production
