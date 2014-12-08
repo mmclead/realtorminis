@@ -23,7 +23,7 @@
         %td= listing.bathrooms
         %td= listing.sq_ft
         %td= listing.web_address
-        %td= active_status(listing)
+        %td{id: "activate_button_#{listing.id}"}= active_status(listing)
         %td 
           .btn-group
             =link_to 'See Listing', [@user,listing], {class: 'btn btn-default'}              
