@@ -1,12 +1,16 @@
 class Site < ActiveRecord::Base
   belongs_to :listing
-  belongs_to :user, through: :listing
+  belongs_to :user
 
   validates_presence_of :listing
+  validates_presence_of :site_code
 
-  #delegate all listing attributes up to the listing
-  
-  
 
-  
+  before_save :upload_to_aws
+
+
+  def upload_to_aws
+     #push the site_code blob up to aws
+  end
+
 end

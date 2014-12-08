@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class Listing < ActiveRecord::Base
   belongs_to :user
   has_many :photos
@@ -8,15 +10,20 @@ class Listing < ActiveRecord::Base
   extend FriendlyId
   friendly_id :address, use: :slugged
 
-  before_save publish, if: active
+  attr_accessor :site_code
+  before_save :publish, if: active
 
 
   def publish
-    tmp_site = Tempfile.new("#{id}-#{address}")
-    html = open("http://web.archive.org/web/20120502173130/http://magmarails.com/")
-    tmp_site << html
+    #build my has_one associated site
+    unless site_code.empty?
+      build_site(site_code: site_code)
+    end
+  end
 
-    #push the file or html to AWS
 
+  def scraped_page
+    debugger
+    open("/listings/#{self.id}").read
   end
 end

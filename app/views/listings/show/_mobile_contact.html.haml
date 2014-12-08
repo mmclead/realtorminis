@@ -22,9 +22,9 @@
     
   .panel-footer
 
-    .fb-share-button{data: {href: "@listing_url", type: "button"}}
+    .fb-share-button{data: {href: "@listing.web_address", type: "button"}}
     
-    %a{href: "#{listing_url}", class: "twitter-share-button align-bottom", data: {via: "GetzelsHomes", count: "none"}}
+    %a{href: "#{@listing.web_address}", class: "twitter-share-button align-bottom", data: {via: "GetzelsHomes", count: "none"}}
       Tweet
 
 :javascript

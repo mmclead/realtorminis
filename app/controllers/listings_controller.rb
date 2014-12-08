@@ -1,7 +1,9 @@
 class ListingsController < ApplicationController
+  # before_filter :find_listing_by_slug
   load_and_authorize_resource :user
-  load_and_authorize_resource through: :user, shallow: true
+  load_and_authorize_resource through: :user, shallow: true, :find_by => :slug
 
+  before_filter :set_profile
   # GET /listings
   # GET /listings.json
   def index
@@ -11,8 +13,12 @@ class ListingsController < ApplicationController
   # GET /listings/1.json
   def show
     @profile = @user.profile
-    @listing_url = @listing.web_address || request.original_url 
-    @photos = @listing.photos
+    @listing.web_address ||= request.original_url 
+  end
+
+  def preview
+
+
   end
 
   # GET /listings/new
@@ -42,7 +48,16 @@ class ListingsController < ApplicationController
   # PATCH/PUT /listings/1
   # PATCH/PUT /listings/1.json
   def update
+    debugger
+    if listing_params[:active] == "true"
+      @profile = @user.profile
+      @listing_url = @listing.web_address || request.original_url 
+      @photos = @listing.photos
+      debugger
+      @listing.site_code = render_to_string 'show', :id => @listing.id, :format => :html
+    end
     respond_to do |format|
+      debugger
       if @listing.update_attributes(listing_params)
         format.html { redirect_to [@user, @listing], notice: 'Listing was successfully updated.' }
         format.json { head :no_content }
