@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+gem 'dotenv-rails', :groups => [:development, :test]
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
@@ -21,6 +22,7 @@ gem 'mini_magick'
 gem 'fog'
 gem 'unf'
 gem 'aws-s3', github: 'fnando/aws-s3'
+gem 'aws-sdk', '2.0.0.pre'
 gem 's3_cors_fileupload'
 gem 'simple_form'
 gem 'twitter-bootstrap-rails-cdn'
@@ -42,7 +44,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'debugger'
-  gem 'dotenv-rails'
 end
 
 # Use ActiveModel has_secure_password

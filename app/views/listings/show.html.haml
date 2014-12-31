@@ -1,27 +1,25 @@
 %head
   %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0"}
   =content_for :title, @listing.title
-  =stylesheet_link_tag 'templates/default'
 
-
-.jumbotron.textured-backgound
-  .text-center.img-center
-    %h2= @listing.title
-      
-    =render 'listings/show/details_banner'
-    =render 'listings/show/video'
-    
-    %h3= @listing.address
-    
-.dark-textured-background
-  =render 'listings/show/navigation'
-  .container
-    .row
-      .col-md-12
+#listing_site
+  .jumbotron.textured-backgound
+    .text-center.img-center
+      %h2= @listing.title
         
-        =render 'listings/show/photos'
-        =render 'listings/show/info'
-        =render 'listings/show/mobile_contact'
-        =render 'listings/show/contact_footer'
+      =render 'listings/show/details_banner'
+      =render 'listings/show/video'
+      
+      %h3= @listing.address
+      
+  .dark-textured-background
+    .container
+      .row
+        .col-md-12
+          
+          =render 'listings/show/photos'
+          =render 'listings/show/info'
+          =render 'listings/show/mobile_contact'
+          =render 'listings/show/contact_footer'
 
-=render 'listings/show/footer'
+  =render 'listings/show/footer'

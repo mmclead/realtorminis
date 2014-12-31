@@ -3,11 +3,11 @@
   %meta(charset="utf-8")
   %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
   %meta(name="viewport" content="width=device-width, initial-scale=1.0")
-  = javascript_include_tag 'https://code.jquery.com/jquery-1.11.1.min.js'
-  = twitter_bootstrap_stylesheet_link_tag :netdna
-  = twitter_bootstrap_javascript_include_tag :netdna
-  = stylesheet_link_tag "preview", media: "all"
-  = javascript_include_tag 'preview'
+  = javascript_include_tag 'http://code.jquery.com/jquery-1.11.2.min.js'
+  = stylesheet_link_tag 'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css'
+  = javascript_include_tag 'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js'
+  = stylesheet_link_tag 'http://s3.amazonaws.com/media.realtorminis.com/assets/preview.css'
+  = javascript_include_tag 'http://s3.amazonaws.com/media.realtorminis.com/assets/preview.js'
 
   %title= yield :title
   

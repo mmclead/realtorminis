@@ -7,7 +7,7 @@ class ListingsController < ApplicationController
   before_filter :set_web_address, only: [:show, :preview]
 
   def show
-    self.class.layout 'preview_listing'
+    render 'show', id: @listing.id, layout: "preview_listing"
   end
 
 
@@ -27,13 +27,17 @@ class ListingsController < ApplicationController
 
   def update
     if listing_params[:active] == "true"
-      set_profile
-      set_web_address
-      @listing.site_code = render_to_string 'show', :id => @listing.id, :format => :html
+      render_and_set_site_code
+      begin
+        listing.publish! 
+      rescue
+        listing.errors[:publish] = "was not successful"
+      end
+      
     end
     respond_to do |format|
       if @listing.update_attributes(listing_params)
-        format.html { redirect_to [@user, @listing], notice: 'Listing was successfully updated.' }
+        format.html { redirect_to user_listings_path(@user), notice: 'Listing was successfully updated.' }
         format.json { head :no_content }
         format.js {head :no_content, status: :success }
       else
@@ -42,6 +46,20 @@ class ListingsController < ApplicationController
         format.js { render json: @listing.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def publish
+    render_and_set_site_code
+    respond_to do |format|
+      if @listing.publish!
+        format.json { head :no_content }
+        format.js {head :no_content, status: :success }
+      else
+        format.json { render json: @listing.errors, status: :unprocessable_entity }
+        format.js { render json: @listing.errors, status: :unprocessable_entity }
+      end
+    end
+
   end
 
   def destroy
@@ -54,7 +72,14 @@ class ListingsController < ApplicationController
 
  private
 
+  def render_and_set_site_code
+    set_profile
+    set_web_address
+    @listing.site_code = render_to_string 'show', id: @listing.id, format: :html, layout: 'preview_listing'
+  end
+
   def set_profile
+    @user ||= @listing.user
     @profile = @user.profile
   end
 

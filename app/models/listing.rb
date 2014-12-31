@@ -11,19 +11,16 @@ class Listing < ActiveRecord::Base
   friendly_id :address, use: :slugged
 
   attr_accessor :site_code
-  before_save :publish, if: active
 
-
-  def publish
+  def publish!
     #build my has_one associated site
     unless site_code.empty?
-      build_site(site_code: site_code)
+      if self.site
+        self.site.update(site_code: site_code)
+      else
+        build_site(site_code: site_code, listing_id: self.id).save
+      end
     end
   end
 
-
-  def scraped_page
-    debugger
-    open("/listings/#{self.id}").read
-  end
 end

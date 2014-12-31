@@ -16,7 +16,9 @@ Realtorminis::Application.routes.draw do
     resources :sites
   end
 
-  resources :listings do 
+  resources :listings do
+    patch :publish, on: :member
+    
     resources :photos, :only => [:index, :create, :destroy] do
       get :generate_key, :on => :collection
     end   
