@@ -27,6 +27,8 @@ gem 's3_cors_fileupload'
 gem 'simple_form'
 gem 'twitter-bootstrap-rails-cdn'
 gem 'friendly_id', '~> 5.0.0'
+gem 'comfortable_mexican_sofa', '~> 1.12.0'
+gem 'kaminari'
 
 gem 'pg'
 gem 'thin'

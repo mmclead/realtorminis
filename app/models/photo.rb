@@ -2,19 +2,19 @@ require 'aws/s3'
 
 class Photo < ActiveRecord::Base
 
+  include AwsS3Connection
+
   belongs_to :listing
-  
+
   validates_presence_of :file_name, :file_content_type, :file_size, :key, :bucket
 
   before_validation(:on => :create) do
     self.file_name = key.split('/').last if key
     # for some reason, the response from AWS seems to escape the slashes in the keys, this line will unescape the slash
     self.url = url.gsub(/%2F/, '/') if url
-    self.file_size ||= s3_object.size rescue nil
+    self.file_size ||= s3_object.content_length rescue nil
     self.file_content_type ||= s3_object.content_type rescue nil
   end
-  # make all attributes readonly after creating the record (not sure we need this?)
-  after_create { readonly! }
   # cleanup; destroy corresponding file on S3
   after_destroy { s3_object.try(:delete) }
 
@@ -27,7 +27,7 @@ class Photo < ActiveRecord::Base
       'size' => file_size,
       'url' => url,
       'image' => self.is_image?,
-      'delete_url' => Rails.application.routes.url_helpers.listing_photo_path(self.listing_id, self, :format => :json)
+      'delete_url' => Rails.application.routes.url_helpers.listing_photo_path(listing.slug, self, :format => :json)
     }
   end
 
@@ -37,20 +37,12 @@ class Photo < ActiveRecord::Base
 
   #---- start S3 related methods -----
   def s3_object
-    @s3_object ||= AWS::S3::S3Object.find(key, bucket) if self.class.open_aws && key
+    @s3_object ||= get_bucket(s3Resource(ENV['AWS_BUCKET_NAME_REGION']), bucket, {make_public: true}).object(key) if key && bucket
   rescue
     nil
   end
 
-  def self.open_aws
-    unless @aws_connected
-      AWS::S3::Base.establish_connection!(
-        :access_key_id     => S3CorsFileupload::Config.access_key_id,
-        :secret_access_key => S3CorsFileupload::Config.secret_access_key
-      )
-    end
-    @aws_connected ||= AWS::S3::Base.connected?
-  end
+
   #---- end S3 related methods -----
 
   def destroy
@@ -58,4 +50,5 @@ class Photo < ActiveRecord::Base
     self.deleted_at = Time.now
     self.save
   end
+  
 end

@@ -6,14 +6,21 @@
   = javascript_include_tag 'http://code.jquery.com/jquery-1.11.2.min.js'
   = stylesheet_link_tag 'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css'
   = javascript_include_tag 'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js'
-  = stylesheet_link_tag 'http://s3.amazonaws.com/media.realtorminis.com/assets/preview.css'
-  = javascript_include_tag 'http://s3.amazonaws.com/media.realtorminis.com/assets/preview.js'
+  - if @creating_remote_site
+    = stylesheet_link_tag 'http://s3.amazonaws.com/media.realtorminis.com/assets/preview.css'
+    = javascript_include_tag 'http://s3.amazonaws.com/media.realtorminis.com/assets/preview.js'
+  - else
+    = stylesheet_link_tag 'preview.css'
+    = javascript_include_tag 'preview.js'
+
 
   %title= yield :title
   
 %body
   #page_container
-
+  - unless @creating_remote_site
+    %header#header
+      = render partial: 'layouts/user/preview_header'
 
   %section#page
     .container-fluid

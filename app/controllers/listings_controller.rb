@@ -3,8 +3,7 @@ class ListingsController < ApplicationController
   load_and_authorize_resource :user
   load_and_authorize_resource through: :user, shallow: true, :find_by => :slug
 
-  before_filter :set_profile, only: [:show, :preview]
-  before_filter :set_web_address, only: [:show, :preview]
+  before_filter :set_profile, :set_content_location, :set_web_address, only: [:show, :preview]
 
   def show
     render 'show', id: @listing.id, layout: "preview_listing"
@@ -29,9 +28,9 @@ class ListingsController < ApplicationController
     if listing_params[:active] == "true"
       render_and_set_site_code
       begin
-        listing.publish! 
+        @listing.publish! 
       rescue
-        listing.errors[:publish] = "was not successful"
+        @listing.errors[:publish] = "was not successful"
       end
       
     end
@@ -75,6 +74,7 @@ class ListingsController < ApplicationController
   def render_and_set_site_code
     set_profile
     set_web_address
+    set_content_location
     @listing.site_code = render_to_string 'show', id: @listing.id, format: :html, layout: 'preview_listing'
   end
 
@@ -85,6 +85,10 @@ class ListingsController < ApplicationController
 
   def set_web_address
     @listing.web_address ||= request.original_url 
+  end
+
+  def set_content_location
+    @cdn_url = ENV['AWS_CDN_NAME']
   end
     
   def listing_params

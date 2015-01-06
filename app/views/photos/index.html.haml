@@ -7,7 +7,7 @@
     = render 'template_download'
     = render 'template_uploaded'
 
-#current_id{data: {id: "#{@listing.id}", photo_count: "#{@photo_count}"}}
+#current_id{data: {id: "#{@listing.slug}", photo_count: "#{@photo_count}", bucket: "#{ENV['AWS_BUCKET_URL_FOR_UPLOADS']}"}}
 
 
 = javascript_include_tag 'initialize_file_upload'

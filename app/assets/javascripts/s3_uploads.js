@@ -57,6 +57,8 @@ $(function() {
             'photo[url]': $(data.result).find('Location').text(),
             'photo[bucket]': $(data.result).find('Bucket').text(),
             'photo[key]': $(data.result).find('Key').text(),
+            'photo[file_size]': data.loaded,
+            'photo[file_content_type]': $(this).find('input#Content-Type').val(),
             authenticity_token: $('meta[name=csrf-token]').attr('content')
           },
           function(data) {

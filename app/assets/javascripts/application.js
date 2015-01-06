@@ -15,4 +15,6 @@
 //= require turbolinks
 //= require s3_cors_fileupload
 //= require s3_uploads
+//= require canvas-to-blob.min
+//= require load-image.all.min
 //= require listings

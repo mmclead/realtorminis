@@ -1,5 +1,10 @@
 Realtorminis::Application.routes.draw do
 
+  comfy_route :cms_admin, :path => '/admin'
+
+  # Make sure this routeset is defined last
+  
+
   root 'static_pages#index'
   get 'static_pages/index'
 
@@ -23,6 +28,4 @@ Realtorminis::Application.routes.draw do
       get :generate_key, :on => :collection
     end   
   end
-  
-
 end

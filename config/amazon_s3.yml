@@ -2,7 +2,7 @@ defaults: &defaults
   access_key_id: <%=ENV['AWS_ACCESS_KEY_ID']%>
   secret_access_key: <%=ENV['AWS_SECRET_KEY']%>
   acl: public-read # options: private, public-read, public-read-write, authenticated-read
-  max_file_size: 524288000 # 500 megabytes
+  max_file_size: 5242880 # 5 megabytes
 
 development:
   <<: *defaults

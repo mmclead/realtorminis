@@ -2,13 +2,16 @@ $(function () {
     // Initialize the jQuery File Upload widget:
     if ($('#fileupload')) {
       var listing_id = $('#current_id').data('id');
+      bucketUrl = $('#current_id').data('bucket');
+      $('#fileupload').attr('action', bucketUrl);
       $('#fileupload').fileupload({
         dataType: 'xml',
         sequentialUploads: true,
         disableImageResize: /Android(?!.*Chrome)|Opera/
             .test(window.navigator && navigator.userAgent),
         imageMaxWidth: 800,
-        imageCrop: false
+        imageMaxHeight: 800,
+        imageCrop: true
       });
       
       // Load existing files:

@@ -1,12 +1,12 @@
 class PhotosController < ApplicationController
 
-  load_and_authorize_resource :listing
+  load_and_authorize_resource :listing, :find_by => :slug
 
   # GET /photos
   # GET /photos.json
   def index
     @photos = @listing.photos
-    @photo_count = @listing.photos.unscoped.count+1
+    @photo_count = Photo.unscoped.where(listing_id: @listing.id).count
 
     respond_to do |format|
       format.html # index.html.erb
@@ -18,7 +18,6 @@ class PhotosController < ApplicationController
   # POST /photos.json
   def create
     @photo = @listing.photos.new(photo_params)
-
     respond_to do |format|
       if @photo.save
         format.html {
@@ -52,7 +51,7 @@ class PhotosController < ApplicationController
     uid = @listing.address.parameterize + "-#{params[:count]}" + File.extname(params[:filename])
 
     render json: {
-      key: "listings/#{@listing.id}/photos/#{uid}",
+      key: "listings/#{@listing.slug}/photos/#{uid}",
       success_action_redirect: "/"
     }
   end
@@ -60,6 +59,6 @@ class PhotosController < ApplicationController
   private
     
     def photo_params
-      params.require(:photo).permit(:url, :bucket, :key, :listing_id)
+      params.require(:photo).permit(:url, :bucket, :key, :listing_id, :file_content_type, :file_size)
     end
 end
