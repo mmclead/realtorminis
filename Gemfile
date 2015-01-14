@@ -17,15 +17,16 @@ gem 'devise'
 gem 'cancancan'
 gem 'haml-rails'
 
-gem 'carrierwave'
+gem 'carrierwave', '~>0.10.0'
 gem 'mini_magick'
-gem 'fog'
+gem 'fog', '~>1.24.0'
 gem 'unf'
 gem 'aws-s3', github: 'fnando/aws-s3'
 gem 'aws-sdk', '2.0.0.pre'
 gem 's3_cors_fileupload'
 gem 'simple_form'
-gem 'twitter-bootstrap-rails-cdn'
+gem 'simple_form_fancy_uploads'
+gem 'bootstrap-wysihtml5-rails'
 gem 'friendly_id', '~> 5.0.0'
 gem 'comfortable_mexican_sofa', '~> 1.12.0'
 gem 'kaminari'
@@ -45,7 +46,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'debugger'
+  gem 'byebug'
 end
 
 # Use ActiveModel has_secure_password

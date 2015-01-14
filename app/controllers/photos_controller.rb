@@ -5,7 +5,7 @@ class PhotosController < ApplicationController
   # GET /photos
   # GET /photos.json
   def index
-    @photos = @listing.photos
+    @photos = @listing.photos.order('created_at ASC')
     @photo_count = Photo.unscoped.where(listing_id: @listing.id).count
 
     respond_to do |format|

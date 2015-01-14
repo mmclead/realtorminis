@@ -1,12 +1,11 @@
+.clearfix
+.row-fluid
+  .col-md-6.col-sm-12
+    = render 'form'
+  .col-md-6.col-sm-12
+    = render 'photo_uploader_form'
+.clearfix
 .row-fluid
   .col-md-12
-    %h1 Editing listing
-.clearfix
-.row-fluid
-  .col-md-6
-    = render 'form'
-.clearfix
-.row-fluid
-  .col-md-12.well
     = link_to 'Back to This Listing', [@user,@listing], {class: 'btn btn-default'}
     = link_to 'Back to All Listings', user_listings_path(@user), {class: 'btn btn-default'}

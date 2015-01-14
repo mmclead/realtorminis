@@ -24,6 +24,11 @@ class ListingsController < ApplicationController
     end
   end
 
+  def edit
+    @photos = @listing.photos
+    @photo_count = Photo.unscoped.where(listing_id: @listing.id).count
+  end
+
   def update
     if listing_params[:active] == "true"
       render_and_set_site_code

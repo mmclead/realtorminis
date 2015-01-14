@@ -12,6 +12,9 @@ class Listing < ActiveRecord::Base
 
   attr_accessor :site_code
 
+  def has_new_changes?
+    updated_at > published_at rescue true
+  end
   def publish!
     #build my has_one associated site
     unless site_code.empty?
@@ -20,6 +23,8 @@ class Listing < ActiveRecord::Base
       else
         build_site(site_code: site_code, listing_id: self.id).save
       end
+      self.published_at = Time.now + 5.seconds
+      self.save!
     end
   end
 

@@ -1,0 +1,27 @@
+= simple_form_for @user, html: {multipart: true, method: :patch} do |u|
+  u.simple_fields_for :profile do |f|
+    %h2
+      Update Profile
+      %small
+        = link_to @user do
+          %button.btn.btn-xs.btn-default
+            Back
+            %i.glyphicon.glyphicon-arrow-left
+        = f.submit 'Save', {class: 'btn btn-success btn-xs'}
+
+    .row
+      .col-xs-12
+        = error_explanation @profile
+    .row
+      .col-sm-6.col-xs-12    
+        = f.input :name, label: "Name that will appear on your listing."
+        = f.input :web_site, label: "Your website", hint: "ex: www.awesomerealtor.com"
+        = f.input :contact_email, as: :email
+        = f.input :phone_number, as: :tel
+        = f.input :dre_number
+        = f.input :tag_line
+         
+      .col-sm-6.col-xs-12
+        = f.input :profile_pic, as: :image_preview, input_html: {preview_version: :thumb}, label: "Upload a Headshot Photo"
+        = f.input :logo, label: "Company Logo", as: :image_preview, input_html: {preview_version: :thumb}
+

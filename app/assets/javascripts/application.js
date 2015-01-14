@@ -10,7 +10,6 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
 //= require jquery_ujs
 //= require turbolinks
 //= require s3_cors_fileupload
@@ -18,3 +17,5 @@
 //= require canvas-to-blob.min
 //= require load-image.all.min
 //= require listings
+//= require users
+//= require bootstrap-wysihtml5

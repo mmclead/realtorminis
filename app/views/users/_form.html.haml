@@ -1,0 +1,15 @@
+
+.col-sm-6.col-xs-12{class: "#{show_info_form ? '' : 'hidden'}"}
+  = f.input :name, label: "Name that will appear on your listing."
+  = f.input :web_site, label: "Your website", hint: "ex: www.awesomerealtor.com"
+  = f.input :contact_email, as: :email
+  = f.input :phone_number, as: :tel
+  = f.input :dre_number
+  = f.input :tag_line
+ 
+.col-sm-6.col-xs-12
+  = f.input :profile_pic, as: :file, label: "Upload a Headshot Photo"
+  = yield :small_profile_pic
+  = f.input :logo, label: "Company Logo", as: :file
+  = yield :small_logo
+

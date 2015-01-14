@@ -3,6 +3,11 @@
     %button.close{:type => 'button', :data => {:dismiss => 'alert'} }
       ×
     = notice
+-if flash[:success].present?
+  .alert.alert-success.fade.in
+    %button.close{:type => 'button', :data => {:dismiss => 'alert'} }
+      ×
+    = flash[:success]
 -if alert.present?
   .alert.alert-danger.fade.in
     %button.close{:type => 'button', :data => {:dismiss => 'alert'} }

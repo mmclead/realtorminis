@@ -62,7 +62,7 @@ $(function() {
             authenticity_token: $('meta[name=csrf-token]').attr('content')
           },
           function(data) {
-            $('#upload_files tbody').append(tmpl('template-uploaded', data));
+            $('#upload_files tbody').prepend(tmpl('template-uploaded', data));
           },
           'json'
       );

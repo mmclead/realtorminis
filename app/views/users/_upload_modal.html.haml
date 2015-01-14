@@ -1,0 +1,15 @@
+#upload_modal.modal.fade
+  = simple_form_for @user, html: {multipart: true, method: :patch} do |u|
+    = u.simple_fields_for :profile do |f|
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %button.close{ type:"button", aria: {label:"Close"}, data: {dismiss:"modal"}}
+              %span{aria:{hidden:"true"}} &times;
+            %h4.modal-title Upload
+          .modal-body
+            .row
+              = render partial: 'form', locals: {show_info_form: false, f: f}
+          .modal-footer
+            %button.btn.btn-default{type: "button", data: {dismiss: "modal"}} Close
+            = f.submit 'Save Changes', class: 'btn btn-primary', id: 'upload_submit_button', data: {"loading-text" => "Saving..." }

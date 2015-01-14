@@ -1,0 +1,18 @@
+- prepare_small_profile_pic_and_logo @user.profile
+= simple_form_for @user, html: {multipart: true, method: :patch} do |u|
+  = u.simple_fields_for :profile do |f|
+    %h2
+      Update Profile
+      %small
+        = link_to @user do
+          %button.btn.btn-xs.btn-default
+            Back
+            %i.glyphicon.glyphicon-arrow-left
+        = f.submit 'Save', {class: 'btn btn-success btn-xs'}
+
+    .row
+      .col-xs-12
+        = error_explanation @user
+    .row
+      = render partial: 'form', locals: {show_info_form: true, f: f}
+      

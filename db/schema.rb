@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150106053931) do
+ActiveRecord::Schema.define(version: 20150114085445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,10 +151,10 @@ ActiveRecord::Schema.define(version: 20150106053931) do
   create_table "listings", force: :cascade do |t|
     t.string   "address",           limit: 255
     t.string   "title",             limit: 255
-    t.integer  "price"
-    t.integer  "bedrooms"
-    t.integer  "bathrooms"
-    t.integer  "sq_ft"
+    t.string   "price"
+    t.string   "bedrooms"
+    t.string   "bathrooms"
+    t.string   "sq_ft"
     t.string   "web_address",       limit: 255
     t.boolean  "sold"
     t.text     "description"
@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(version: 20150106053931) do
     t.datetime "updated_at"
     t.boolean  "active",                        default: false
     t.string   "slug",              limit: 255
+    t.datetime "published_at"
   end
 
   add_index "listings", ["user_id"], name: "index_listings_on_user_id", using: :btree

@@ -1,3 +1,8 @@
-%button.btn.btn-primary.disabled
-  You are live!
-= link_to 'Publish Changes', publish_listing_path(listing), remote: true, method: :patch, id: 'publish_button', class: 'btn btn-default', :data => { :confirm => 'Are you sure?' }
+
+- if listing.has_new_changes?
+  %button.btn.btn-primary.disabled
+    You are live!
+  = link_to 'Publish Changes', publish_listing_path(listing), remote: true, method: :patch, id: 'publish_button', class: 'btn btn-default', :data => { :confirm => 'Are you sure?' }
+- else
+  %button.btn.btn-primary.disabled
+    You are live and up to date!

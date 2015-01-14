@@ -1,9 +1,18 @@
-%h1 My Profile
+- prepare_small_profile_pic_and_logo @profile
+= render partial: 'upload_modal'
+%h1 
+  My Profile
+  %small 
+    = link_to edit_user_path(@current_user) do
+      %button.btn.btn-small.btn-default
+        Edit
 
 #logo_and_profile.col-md-2
-  = image_tag @profile.profile_pic.url, alt: "#{@profile.name} Profile Picture", class: 'profile-pic img-rounded', id: 'user_profile_pic'
-  = image_tag @profile.logo.url, alt: "#{@profile.name} Logo", class: 'logo img-rounded', id: 'user_logo'
+  = yield :small_profile_pic
+  = yield :small_logo
+  %button.btn-link{type: "button", data: {toggle: "modal", target: "#upload_modal"}}
+    Update photos
 
 #profile_information.col-md-10
-  - @profile_attributes.each do|profile_attribute|
+  - @profile_attributes.each do |profile_attribute|
     = render partial: 'profile_row', locals: {profile_attribute: profile_attribute}

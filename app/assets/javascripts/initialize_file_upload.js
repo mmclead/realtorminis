@@ -11,13 +11,14 @@ $(function () {
             .test(window.navigator && navigator.userAgent),
         imageMaxWidth: 800,
         imageMaxHeight: 800,
-        imageCrop: true
+        imageCrop: true,
+        prependFiles: true
       });
       
       // Load existing files:
       $.getJSON("/listings/"+listing_id+"/photos", function (files) {
         $.each(files, function(index, value) { 
-          $('#upload_files tbody').append(tmpl('template-uploaded', value));
+          $('#upload_files tbody').prepend(tmpl('template-uploaded', value));
         });
       });
     

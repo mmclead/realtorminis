@@ -7,7 +7,9 @@ class User < ActiveRecord::Base
 
   has_many :listings, dependent: :destroy
   has_many :sites, dependent: :destroy
-  has_one :profile
+  has_one :profile, dependent: :destroy
+
+  accepts_nested_attributes_for :profile
 
   def profile_hash 
     profile.profile_hash
