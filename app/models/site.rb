@@ -22,7 +22,18 @@ class Site < ActiveRecord::Base
 
     self.bucket = site_bucket.name
     self.custom_url = site.key
+    self.active = true
 
   end
+
+  def destroy
+    s3 = s3Resource("#{ENV['AWS_SITE_BUCKET_REGION']}")
+    site_bucket = get_bucket(s3, "#{ENV['AWS_SITE_BUCKET']}")
+
+    site = site_bucket.object("#{listing.slug}.html")
+    site.delete()
+    self.update_column(:active, false)
+  end
+
 
 end

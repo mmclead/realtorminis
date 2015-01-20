@@ -13,7 +13,7 @@
       .carousel-inner.photo-slides
         -@listing.photos.each_with_index do |photo, i|
           .item.img-center{:class => "#{ i==0 ? 'active' : '' }"}
-            =image_tag(image_url("//#{@cdn_url}/#{photo.key}"), height: 500)
+            =image_tag(image_url("#{@cdn_url}/#{photo.key}"), height: 500)
 
       %a.left.carousel-control{href: "#main-carousel", :data => {slide: "prev"} }
         %span.icon-prev
@@ -46,13 +46,13 @@
               .hidden-xs
                 -@listing.photos.each do |photo|
                   .square-image
-                    =link_to image_url("//#{@cdn_url}/#{photo.key}") do
-                      =image_tag(image_url("//#{@cdn_url}/#{photo.key}"))
+                    =link_to image_url("#{@cdn_url}/#{photo.key}") do
+                      =image_tag(image_url("#{@cdn_url}/#{photo.key}"))
               .visible-xs 
                 -@listing.photos.each do |photo|
                   .centered-and-spaced
-                    =link_to image_url("//#{@cdn_url}/#{photo.key}") do
-                      =image_tag(image_url("//#{@cdn_url}/#{photo.key}"), class: 'img-responsive')
+                    =link_to image_url("#{@cdn_url}/#{photo.key}") do
+                      =image_tag(image_url("#{@cdn_url}/#{photo.key}"), class: 'img-responsive')
                       
 
     :javascript

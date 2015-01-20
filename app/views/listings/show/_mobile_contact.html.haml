@@ -3,22 +3,26 @@
     %h2#contact
       Contact Listing Agent
   .panel-body.text-center.lead
-    %address
-      .profile_image
-        = image_tag @profile.profile_pic, class: "img-responsive"
-      %h2 
-        = @profile.name
-        %br
-        %small=@profile.tag_line
-      %hr
-      %p= link_to "Call Listing Agent", "tel:+#{@profile.phone_number}", class: "btn btn-lg"
-      %p=mail_to @profile.contact_email
-      %p.small
-        DRE# 
-        =@profile.dre_number
+    .col-sm-6
+      %address
+        .profile_image
+          = image_tag @profile.profile_pic, class: "img-responsive"
+        %h2 
+          = @profile.name
+          %br
+          %small=@profile.tag_line
+    .col-sm-6
+      %address
+        .visible-xs
+          %hr
+        %p= link_to "Call Listing Agent", "tel:+#{@profile.phone_number}", class: "btn btn-lg"
+        %p=mail_to @profile.contact_email
+        %p.small
+          DRE# 
+          =@profile.dre_number
 
-      .profile_image
-        =image_tag @profile.logo, class: "img-responsive"
+        .profile_image
+          =image_tag @profile.logo, class: "img-responsive"
     
   .panel-footer
 

@@ -48,6 +48,9 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.0)
+    auto_html (1.6.4)
+      redcarpet (~> 3.1)
+      rinku (~> 1.5.0)
     aws-sdk (2.0.0.pre)
       aws-sdk-resources (= 2.0.0.pre)
     aws-sdk-core (2.0.0)
@@ -264,8 +267,10 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
+    redcarpet (3.2.2)
     responders (2.0.2)
       railties (>= 4.2.0.alpha, < 5)
+    rinku (1.5.1)
     rspec-core (3.1.7)
       rspec-support (~> 3.1.0)
     rspec-expectations (3.1.2)
@@ -303,10 +308,6 @@ GEM
     simple_form (3.1.0)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
-    simple_form_fancy_uploads (0.1.1)
-      carrierwave
-      rails (>= 4.0.0)
-      simple_form (~> 3.0)
     slop (3.6.0)
     sprockets (2.12.3)
       hike (~> 1.2)
@@ -344,6 +345,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  auto_html
   aws-s3!
   aws-sdk (= 2.0.0.pre)
   bootstrap-wysihtml5-rails
@@ -372,7 +374,6 @@ DEPENDENCIES
   sdoc
   shoulda-matchers
   simple_form
-  simple_form_fancy_uploads
   thin
   turbolinks
   uglifier (>= 1.3.0)

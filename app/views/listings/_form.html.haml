@@ -1,16 +1,13 @@
-= simple_form_for ([@user, @listing]) do |f|
-  %h1 
-    Edit listing
-    = f.submit 'Save', {class: 'btn btn-success btn-sm'}
-    = link_to [@user,@listing] do
-      %button.btn.btn-default 
-        Preview listing
-    %div{id: "activate_button_#{@listing.id}"}= active_status(@listing)
-
+= simple_form_for [@user, @listing], html: {id: 'edit_listing_form'} do |f|
+  %h2 
+    Listing Details
+    = f.submit 'Save', {class: 'btn btn-default btn-sm', id: 'submit_listing_button'}
+    = f.hidden_field :preview, value: true
   = error_explanation @listing 
   
   = f.input :address, label: "What's the address?"
   = f.input :title, label: "What title do you want at the top of the listing?", hint: "Something like \"One of a kind home in quaint neighborhood\""
+  = f.input :video_link, as: :string, label: "Do you have a video to link to?"
 
   .row
     .col-md-6
@@ -25,10 +22,4 @@
   <hr>
   = f.input :short_description, hint: "This should be one or two sentences.", as: :wysihtml5
   <hr>
-  = f.input :description, hint: "Here is where you put the full description.", as: :wysihtml5
-  <hr>
-  = f.input :web_address, hint: "If you want a custom URL you can let us know what you'd like it to be right here."
-
-  <hr>
-  .actions
-    
+  = f.input :description, hint: "Here is where you put the full description.", as: :wysihtml5  

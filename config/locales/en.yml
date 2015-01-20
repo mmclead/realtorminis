@@ -21,3 +21,8 @@
 
 en:
   hello: "Hello world"
+
+  listings:
+    index: 
+      confirm_delete: 'Are you sure? This will delete all information about this listing.'
+      confirm_listing_deactivation: 'Are you sure? This will deactivate your listing and remove your live site.'

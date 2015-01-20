@@ -15,14 +15,14 @@
   #page_container
 
     %header#header
-      = render user_signed_in? ? 'layouts/user/header' : 'layouts/header'
+      = render user_signed_in? ? 'shared/header/user/header' : 'shared/header/header'
 
     %section#page
       .container-fluid
-        =render 'layouts/notices'
+        =render 'shared/header/notices'
         = yield
 
     %footer
-      = render user_signed_in? ? 'layouts/user/footer' : 'layouts/footer'
+      = render user_signed_in? ? 'shared/header/user/footer' : 'shared/header/footer'
 
   

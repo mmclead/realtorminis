@@ -8,9 +8,10 @@
       %h2= @listing.title
         
       =render 'listings/show/details_banner'
-      =render 'listings/show/video'
-      
       %h3= @listing.address
+
+      
+      =render 'listings/show/video'
       
   .dark-textured-background
     .container
@@ -19,7 +20,11 @@
           
           =render 'listings/show/photos'
           =render 'listings/show/info'
+          =render 'listings/show/map'
           =render 'listings/show/mobile_contact'
           =render 'listings/show/contact_footer'
 
+
   =render 'listings/show/footer'
+
+

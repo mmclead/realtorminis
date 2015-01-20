@@ -6,15 +6,29 @@ class Listing < ActiveRecord::Base
   has_one :site
 
   scope :active, -> { where(active: true) }
-
+  scope :deleted, -> { where(deleted: true) }
+  scope :not_deleted, -> { where(deleted: [false, nil]) }
   extend FriendlyId
   friendly_id :address, use: :slugged
 
   attr_accessor :site_code
 
-  def has_new_changes?
-    updated_at > published_at rescue true
+  before_save (:delete_site), if: :deleting_active_listing? 
+
+  validates_presence_of :address, :title, :price, :bedrooms, :bathrooms, :sq_ft, :short_description, :description
+
+
+  auto_html_for :video_link do
+    html_escape
+    youtube(width: 640, height:360)
+    vimeo(width: 640, height:360)
   end
+
+  def has_new_changes?
+    latest_update = [updated_at, photos.last.updated_at].max rescue updated_at
+    latest_update > published_at rescue true
+  end
+
   def publish!
     #build my has_one associated site
     unless site_code.empty?
@@ -26,6 +40,32 @@ class Listing < ActiveRecord::Base
       self.published_at = Time.now + 5.seconds
       self.save!
     end
+  end
+
+  def web_address
+    "#{site.bucket}/#{site.custom_url}" unless site.nil?
+  end
+
+  def map_from_address
+    %Q[
+      <iframe width="600"
+        height="450"
+        frameborder="0" style="border:0"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD6yANsGxi84DBW8ZlGcS1Ka-fh8MCS-Q8&q=#{address}">
+      </iframe>
+    ]
+  end
+
+  def deleting_active_listing?
+    active_changed?(from: true, to: false)
+  end
+
+  def destroy
+    self.update(active: false, deleted: true)
+  end
+
+  def delete_site
+    self.site.destroy if self.site
   end
 
 end
