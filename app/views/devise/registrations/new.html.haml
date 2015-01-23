@@ -1,0 +1,19 @@
+#user_signup_form
+
+  .col-sm-6.col-sm-offset-3.col-xs-12
+    .panel.panel-info
+      .panel-heading
+        %h2.panel-title Start Selling Faster Now
+      .panel-body
+        = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+          = f.error_notification
+          
+          .form-inputs
+            = f.input :email, required: true, autofocus: true
+            = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @validatable)
+
+          <hr>
+          .form-actions.text-center
+            = f.button :submit, "I'm Ready!", class: 'btn btn-primary btn-lg'
+
+          = render "devise/shared/links"
