@@ -24,3 +24,12 @@
 iframe.wysihtml5-sandbox {
   width: 100% !important;
 }
+
+.user_remember_me {
+  display: inline-block;
+  .controls {
+    display: inline-block;
+    margin-left: 30px;
+    min-height: 25px;
+  } 
+}
