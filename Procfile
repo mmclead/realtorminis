@@ -1,1 +1,1 @@
-web: bundle exec thin start -p 3001 --ssl --ssl-key-file ~/.ssl/server.key --ssl-cert-file ~/.ssl/server.crt
+web: bundle exec thin start -p 3000
