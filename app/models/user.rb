@@ -5,9 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
 
-  has_many :listings, dependent: :destroy
-  has_many :sites, dependent: :destroy
-  has_one :profile, dependent: :destroy
+  has_many :listings, dependent: :destroy, inverse_of: :user
+  has_many :sites, dependent: :destroy, through: :listings
+  has_one :profile, dependent: :destroy, inverse_of: :user
+  has_many :sub_profiles, class_name: "Profile", dependent: :destroy, inverse_of: :user
+  has_one :account, dependent: :destroy, inverse_of: :user, autosave: true
 
   accepts_nested_attributes_for :profile
 

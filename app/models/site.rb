@@ -12,6 +12,15 @@ class Site < ActiveRecord::Base
   before_save :upload_to_aws
 
 
+  def active_status
+    if active
+      "<i class='glyphicon glyphicon-ok text-success'></i>"
+    else
+      "<i class='glyphicon glyphicon-remove text-danger'></i>"
+    end
+  end
+
+
   def upload_to_aws
     s3 = s3Resource("#{ENV['AWS_SITE_BUCKET_REGION']}")
     site_bucket = get_bucket(s3, "#{ENV['AWS_SITE_BUCKET']}")

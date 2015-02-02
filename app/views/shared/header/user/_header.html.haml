@@ -12,7 +12,7 @@
     %ul.nav.navbar-nav
       %li{class: "#{'active' if current_page? user_path(current_user)}"}= link_to "Profile", user_path(current_user)
       %li{class: "#{'active' if is_under? 'listing' }"}= link_to "Listings", user_listings_path(current_user)
-      %li{class: "#{'active' if is_under? 'account' }"}= link_to "Account", '#'
+      %li{class: "#{'active' if is_under? 'account' }"}= link_to "Account", user_account_path(current_user)
     %ul.nav.navbar-nav.navbar-right
       - if user_signed_in?
         %li

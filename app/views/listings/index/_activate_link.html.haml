@@ -1,1 +1,2 @@
-= link_to 'Make Listing Live', user_listing_path(@user, listing, {listing:{active: true}}), remote: true, method: :patch, id: 'make_live_button', class: 'btn btn-default', :data => { :confirm => 'Are you sure?' }
+%button.btn.btn-primary#enable_listing_button{type: "button", data: {toggle: "modal", target: "#activate_listing_modal", listing_id: "#{listing.slug}", user_id: "#{@user.id}"}}
+    Make Listing Live

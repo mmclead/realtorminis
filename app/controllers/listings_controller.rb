@@ -1,5 +1,6 @@
 class ListingsController < ApplicationController
   include ListingsHelper
+  include PurchaseableControllerHelper
   # before_filter :find_listing_by_slug
   load_and_authorize_resource :user
   load_and_authorize_resource through: :user, shallow: true, :find_by => :slug
@@ -36,6 +37,7 @@ class ListingsController < ApplicationController
 
   def update
     if listing_params[:active] == "true"
+      charge_customer_with_stripe(1000, params, @listing) unless @listing.is_paid_for?
       render_and_set_site_code
       begin
         @listing.publish! 

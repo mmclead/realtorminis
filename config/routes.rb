@@ -17,8 +17,10 @@ Realtorminis::Application.routes.draw do
 
   resources :users do
     resource :profile
+    resource :account, only: [:show]
     resources :listings
     resources :sites
+    resources :credits
   end
 
   resources :listings do

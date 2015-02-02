@@ -1,0 +1,22 @@
+#activate_listing_modal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{ type:"button", aria: {label:"Close"}, data: {dismiss:"modal"}}
+          %span{aria:{hidden:"true"}} &times;
+        %h4.modal-title Activate Listing Site
+      .modal-body
+        = form_tag user_listing_path(@user.id, -1), method: :put, id: 'listing_purchase_form' do
+          %article
+            %label.amount
+              %span Amount: $10.00
+          = hidden_field_tag 'listing_id'
+          = hidden_field_tag 'listing[active]', true
+          %script{src: "https://checkout.stripe.com/checkout.js", class: "stripe-button", data: {key: "#{Rails.configuration.stripe[:publishable_key]}", description: "listing site", amount: "1000"}}
+      .modal-footer
+        %button.btn.btn-default{type: "button", data: {dismiss: "modal"}} Cancel
+
+
+
+
+

@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150117054319) do
+ActiveRecord::Schema.define(version: 20150131083141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.float    "credits"
+    t.boolean  "active"
+    t.hstore   "settings"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
 
   create_table "comfy_cms_blocks", force: :cascade do |t|
     t.string   "identifier",     null: false
@@ -135,6 +147,20 @@ ActiveRecord::Schema.define(version: 20150117054319) do
   add_index "comfy_cms_snippets", ["site_id", "identifier"], name: "index_comfy_cms_snippets_on_site_id_and_identifier", unique: true, using: :btree
   add_index "comfy_cms_snippets", ["site_id", "position"], name: "index_comfy_cms_snippets_on_site_id_and_position", using: :btree
 
+  create_table "credits", force: :cascade do |t|
+    t.integer  "account_id"
+    t.integer  "purchaseable_id"
+    t.string   "purchaseable_type"
+    t.datetime "spent_at"
+    t.datetime "purchased_at"
+    t.hstore   "payment_details"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "credits", ["account_id"], name: "index_credits_on_account_id", using: :btree
+  add_index "credits", ["purchaseable_type", "purchaseable_id"], name: "index_credits_on_purchaseable_type_and_purchaseable_id", using: :btree
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",           limit: 255, null: false
     t.integer  "sluggable_id",               null: false
@@ -241,4 +267,6 @@ ActiveRecord::Schema.define(version: 20150117054319) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "accounts", "users"
+  add_foreign_key "credits", "accounts"
 end

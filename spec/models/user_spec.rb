@@ -6,6 +6,9 @@ describe User do
   describe 'associations' do
     it { should have_many :listings }
     it { should have_many :sites }
+    it { should have_many :sub_profiles }
+    it { should have_one :profile }
+    it { should have_one :account }
   end
 
 
