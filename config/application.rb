@@ -11,5 +11,21 @@ module Realtorminis
 
     # config.force_ssl = true
 
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address:              'smtp.gmail.com',
+      port:                 587,
+      domain:               'realtorminis.com',
+      user_name:            ENV['SENDING_EMAIL_ADDRESS'],
+      password:             ENV['SENDING_EMAIL_ADDRESS_PASSWORD'],
+      authentication:       'plain',
+      enable_starttls_auto: true
+    }
+    config.action_mailer.default_options = {
+      from: ENV['DEFAULT_FROM_EMAIL'],
+      reply_to: ENV['DEFAULT_FROM_EMAIL']
+    }
+
+
   end
 end

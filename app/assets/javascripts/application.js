@@ -18,4 +18,5 @@
 //= require load-image.all.min
 //= require listings
 //= require users
+//= require accounts
 //= require bootstrap-wysihtml5

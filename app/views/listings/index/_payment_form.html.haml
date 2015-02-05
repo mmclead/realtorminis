@@ -12,7 +12,7 @@
               %span Amount: $10.00
           = hidden_field_tag 'listing_id'
           = hidden_field_tag 'listing[active]', true
-          %script{src: "https://checkout.stripe.com/checkout.js", class: "stripe-button", data: {key: "#{Rails.configuration.stripe[:publishable_key]}", description: "listing site", amount: "1000"}}
+          %script{src: "https://checkout.stripe.com/checkout.js", class: "stripe-button", data: {key: "#{Rails.configuration.stripe[:publishable_key]}", email: "#{current_user.email}", name: "RealtorMinis", label: "Launch!", description: "Single Listing Site", amount: "#{Rails.configuration.prices[:basic_listing]}"}}
       .modal-footer
         %button.btn.btn-default{type: "button", data: {dismiss: "modal"}} Cancel
 

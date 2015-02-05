@@ -12,7 +12,7 @@ module PurchaseableControllerHelper
       charge = Stripe::Charge.create(
         customer: customer.id,
         amount: amount,
-        description: "listing site",
+        description: "Real estate listing site",
         currency: 'usd'
       )
 

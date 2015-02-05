@@ -19,38 +19,17 @@
           %th Web Address
           %th Active Status
           %th First Published On
+          %th Payment Details
       %tbody
         - @sites.each do |site|
           %tr
             %td= site.custom_url
             %td= site.active_status.html_safe
-            %td= site.created_at
-      
+            %td= site.created_at.to_formatted_s(:long) 
+            %td
+              - if site.listing.reciept_credit
+                %button.btn.btn-primary.payment_details_button{type: "button", data: {toggle: "modal", target: "#payment_details_modal", listing_id: "#{site.listing.id}"}}
+                  See Details
 
-.row#credits
-  .col-sm-12
-    - if @account.credits.to_i > 0
-      %h3.text-success
-        Credits :
-        = @account.credits.to_i
-    - else
-      %h3.text-warning
-        Credits :
-        = @account.credits.to_i
-        = simplepay_form_for(:standard, {amount: 10.00, description: "1 Credit"}, yield(:pay_button))
-        
 
-%form{action:"https://authorize.payments-sandbox.amazon.com/pba/paypipeline", method:"post"}
-  %input{type:"hidden", name:"amount", value:"USD 10"}
-  %input{type:"hidden", name:"processImmediate", value: "1"}
-  %input{type:"hidden", name:"signatureMethod", value: "HmacSHA256"}
-  %input{type:"hidden", name:"accessKey", value: "11SEM03K88SD016FS1G2"}
-  %input{type:"hidden", name:"collectShippingAddress", value: "0"}
-  %input{type:"hidden", name:"isDonationWidget", value: "0"}
-  %input{type:"hidden", name:"description", value: "credit"}
-  %input{type:"hidden", name:"amazonPaymentsAccountId", value: "MYEFWMEXTXVJ2FQBXUA2SQZ49PPLLCB9FAHM1A"}
-  %input{type:"hidden", name:"cobrandingStyle", value: "logo"}
-  %input{type:"hidden", name:"signatureVersion", value: "2"}
-  %input{type:"hidden", name:"immediateReturn", value: "1"}
-  %input{type:"hidden", name:"signature", value: "58LO/JcxEywesKEhwWyWuMMRwqRHX88euyVj7ljXthc="}
-  = yield(:pay_button)
+= render partial: 'payment_details_modal'

@@ -17,7 +17,9 @@ Realtorminis::Application.routes.draw do
 
   resources :users do
     resource :profile
-    resource :account, only: [:show]
+    resource :account, only: [:show] do
+      get :payment_details
+    end
     resources :listings
     resources :sites
     resources :credits

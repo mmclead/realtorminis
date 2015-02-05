@@ -1,0 +1,22 @@
+.row
+  .col-sm-3
+    .lead
+      Payment Method
+  .col-sm-2
+    .lead
+      Amount
+  .col-sm-3
+    .lead
+      Payment Date
+  .col-sm-3
+    .lead
+      Transaction ID
+.row
+  .col-sm-3
+    = reciept_credit.try(:payment_card)
+  .col-sm-2
+    = number_to_currency reciept_credit.try(:payment_amount)
+  .col-sm-3
+    = reciept_credit.try(:purchased_at).try(:to_formatted_s, :long)
+  .col-sm-3
+    = reciept_credit.try(:transaction_id)

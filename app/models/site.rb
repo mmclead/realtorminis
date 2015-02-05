@@ -8,9 +8,8 @@ class Site < ActiveRecord::Base
   validates_presence_of :listing
   validates_presence_of :site_code
 
-
+  before_validation :listing_must_be_paid_for
   before_save :upload_to_aws
-
 
   def active_status
     if active
@@ -19,7 +18,6 @@ class Site < ActiveRecord::Base
       "<i class='glyphicon glyphicon-remove text-danger'></i>"
     end
   end
-
 
   def upload_to_aws
     s3 = s3Resource("#{ENV['AWS_SITE_BUCKET_REGION']}")
@@ -32,7 +30,6 @@ class Site < ActiveRecord::Base
     self.bucket = site_bucket.name
     self.custom_url = site.key
     self.active = true
-
   end
 
   def destroy
@@ -44,5 +41,12 @@ class Site < ActiveRecord::Base
     self.update_column(:active, false)
   end
 
-
+ private
+  def listing_must_be_paid_for
+    unless listing.is_paid_for?
+      errors.add(:listing, "must be paid for in order to publish")
+    end
+  rescue
+    errors.add(:listing, "must be paid for in order to publish")
+  end
 end

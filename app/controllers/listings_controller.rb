@@ -8,7 +8,7 @@ class ListingsController < ApplicationController
   before_filter :set_profile, :set_content_location, :set_web_address, only: [:show, :preview]
 
   def index 
-    @listings = @listings.not_deleted
+    @listings = @listings.not_deleted.order(created_at: :desc)
   end
 
   def show
@@ -37,7 +37,7 @@ class ListingsController < ApplicationController
 
   def update
     if listing_params[:active] == "true"
-      charge_customer_with_stripe(1000, params, @listing) unless @listing.is_paid_for?
+      charge_customer_with_stripe(Rails.configuration.prices[:basic_listing], params, @listing) unless @listing.is_paid_for?
       render_and_set_site_code
       begin
         @listing.publish! 

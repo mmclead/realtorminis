@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
   respond_to :html, :json, :js
 
-  load_and_authorize_resource
+  before_filter :set_user, :get_or_set_profile, only: :show
+
   def show
-    @user = current_user
-    @profile = @user.profile
     @profile_attributes = @user.profile.profile_hash
   end
 
@@ -23,6 +22,16 @@ class UsersController < ApplicationController
   end
 
  private
+
+  def set_user
+    @user = current_user
+  end
+
+  def get_or_set_profile
+    @user.create_profile unless @user.profile
+    @profile = @user.profile
+  end
+
   def profile_params
     params.require(:user).permit(:profile_attributes => 
       [:id, :name, :web_site, :tag_line, :contact_email, :phone_number, :dre_number, :profile_pic, :logo])
