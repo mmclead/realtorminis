@@ -4,17 +4,19 @@
       .modal-header
         %button.close{ type:"button", aria: {label:"Close"}, data: {dismiss:"modal"}}
           %span{aria:{hidden:"true"}} &times;
-        %h4.modal-title Activate Listing Site
+        %h4.modal-title= cms_snippet_content("activate-listing-site-title").html_safe 
+
       .modal-body
         = form_tag user_listing_path(@user.id, -1), method: :put, id: 'listing_purchase_form' do
-          %article
-            %label.amount
-              %span Amount: $10.00
           = hidden_field_tag 'listing_id'
           = hidden_field_tag 'listing[active]', true
-          %script{src: "https://checkout.stripe.com/checkout.js", class: "stripe-button", data: {key: "#{Rails.configuration.stripe[:publishable_key]}", email: "#{current_user.email}", name: "RealtorMinis", label: "Launch!", description: "Single Listing Site", amount: "#{Rails.configuration.prices[:basic_listing]}"}}
+          = cms_snippet_content("activate-listing-site-content").html_safe 
+          
+          .text-center
+            %script{src: "https://checkout.stripe.com/checkout.js", class: "stripe-button", data: {key: "#{Rails.configuration.stripe[:publishable_key]}", email: "#{current_user.email}", name: "#{cms_snippet_content("store-name").html_safe }", panel: {label: "#{cms_snippet_content("basic-listing-purchase-form-cta").html_safe }"}, label: "#{cms_snippet_content("basic-listing-purchase-cta").html_safe }", description: "Single Listing Site", amount: "#{Rails.configuration.prices[:basic_listing]}"}}
       .modal-footer
-        %button.btn.btn-default{type: "button", data: {dismiss: "modal"}} Cancel
+        = link_to "https://www.stripe.com", target: "_blank" do
+          =image_tag("big.png")
 
 
 

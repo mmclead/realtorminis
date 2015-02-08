@@ -1,4 +1,4 @@
-$ ->
+ready = ->
 
   $(".payment_details_button").on 'click', () ->
     $('#payment_details_modal .modal-body').html('')
@@ -7,3 +7,4 @@ $ ->
     ).fail () ->
       $('#payment_details_modal .modal-body').html("<span class='lead'> Oops. Couldn't get your payment details. Please try again.</span>")
     
+$(document).on('page:load ready', ready)
