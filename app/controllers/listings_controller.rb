@@ -98,6 +98,7 @@ class ListingsController < ApplicationController
   def set_profile
     @user ||= @listing.user
     @profile = @user.profile
+    @key_photo = @listing.photos.first.key rescue nil
   end
 
   def set_web_address

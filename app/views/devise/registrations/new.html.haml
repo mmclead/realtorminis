@@ -3,7 +3,7 @@
   .col-sm-6.col-sm-offset-3.col-xs-12
     .panel.panel-info
       .panel-heading
-        %h2.panel-title Start Selling Faster Now
+        %h2.panel-title= cms_snippet_content("sign-up-title").html_safe 
       .panel-body
         = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
           = f.error_notification
