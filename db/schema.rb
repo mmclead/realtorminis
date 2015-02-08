@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150131083141) do
+ActiveRecord::Schema.define(version: 20150208075009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,10 +162,10 @@ ActiveRecord::Schema.define(version: 20150131083141) do
   add_index "credits", ["purchaseable_type", "purchaseable_id"], name: "index_credits_on_purchaseable_type_and_purchaseable_id", using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
-    t.string   "slug",                      null: false
-    t.integer  "sluggable_id",              null: false
+    t.string   "slug",           limit: 255, null: false
+    t.integer  "sluggable_id",               null: false
     t.string   "sluggable_type", limit: 50
-    t.string   "scope"
+    t.string   "scope",          limit: 255
     t.datetime "created_at"
   end
 
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(version: 20150131083141) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active",                        default: false
-    t.string   "slug"
+    t.string   "slug",              limit: 255
     t.datetime "published_at"
     t.boolean  "deleted"
     t.text     "video_link"
@@ -209,6 +209,7 @@ ActiveRecord::Schema.define(version: 20150131083141) do
     t.integer  "listing_id"
     t.boolean  "deleted",                       default: false
     t.datetime "deleted_at"
+    t.integer  "order"
   end
 
   add_index "photos", ["listing_id"], name: "index_photos_on_listing_id", using: :btree
