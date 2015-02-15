@@ -1,7 +1,7 @@
 / To be used with Javascript-Templates (see: https://github.com/blueimp/JavaScript-Templates)
 / The template to display files that have been uploaded to S3 already
 %script#template-uploaded{:type => "text/x-tmpl"}
-  %tr.template-uploaded{:id => "photo_{%=o.id%}"}
+  %tr.template-uploaded{:id => "photo_{%=o.id%}", data: {object_id: "{%=o.id%}"}}
     %td
       %span.preview
         {% if (o.image == true) { %}

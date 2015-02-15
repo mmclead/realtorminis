@@ -8,6 +8,10 @@ class Photo < ActiveRecord::Base
 
   validates_presence_of :file_name, :file_content_type, :file_size, :key, :bucket
 
+  default_scope { where(deleted: false) }
+
+
+
   before_validation(:on => :create) do
     self.file_name = key.split('/').last if key
     # for some reason, the response from AWS seems to escape the slashes in the keys, this line will unescape the slash
@@ -18,7 +22,7 @@ class Photo < ActiveRecord::Base
   # cleanup; destroy corresponding file on S3
   after_destroy { s3_object.try(:delete) }
 
-  default_scope { where(deleted: false) }
+  
 
   def to_jq_upload
     { 

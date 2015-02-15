@@ -7,11 +7,11 @@
     #main-carousel.carousel.slide
       .hidden-xs
         %ol.carousel-indicators
-          -@listing.photos.each_with_index do |photo, i|
+          -@photos.each_with_index do |photo, i|
             %li{:class => "#{ i==0 ? 'active' : '' }", :data => {:target => "#main-carousel", :slideTo => "#{i}" } }
 
       .carousel-inner.photo-slides
-        -@listing.photos.each_with_index do |photo, i|
+        -@photos.each_with_index do |photo, i|
           .item.img-center{:class => "#{ i==0 ? 'active' : '' }"}
             =image_tag(image_url("#{@cdn_url}/#{photo.key}"), height: 500)
 
@@ -44,12 +44,12 @@
           #panel-body.dark-panel-body
             #links
               .hidden-xs
-                -@listing.photos.each do |photo|
+                -@photos.each do |photo|
                   .square-image
                     =link_to image_url("#{@cdn_url}/#{photo.key}") do
                       =image_tag(image_url("#{@cdn_url}/#{photo.key}"))
               .visible-xs 
-                -@listing.photos.each do |photo|
+                -@photos.each do |photo|
                   .centered-and-spaced
                     =link_to image_url("#{@cdn_url}/#{photo.key}") do
                       =image_tag(image_url("#{@cdn_url}/#{photo.key}"), class: 'img-responsive')

@@ -5,7 +5,11 @@ class PhotosController < ApplicationController
   # GET /photos
   # GET /photos.json
   def index
-    @photos = @listing.photos.order('created_at ASC')
+    if params[:reverse]
+      @photos = @listing.photos.order(order: :desc)
+    else
+      @photos = @listing.photos.order(order: :asc)
+    end
     @photo_count = Photo.unscoped.where(listing_id: @listing.id).count
 
     respond_to do |format|
@@ -29,6 +33,19 @@ class PhotosController < ApplicationController
       else
         format.html { render action: "new" }
         format.json { render json: @photo.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def sort_photos
+    #example sort_photos_params  {"photos"=>["photo_138", "photo_136", "photo_137"]}
+    respond_to do |format|
+      photo_ids = params[:photos].join(",").gsub("photo_", "").split(",")
+      photo_updates = photo_ids.map.with_index{|photo_id, index| {order: index} }.to_a
+      if Photo.transaction { Photo.update(photo_ids, photo_updates) }
+        format.js {head :no_content, status: :success }
+      else
+        format.js { render json: {error: 'Could not update photos'}, status: :unprocessable_entity }
       end
     end
   end
@@ -59,6 +76,6 @@ class PhotosController < ApplicationController
   private
     
     def photo_params
-      params.require(:photo).permit(:url, :bucket, :key, :listing_id, :file_content_type, :file_size)
+      params.require(:photo).permit(:url, :bucket, :key, :listing_id, :file_content_type, :file_size, :order)
     end
 end

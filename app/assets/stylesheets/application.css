@@ -14,6 +14,7 @@
  *= require photos
  *= require users
  *= require listings
+ *= require edit_listings
  *= require page
  *= require purchase_forms
  */

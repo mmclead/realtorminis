@@ -30,6 +30,7 @@ Realtorminis::Application.routes.draw do
     
     resources :photos, :only => [:index, :create, :destroy] do
       get :generate_key, :on => :collection
+      post :sort_photos, :on => :collection
     end   
   end
 end

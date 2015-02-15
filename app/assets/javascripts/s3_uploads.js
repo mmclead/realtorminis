@@ -62,7 +62,7 @@ $(function() {
             authenticity_token: $('meta[name=csrf-token]').attr('content')
           },
           function(data) {
-            $('#upload_files tbody').prepend(tmpl('template-uploaded', data));
+            $('#listing_photos tbody').append(tmpl('template-uploaded', data));
           },
           'json'
       );
@@ -73,7 +73,7 @@ $(function() {
       data.context.remove();
    });
 
-   $('#fileupload').bind('fileuploaddestroyed', function (e, data) {
+   $('#fileupload, #listing_photos').bind('fileuploaddestroyed', function (e, data) {
       if (!data.url) // sometimes this callback seems to get triggered a couple times, and has null data after the first time
         return null;
 

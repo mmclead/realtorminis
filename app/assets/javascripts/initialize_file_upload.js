@@ -11,15 +11,29 @@ $(function () {
             .test(window.navigator && navigator.userAgent),
         imageMaxWidth: 800,
         imageMaxHeight: 800,
-        imageCrop: true,
+        imageCrop: false,
         prependFiles: true
       });
       
       // Load existing files:
       $.getJSON("/listings/"+listing_id+"/photos", function (files) {
         $.each(files, function(index, value) { 
-          $('#upload_files tbody').prepend(tmpl('template-uploaded', value));
+          $('#listing_photos tbody').append(tmpl('template-uploaded', value));
         });
+        $( '#listing_photos tbody' ).sortable(
+          {
+            placeholder: "photo-place-holder",
+            stop: function (event, ui) {
+              $.post("/listings/"+listing_id+"/photos/sort_photos", { photos: $( '#listing_photos tbody' ).sortable( "toArray" ) } )
+                .success( function ( result ) {
+                  $('#sort_success_message').text("Photos have been updated").fadeIn(1000).fadeOut(3000);
+                })
+                .fail( function ( error ) {
+                  $('#sort_failure_message').text("Photos could not be updated").fadeIn(1000).fadeOut(3000);
+              })
+            }
+          }
+        ).disableSelection();
       });
     
       // used by the jQuery File Upload

@@ -1,11 +1,16 @@
-%div{:style => 'padding: 10px;'}
+#photo_uploader{:style => 'padding: 10px;'}
   %h2 Upload photos
+  #sort_success_message.alert.alert-success
+  #sort_failure_message.alert.alert-danger
   = s3_cors_fileupload_form_tag :id => 'fileupload'
   
   .javascript-templates
     = render 'photos/template_upload'
     = render 'photos/template_download'
     = render 'photos/template_uploaded'
+  
+  %table#listing_photos.table.table-striped
+    %tbody
 
 #current_id{data: {id: "#{@listing.slug}", photo_count: "#{@photo_count}", bucket: "#{ENV['AWS_BUCKET_URL_FOR_UPLOADS']}"}}
 

@@ -13,7 +13,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
-  process :resize_to_fit => [nil,600]
+  process :resize_to_fit => [600,600]
 
   # Create different versions of your uploaded files:
   version :thumb do

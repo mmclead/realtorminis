@@ -12,6 +12,7 @@ class ListingsController < ApplicationController
   end
 
   def show
+    @photos = @listing.photos.order(order: :asc)
     render 'show', id: @listing.id, layout: "preview_listing"
   end
 
@@ -31,7 +32,7 @@ class ListingsController < ApplicationController
   end
 
   def edit
-    @photos = @listing.photos
+    # @photos = @listing.photos
     @photo_count = Photo.unscoped.where(listing_id: @listing.id).count
   end
 
@@ -62,6 +63,8 @@ class ListingsController < ApplicationController
       end
     end
   end
+
+
 
   def publish
     render_and_set_site_code
@@ -98,7 +101,7 @@ class ListingsController < ApplicationController
   def set_profile
     @user ||= @listing.user
     @profile = @user.profile
-    @key_photo = @listing.photos.first.key rescue nil
+    @key_photo = @listing.photos.order(order: :asc).first.key rescue nil
   end
 
   def set_web_address
