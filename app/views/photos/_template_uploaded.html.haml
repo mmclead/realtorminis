@@ -9,6 +9,8 @@
           %img{:src => "{%=o.url%}", :style => 'width:80px;'}
         {% } %}
     %td
+      %i.photo-handle.glyphicon.glyphicon-resize-vertical
+    %td
       %p.name
         {% if (o.url) { %}
         %a{:href => "{%=o.url%}", :title => "{%=o.name%}", :download => "{%=o.name%}", :"data-gallery" => !"{%= o.image ? 'true' : '' %}".html_safe.empty? && ''} {%=o.name%}

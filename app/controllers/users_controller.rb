@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html, :json, :js
 
-  before_filter :set_user, :get_or_set_profile, only: :show
+  before_filter :set_user, :get_or_set_profile
 
   def show
     @profile_attributes = @user.profile.profile_hash

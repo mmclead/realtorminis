@@ -29,6 +29,9 @@ $(function () {
         $( '#listing_photos tbody' ).sortable(
           {
             placeholder: "photo-place-holder",
+            handle: ".photo-handle",
+            axis: "y",
+            cursor: "move",
             stop: function (event, ui) {
               $.post("/listings/"+listing_id+"/photos/sort_photos", { photos: $( '#listing_photos tbody' ).sortable( "toArray" ) } )
                 .success( function ( result ) {
