@@ -4,14 +4,12 @@ gem 'dotenv-rails', :groups => [:development, :test, :production]
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 
-
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
-
 
 gem 'devise'
 gem 'cancancan'
@@ -23,7 +21,6 @@ gem 'fog', '~>1.24.0'
 gem 'unf'
 gem 'aws-s3', github: 'fnando/aws-s3'
 gem 'aws-sdk', '2.0.0.pre'
-gem "simplepay-rails4", :require => 'simplepay', path: '../gems/simplepay'
 gem "stripe", :github => 'stripe/stripe-ruby'
 gem 's3_cors_fileupload'
 gem 'simple_form'
@@ -34,7 +31,8 @@ gem 'kaminari'
 gem 'auto_html'
 
 gem 'pg'
-gem 'thin'
+gem 'puma'
+gem "rack-timeout"
 
 gem 'rails_12factor', group: :production
 
