@@ -19,5 +19,4 @@
 //= require listings
 //= require users
 //= require accounts
-//= require photos
 //= require bootstrap-wysihtml5

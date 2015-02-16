@@ -1,6 +1,6 @@
 $ ->
 
-  $("#enable_listing_button").on 'click', () ->
+  $(".enable_listing_button").on 'click', () ->
     $('#listing_purchase_form').attr("action", "/users/"+$(this).data('userId')+"/listings/"+$(this).data('listingId'))
     $('#listing_purchase_form').find('#listing_id').val($(this).data('listingId'))
 

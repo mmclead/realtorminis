@@ -1,19 +1,19 @@
 %nav.navbar.navbar-default.square
   .container
-    %ul.nav-justified.nav
+    %ul.nav-justified.nav.lead
       %li
-        <strong>Price: </strong>
+        Price
         %br
-        = number_to_currency(@listing.price, precision: 0)
+        %strong= number_to_currency(@listing.price, precision: 0)
       %li
-        <strong>Bedrooms: </strong>
+        Bedrooms
         %br
-        = @listing.bedrooms
+        %strong= @listing.bedrooms
       %li
-        <strong>Bathrooms: </strong>
+        Bathrooms
         %br
-        = @listing.bathrooms
+        %strong= number_to_human @listing.bathrooms, strip_insignificant_zeros: true
       %li
-        <strong>Sq Ft: </strong>
+        Sq Ft
         %br
-        = @listing.sq_ft
+        %strong= number_with_delimiter @listing.sq_ft

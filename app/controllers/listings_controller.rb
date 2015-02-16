@@ -12,7 +12,7 @@ class ListingsController < ApplicationController
   end
 
   def show
-    @photos = @listing.photos.order(order: :asc)
+    @photos = @listing.photos.order(order: :asc).order(created_at: :asc)
     render 'show', id: @listing.id, layout: "preview_listing"
   end
 
@@ -95,13 +95,15 @@ class ListingsController < ApplicationController
     set_web_address
     set_content_location
     @creating_remote_site = true
+
     @listing.site_code = render_to_string 'show', id: @listing.id, format: :html, layout: 'preview_listing'
   end
 
   def set_profile
     @user ||= @listing.user
     @profile = @user.profile
-    @key_photo = @listing.photos.order(order: :asc).first.key rescue nil
+    @photos = @listing.photos.order(order: :asc).order(created_at: :asc)
+    @key_photo = @photos.first.key rescue nil
   end
 
   def set_web_address

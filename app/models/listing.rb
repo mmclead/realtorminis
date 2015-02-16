@@ -40,6 +40,7 @@ class Listing < ActiveRecord::Base
         build_site(site_code: site_code, listing_id: self.id).save
       end
       self.published_at = Time.now + 5.seconds
+      self.active = true
       self.save!
     end
   end

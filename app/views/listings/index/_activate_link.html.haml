@@ -1,2 +1,5 @@
-%button.btn.btn-primary#enable_listing_button{type: "button", data: {toggle: "modal", target: "#activate_listing_modal", listing_id: "#{listing.slug}", user_id: "#{@user.id}"}}
+- if listing.is_paid_for?
+  = link_to 'Make Listing Live', publish_listing_path(listing), remote: true, method: :patch, id: 'publish_button', class: 'btn btn-primary', :data => { :confirm => 'Are you sure?' }
+- else
+  %button.btn.btn-primary.enable_listing_button{type: "button", data: {toggle: "modal", target: "#activate_listing_modal", listing_id: "#{listing.slug}", user_id: "#{@user.id}"}}
     Make Listing Live

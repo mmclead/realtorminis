@@ -24,9 +24,10 @@ class Site < ActiveRecord::Base
     site_bucket = get_bucket(s3, "#{ENV['AWS_SITE_BUCKET']}")
 
     site = site_bucket.object("#{listing.slug}.html")
+    # logger.info ("deleting #{site.inspect}")
     site.delete()
-    site.put(body: site_code)
-
+    site.put(body: site_code, cache_control: "must-revalidate" )
+    # logger.info ("pushing new site to : #{site.key}")
     self.bucket = site_bucket.name
     self.custom_url = site.key
     self.active = true

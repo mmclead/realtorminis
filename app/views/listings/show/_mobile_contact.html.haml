@@ -1,7 +1,7 @@
 .panel.panel-default
   .panel-heading
     %h2#contact
-      Contact Listing Agent
+      Listing Agent
   .panel-body.text-center.lead
     .col-sm-6
       %address
@@ -15,8 +15,15 @@
       %address
         .visible-xs
           %hr
-        %p= link_to "Call Listing Agent", "tel:+#{@profile.phone_number}", class: "btn btn-lg"
-        %p=mail_to @profile.contact_email
+        %p
+          = link_to "tel:+#{@profile.phone_number}", class: "btn btn-primary btn-lg" do
+            %i.glyphicon.glyphicon-earphone
+            = @profile.phone_number
+          
+        %p
+          = mail_to @profile.contact_email, class: "btn btn-primary btn-lg" do
+            %i.glyphicon.glyphicon-envelope
+            = @profile.contact_email
         %p.small
           DRE# 
           =@profile.dre_number

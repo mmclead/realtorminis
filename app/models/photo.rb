@@ -10,8 +10,6 @@ class Photo < ActiveRecord::Base
 
   default_scope { where(deleted: false) }
 
-
-
   before_validation(:on => :create) do
     self.file_name = key.split('/').last if key
     # for some reason, the response from AWS seems to escape the slashes in the keys, this line will unescape the slash
