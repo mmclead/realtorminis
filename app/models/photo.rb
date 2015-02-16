@@ -22,16 +22,16 @@ class Photo < ActiveRecord::Base
   # cleanup; destroy corresponding file on S3
   after_destroy { s3_object.try(:delete) }
 
-  
-
   def to_jq_upload
     { 
       'id' => id,
-      'name' => file_name,
-      'size' => file_size,
       'url' => url,
+      'name' => file_name,
+      'type' => file_content_type,
+      'size' => file_size,
       'image' => self.is_image?,
-      'delete_url' => Rails.application.routes.url_helpers.listing_photo_path(listing.slug, self, :format => :json)
+      'delete_url' => Rails.application.routes.url_helpers.listing_photo_path(listing.slug, self, :format => :json),
+      'delete_type' => "DELETE"
     }
   end
 

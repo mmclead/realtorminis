@@ -17,6 +17,9 @@ $(function() {
   var photo_count = parseInt($('#current_id').data('photo-count'));
   // hit the controller for info when the file comes in
   $('#fileupload').bind('fileuploadadd', function (e, data) {
+
+      $('.fileupload-buttonbar .cancel').show()
+      $('.fileupload-buttonbar .start').show()
       var content_type = data.files[0].type;
       var file_name = data.files[0].name;
       
@@ -71,9 +74,13 @@ $(function() {
    $('#fileupload').bind('fileuploadcompleted', function (e, data) {
       // remove the downloaded templates, since in the above function we put our own custom 'template-uploaded' onto the list instead
       data.context.remove();
+      if ($($('.files tr.template-upload').length == 0)) {
+        $('.fileupload-buttonbar .cancel').hide()
+        $('.fileupload-buttonbar .start').hide()
+      }
    });
-
-   $('#fileupload, #listing_photos').bind('fileuploaddestroyed', function (e, data) {
+    
+   $('#fileupload').bind('fileuploaddestroyed', function (e, data) {
       if (!data.url) // sometimes this callback seems to get triggered a couple times, and has null data after the first time
         return null;
 

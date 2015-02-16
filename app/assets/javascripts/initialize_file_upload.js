@@ -6,20 +6,26 @@ $(function () {
       $('#fileupload').attr('action', bucketUrl);
       $('#fileupload').fileupload({
         dataType: 'xml',
-        sequentialUploads: true,
+        sequentialUploads: false,
         disableImageResize: /Android(?!.*Chrome)|Opera/
             .test(window.navigator && navigator.userAgent),
         imageMaxWidth: 800,
         imageMaxHeight: 800,
         imageCrop: false,
-        prependFiles: true
+        prependFiles: true,
       });
+
+      $('.fileupload-buttonbar .toggle').remove()
+      $('.fileupload-buttonbar .delete').remove()
+      $('.fileupload-buttonbar .cancel').hide()
+      $('.fileupload-buttonbar .start').hide()
       
       // Load existing files:
       $.getJSON("/listings/"+listing_id+"/photos", function (files) {
         $.each(files, function(index, value) { 
           $('#listing_photos tbody').append(tmpl('template-uploaded', value));
         });
+  
         $( '#listing_photos tbody' ).sortable(
           {
             placeholder: "photo-place-holder",
@@ -34,6 +40,11 @@ $(function () {
             }
           }
         ).disableSelection();
+
+        $(".delete-photo").on("ajax:success", function (e, data, status, xhr) {
+          $(this).parents('tr').addClass('danger').fadeOut(1500);
+        });
+
       });
     
       // used by the jQuery File Upload

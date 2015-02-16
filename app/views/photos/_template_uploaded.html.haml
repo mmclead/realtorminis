@@ -19,13 +19,6 @@
       %span.size {%=formatFileSize(o.size)%}
     %td
       {% if (o.delete_url) { %}
-      %button.btn.btn-danger.delete{"data-type" => "DELETE", "data-url" => "{%=o.delete_url%}", "data-object_id" => "{%=o.id%}", "data-confirmation" => "Are you sure?", "data-xhr-fields" => !"{% if (o.delete_with_credentials) { %} {'withCredentials': true} {% } %}".blank? && "{% if (o.delete_with_credentials) { %} {'withCredentials': true} {% } %}"}
-        %i.icon-trash.icon-white
-        %span Delete
-      %input.toggle{:name => "delete", :type => "checkbox", :value => "1"}
-      {% } else { %}
-      %button.btn.btn-warning.cancel
-        %i.glyphicon.glyphicon-ban-circle
-        %span Cancel
+      = link_to 'Delete', "{%=o.delete_url%}", method: :delete, remote: true, class: 'delete-photo btn btn-danger delete', data: {confirm: "Are you sure"}
       {% } %}
           

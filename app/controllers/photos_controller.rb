@@ -58,8 +58,8 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to photos_url }
-      format.json { head :no_content }
-      format.xml { head :no_content }
+      format.json { render json: { id: params[:id] } }
+      format.xml  { head :no_content }
     end
   end
 
