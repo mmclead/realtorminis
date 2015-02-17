@@ -33,6 +33,7 @@ gem 'auto_html'
 gem 'pg'
 gem 'puma'
 gem "rack-timeout"
+gem 'newrelic_rpm'
 
 gem 'rails_12factor', group: :production
 
