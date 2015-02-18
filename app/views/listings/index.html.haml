@@ -2,30 +2,8 @@
   Current Listings
   = link_to 'New Listing', new_user_listing_path(@user), class: "btn btn-primary"
 
+.row
+  - @listings.each do |listing|
+    = render partial: "listings/index/listing", locals: {listing: listing}
 
-%table.table.table-striped
-  %thead
-    %tr
-      %th Address
-      %th Price
-      %th Bedrooms
-      %th Bathrooms
-      %th Square feet
-      %th Web Address
-      %th Actions
-  %tbody
-    - @listings.each do |listing|
-      %tr
-        %td= listing.address
-        %td= listing.price
-        %td= listing.bedrooms
-        %td= listing.bathrooms
-        %td= listing.sq_ft
-        %td 
-          - if listing.active
-            = link_to "//#{listing.web_address}", class: 'btn btn-link', target: "_blank" do
-              = listing.web_address
-              %i.glyphicon.glyphicon-export
-          
-        %td= render partial: 'listing_actions_buttons', locals: {listing: listing}
 = render partial: 'listings/index/payment_form'

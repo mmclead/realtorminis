@@ -3,11 +3,27 @@
     Listing Details
     = f.submit 'Save', {class: 'btn btn-default btn-sm', id: 'submit_listing_button'}
     = f.hidden_field :preview, value: true
+
   = error_explanation @listing 
   
-  = f.input :address, label: "What's the address?"
+  .row
+    .col-md-12
+      = label_tag 'listing[web_address]', "#{ENV['AWS_SITE_BUCKET']}\\ "
+      = text_field_tag 'listing[web_address]', @listing.web_address, id: "listing_web_address", size: 40
+      = link_to "Check Availability", check_availability_listings_path(address: ""), remote: true, format: :json, class: "btn btn-default btn-xs", id: 'name_checker'
+
+  .row
+    .col-md-6
+      = f.input :address, label: "Street address?"
+    .col-md-3
+      = f.input :city, label: "City?"
+    .col-md-3
+      = f.input :state, label: "State?", collection: us_states
+
   = f.input :title, label: "What title do you want at the top of the listing?", hint: "Something like \"One of a kind home in quaint neighborhood\""
-  = f.input :video_link, as: :string, label: "Do you have a video to link to?"
+
+  = f.input :video_link, as: :string, label: "Do you have a video on youtube?", placeholder: "ex: https://www.youtube.com/watch?v=3VIobar4Vdw", hint: "Just grab the url from your browser on youtube"
+
 
   .row
     .col-md-6

@@ -21,7 +21,7 @@
             = @profile.phone_number
           
         %p
-          = mail_to @profile.contact_email, class: "btn btn-primary btn-lg" do
+          = mail_to @profile.contact_email, class: "btn btn-link btn-lg" do
             %i.glyphicon.glyphicon-envelope
             = @profile.contact_email
         %p.small

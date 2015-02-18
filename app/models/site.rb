@@ -23,7 +23,7 @@ class Site < ActiveRecord::Base
     s3 = s3Resource("#{ENV['AWS_SITE_BUCKET_REGION']}")
     site_bucket = get_bucket(s3, "#{ENV['AWS_SITE_BUCKET']}")
 
-    site = site_bucket.object("#{listing.slug}.html")
+    site = site_bucket.object("#{listing.web_address}.html")
     # logger.info ("deleting #{site.inspect}")
     site.delete()
     site.put(body: site_code, cache_control: "must-revalidate" )

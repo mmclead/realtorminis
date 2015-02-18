@@ -17,8 +17,8 @@ class Listing < ActiveRecord::Base
 
   before_save (:delete_site), if: :deleting_active_listing? 
 
-  validates_presence_of :address, :title, :price, :bedrooms, :bathrooms, :sq_ft, :short_description, :description
-
+  validates_presence_of :address, :city, :state, :title, :price, :bedrooms, :bathrooms, :sq_ft, :short_description, :description
+  validates_uniqueness_of :web_address, allow_nil: true
 
   auto_html_for :video_link do
     html_escape
@@ -45,8 +45,16 @@ class Listing < ActiveRecord::Base
     end
   end
 
-  def web_address
+  def full_address
+    "#{address} #{city}, #{state} #{zip}"
+  end
+
+  def full_web_address
     "#{site.bucket}/#{site.custom_url}" unless site.nil?
+  end
+
+  def key_photo
+    photos.first.key rescue ''
   end
 
   def map_from_address
@@ -54,7 +62,7 @@ class Listing < ActiveRecord::Base
       <iframe width="600"
         height="450"
         frameborder="0" style="border:0"
-        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD6yANsGxi84DBW8ZlGcS1Ka-fh8MCS-Q8&q=#{address}">
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD6yANsGxi84DBW8ZlGcS1Ka-fh8MCS-Q8&q=#{full_address}">
       </iframe>
     ]
   end

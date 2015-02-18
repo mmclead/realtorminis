@@ -1,14 +1,16 @@
 class ListingsController < ApplicationController
   include ListingsHelper
   include PurchaseableControllerHelper
+
+  respond_to :json
   # before_filter :find_listing_by_slug
   load_and_authorize_resource :user
   load_and_authorize_resource through: :user, shallow: true, :find_by => :slug
-
-  before_filter :set_profile, :set_content_location, :set_web_address, only: [:show, :preview]
+  before_filter :set_content_location, only: [:show, :index]
+  before_filter :set_profile, :set_web_address, only: [:show]
 
   def index 
-    @listings = @listings.not_deleted.order(created_at: :desc)
+    @listings = @listings.not_deleted.order(updated_at: :desc)
   end
 
   def show
@@ -64,15 +66,17 @@ class ListingsController < ApplicationController
     end
   end
 
-
+  def check_availability
+    available = {"available" => (Listing.where(web_address: params[:address].parameterize).count == 0)}
+    respond_with available
+  end
 
   def publish
     render_and_set_site_code
-    respond_to do |format|
-      if @listing.publish!
-        format.json { head :no_content }
-        format.js {head :no_content, status: :success }
-      else
+    if @listing.publish!
+      render partial: "/listings/index/listing", locals: {listing: @listing} and return
+    else
+      respond_to do |format|
         format.json { render json: @listing.errors, status: :unprocessable_entity }
         format.js { render json: @listing.errors, status: :unprocessable_entity }
       end
@@ -115,6 +119,6 @@ class ListingsController < ApplicationController
   end
     
   def listing_params
-    params.require(:listing).permit(:address, :title, :price, :video_link, :bedrooms, :bathrooms, :sq_ft, :sold, :short_description, :description, :web_address, :user, :user_id, :active)
+    params.require(:listing).permit(:address, :city, :state, :title, :price, :video_link, :bedrooms, :bathrooms, :sq_ft, :sold, :short_description, :description, :web_address, :user, :user_id, :active)
   end
 end

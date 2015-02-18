@@ -27,6 +27,7 @@ Realtorminis::Application.routes.draw do
 
   resources :listings do
     patch :publish, on: :member
+    get :check_availability, on: :collection
     
     resources :photos, :only => [:index, :create, :destroy] do
       get :generate_key, :on => :collection

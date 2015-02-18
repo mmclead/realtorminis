@@ -1,0 +1,41 @@
+.listing-item.col-sm-6
+  .listing-panel.panel.panel-info{id: "#{listing.id}"}
+    .panel-heading
+      %h3.panel-title= listing.full_address
+    .panel-body
+      .row
+        .col-sm-6
+          %ul.list-group
+            %li.list-group-item
+              %strong Price
+              .pull-right= number_to_currency(listing.price, precision: 0)
+            %li.list-group-item
+              %strong Bedrooms
+              .pull-right= listing.bedrooms
+            %li.list-group-item
+              %strong Bathroom
+              .pull-right= number_to_human listing.bathrooms, strip_insignificant_zeros: true
+            %li.list-group-item
+              %strong Square feet
+              .pull-right= number_with_delimiter listing.sq_ft
+          
+        .col-sm-6
+          - if listing.key_photo.present?
+            .hidden-xs
+              = image_tag(image_url("#{@cdn_url}/#{listing.key_photo}"), class: 'img-responsive pull-right key_photo')
+            .visible-xs
+              = image_tag(image_url("#{@cdn_url}/#{listing.key_photo}"), class: 'img-responsive')
+          
+      %hr
+      .row
+        .col-sm-12
+          Site Link: 
+          - if listing.active
+            = link_to "//#{listing.full_web_address}", class: 'listing-link btn btn-link', target: "_blank" do
+              = listing.full_web_address
+              %i.glyphicon.glyphicon-export
+          - else 
+            %span.btn.btn-link N/A
+      .row
+        .col-sm-12
+          = render partial: 'listing_actions_buttons', locals: {listing: listing}
