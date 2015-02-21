@@ -1,13 +1,5 @@
 class PageController < ApplicationController
+  layout "external"
   def home
-  end
-
-  def about
-  end
-
-  def pricing
-  end
-
-  def contact
   end
 end

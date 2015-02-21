@@ -2,11 +2,7 @@ Realtorminis::Application.routes.draw do
 
   comfy_route :cms_admin, :path => '/admin'
 
-  # Make sure this routeset is defined last
-  
-
-  root 'static_pages#index'
-  get 'static_pages/index'
+  root 'page#home'
 
   get "/home", to: 'page#home', as: 'home'
   get "/about", to: 'page#about', as: 'about'

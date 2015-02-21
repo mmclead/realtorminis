@@ -1,1 +1,159 @@
-= cms_snippet_content("home-page").html_safe
+
+/ ********** HEADER SECTION **********
+#h
+  .container
+    .row.centered
+      = cms_snippet_content("home-hero").html_safe 
+      .col-md-6.col-md-offset-3.mt
+        %button.btn.btn-lg.btn-green.subscribe-submit{type: "button", data: {toggle: "modal", target: "#user_signup_form"}}
+          Sign up
+        %br
+        = link_to('Login', new_user_session_path, class: "btn btn btn-link green" )
+    .row
+      .continue
+        %i.ion-chevron-down
+
+#cta
+  .container
+    .row
+      %h2 Creating a custom site for your listing can be complicated. Realtor Minis makes it easy.
+ 
+/ ********** INTRODUCTION SECTION **********
+.container.mt
+  .row
+    .col-md-6.col-md-offset-3.centered
+      %h2 Create Beatiful Single Page Listing Sites
+      %hr.aligncenter
+      %h4 For only $10 (forever)
+    
+  .row.mt
+    .col-md-6
+      = cms_snippet_content('home-services-details').html_safe
+    .col-md-6.of
+      = image_tag "browser.png", alt: "", data: {effect: "slide-right"}, class: 'img-responsive aligncenter'
+  
+/ ********** HOW IT WORKS SECTION **********
+#g
+  .container
+    .row
+      .col-md-6.col-md-offset-3.centered
+        %h2 Creating your site is easy
+        %hr.aligncenter
+        %h4 We can walk through it with 4 steps
+    
+    .row.mt
+      .col-md-4
+        = cms_snippet_content('home-step-1-2').html_safe
+
+      .col-md-4
+        = image_tag "item.png", alt: "", data: {effect: "slide-bottom"}, class: 'img-responsive aligncenter'
+    
+      .col-md-4
+        = cms_snippet_content('home-step-3-4').html_safe
+    
+/ ********** CALL TO ACTION SECTION **********
+#cta
+  .container
+    .row
+      = cms_snippet_content("home-statistics").html_safe
+    
+/ ********** FEATURES SECTION - Part 1 **********
+.container.mt
+  .row
+    = cms_snippet_content("home-key-features").html_safe
+  .row.mt
+    .col-md-12
+      = image_tag "display.jpg", alt: "", data: {effect: "slide-bottom"}, class: 'img-responsive aligncenter'
+    
+/ ********** FEATURES SECTION - Part 2 **********
+#g
+  .container
+    .row.mt
+      .col-md-6.col-md-offset-3.centered
+        %h2 Site Features
+        %hr.aligncenter
+        %h4 What You Need To Know
+      
+    .row.mt
+      .col-md-4.centered
+        %i.ion-cube.green.big
+        %p.green All Included in a big package
+        %p.text16 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      
+      .col-md-4.centered
+        %i.ion-document-text.green.big
+        %p.green Complete documentation
+        %p.text16 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      
+      .col-md-4.centered
+        %i.ion-email.green.big
+        %p.green Free email support
+        %p.text16 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      
+    .row.mt
+      .col-md-4.centered
+        %i.ion-eye.green.big
+        %p.green Retina device ready
+        %p.text16 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      
+      .col-md-4.centered
+        %i.ion-fireball.green.big
+        %p.green Hot trends used
+        %p.text16 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      
+      .col-md-4.centered
+        %i.ion-heart.green.big
+        %p.green Crafted with love
+        %p.text16 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      
+/ ********** TESTIMONIAL SECTION **********
+#testimonial
+  .container
+    .row.mt
+      .col-lg-8.col-lg-offset-2.centered
+        /
+          Carousel
+          \==================================================
+        #myCarousel.carousel.slide{"data-ride" => "carousel"}
+          .carousel-inner
+            .item.active
+              = image_tag "ui-01.jpg", alt: "First Slide", width: "120", class: 'img-circle aligncenter'
+              %h3 Mark Turin
+              %hr.aligncenter
+              %p There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+            .item
+              = image_tag "ui-02.jpg", alt: "Second Slide", width: "120", class: 'img-circle aligncenter'
+              %h3 Sarah Schmidt
+              %hr.aligncenter
+              %p There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+            .item
+              = image_tag "ui-03.jpg", alt: "Third Slide", width: "120", class: 'img-circle aligncenter'
+              %h3 Phil Carsons
+              %hr.aligncenter
+              %p There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+        
+/ ********** REGISTER SECTION **********
+#g
+  .container
+    .row.centered
+      .col-md-6.col-md-offset-3.mt
+        %button.btn.btn-lg.btn-green.subscribe-submit{type: "button", data: {toggle: "modal", target: "#user_signup_form"}}
+          Sign up
+        %br
+        = link_to('Login', new_user_session_path, class: "btn btn btn-link green" )
+    
+/ ********** END SECTION **********
+.container
+  .row.mtb
+    .col-md-6.col-md-offset-3.centered
+      %p.text28
+        %a{:href => "#"}
+          %i.ion-social-twitter
+        %a{:href => "#"}
+          %i.ion-social-instagram
+        %a{:href => "#"}
+          %i.ion-social-facebook
+      %hr.aligncenter/
+      %p= "RealtorMinis.com | Copyright #{Date.today.year}"
+
+= render 'devise/registrations/new_modal'

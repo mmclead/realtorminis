@@ -1,0 +1,20 @@
+#user_signup_form.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h2.modal-title= cms_snippet_content("sign-up-title").html_safe 
+        %button.close{ type:"button", aria: {label:"Close"}, data: {dismiss:"modal"}}
+          %span{aria:{hidden:"true"}} &times;
+      .modal-body
+        = simple_form_for(:user, url: registration_path("user")) do |f|
+          = f.error_notification
+          
+          .form-inputs
+            = f.input :email, required: true, autofocus: true
+            = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @validatable)
+
+          
+          .form-actions.text-center
+            %hr.aligncenter
+            = f.button :submit, "Start", class: 'btn btn-green btn-lg'
+
