@@ -16,6 +16,7 @@
 //= require s3_uploads
 //= require canvas-to-blob.min
 //= require load-image.all.min
+//= require initialize_file_upload
 //= require listings
 //= require accounts
 //= require bootstrap-wysihtml5
