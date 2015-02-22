@@ -13,12 +13,15 @@
       = link_to "Check Availability", check_availability_listings_path(address: ""), remote: true, format: :json, class: "btn btn-default btn-xs", id: 'name_checker'
 
   .row
-    .col-md-6
-      = f.input :address, label: "Street address?"
-    .col-md-3
-      = f.input :city, label: "City?"
-    .col-md-3
-      = f.input :state, label: "State?", collection: us_states
+    .col-md-12
+      = f.input :address, label: "Street address"
+  .row
+    .col-md-4
+      = f.input :city, label: "City"
+    .col-md-4
+      = f.input :state, label: "State", collection: us_states
+    .col-md-4
+      = f.input :zip, label: "Zip code"
 
   = f.input :title, label: "What title do you want at the top of the listing?", hint: "Something like \"One of a kind home in quaint neighborhood\""
 
