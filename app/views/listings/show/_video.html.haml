@@ -1,6 +1,7 @@
 - if @listing.video_link.present?
   #video_container.embed-responsive.embed-responsive-16by9
     = @listing.video_link_html
+
 - elsif @key_photo.present?
   #key_photo_container.img-thumbnail
     =image_tag(image_url("#{@cdn_url}/#{@key_photo}"), class: 'img-responsive')
