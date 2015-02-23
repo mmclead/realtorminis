@@ -54,7 +54,7 @@ class Listing < ActiveRecord::Base
   end
 
   def key_photo
-    photos.first.key rescue ''
+    photos.order(order: :asc).first.key rescue ''
   end
 
   def map_from_address
