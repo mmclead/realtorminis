@@ -5,6 +5,7 @@ Realtorminis::Application.routes.draw do
   root 'page#home'
 
   get "/home", to: 'page#home', as: 'home'
+  get "/home2", to: 'page#home_two', as: 'home2'
   get "/about", to: 'page#about', as: 'about'
   get "/pricing", to: 'page#pricing', as: 'pricing'
   get "/contact", to: 'page#contact', as: 'contact'
