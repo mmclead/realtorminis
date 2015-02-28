@@ -19,44 +19,49 @@
           %button.btn.btn-conf.btn-green.navbar-btn{type: "button", data: {toggle: "modal", target: "#user_signup_form"}}
             Sign up
         %li
-          = link_to('Login', new_user_session_path)
+          %button.btn.btn-conf.btn-link.navbar-btn{type: "button", data: {toggle: "modal", target: "#user_login_form"}}
+            Login
 
 / ********** HEADER **********
-%section#home
-#h
-  .container
-    .row
-      .col-md-6
-        %h2= cms_snippet_content("home-hero").html_safe 
+/ %section#home
+/ #h
+/   .container
+/     .row
+/       .col-md-6
+/         %h2= cms_snippet_content("home-hero").html_safe 
 
-        %button.btn.btn-conf.btn-green{type: "button", data: {toggle: "modal", target: "#user_signup_form"}}
-          Sign up
-        = link_to('Login', new_user_session_path, class: "btn btn-conf btn-clear")
-
-#g
-  .container
-    .row
-      = cms_snippet_content("home-key-features").html_safe
-
+/         %button.btn.btn-conf.btn-green{type: "button", data: {toggle: "modal", target: "#user_signup_form"}}
+/           Sign up
+/         = link_to('Login', new_user_session_path, class: "btn btn-conf btn-clear")
 / ********** SIDE IMAGE - SECTION **********
-%section#about
+%section#home
 %section.side-image.text-heavy.clearfix
   .image-container.col-md-5.col-sm-3.pull-left
     .background-image-holder
       /%img.background-image{:alt => "Background Image", :src => "assets/img/side.jpg"}
 
+
   .container
-    .row
-      .col-md-6.col-md-offset-6.col-sm-8.col-sm-offset-4.content.clearfix
+    .row.content.clearfix
+      .col-md-5.col-sm-3
+        = image_tag image_url("iphone-front.png"), class: 'img-responsive aligncenter', width: '317'
+      .col-md-6.col-sm-8
         %h1 Create Beatiful Single Page Listing Sites
         %h2= "For only $#{(ENV['BASIC_LISTING_PRICE'].to_i/100)} (forever)"
         %p.lead
-          Your clients love getting special treatment.  We can help you give it to them.
+          Your clients love getting special treatment.  We help you give it to them.
 
         %button.btn.btn-conf.btn-green{type: "button", data: {toggle: "modal", target: "#user_signup_form"}}
           Sign up
         %br
         = cms_snippet_content('home-services-details').html_safe
+%section#about
+#g
+  .container
+    .row
+      = cms_snippet_content("home-key-features").html_safe
+
+
 
 / ********** WHITE SECTION - IMAGE PHONE **********
 .container
@@ -65,14 +70,14 @@
       %h1
         Creating your site is easy.
       %h3.mb
-        We can walk through it with 4 steps
+        Let's walk through it in 4 easy steps.
 
       %p= cms_snippet_content('home-step-1-2').html_safe
       %p= cms_snippet_content('home-step-3-4').html_safe
       %button.btn.btn-conf.btn-green{type: "button", data: {toggle: "modal", target: "#user_signup_form"}}
         Sign up
     .col-md-7
-      /= image_tag "//d2a87i39r9jceq.cloudfront.net/assets/phone-listing.png", class: 'img-responsive aligncenter', width: '320'
+      
 / ********** GREY SECTION - BLOG **********
 / #grey
 /   .container
