@@ -11,16 +11,16 @@
           = hidden_field_tag 'listing_id'
           = hidden_field_tag 'listing[active]', true
           %article
-            .text-center.lead
-              %span.activate-content
-                = cms_snippet_content("activate-listing-site-content").html_safe 
-              %hr
-              %label.amount
+            .text-center
+              %label.amount.lead
                 %span
                   = "Yours forever for only $#{(ENV['BASIC_LISTING_PRICE'].to_i/100)}"
+              %br    
+              %script{src: "https://checkout.stripe.com/checkout.js", class: "stripe-button", data: {key: "#{Rails.configuration.stripe[:publishable_key]}", email: "#{current_user.email}", name: "#{cms_snippet_content("store-name").html_safe }", panel: {label: "#{cms_snippet_content("basic-listing-purchase-form-cta").html_safe }"}, label: "#{cms_snippet_content("basic-listing-purchase-cta").html_safe }", description: "Single Listing Site", amount: "#{Rails.configuration.prices[:basic_listing]}"}}
+              
+              
           
-          .text-center
-            %script{src: "https://checkout.stripe.com/checkout.js", class: "stripe-button", data: {key: "#{Rails.configuration.stripe[:publishable_key]}", email: "#{current_user.email}", name: "#{cms_snippet_content("store-name").html_safe }", panel: {label: "#{cms_snippet_content("basic-listing-purchase-form-cta").html_safe }"}, label: "#{cms_snippet_content("basic-listing-purchase-cta").html_safe }", description: "Single Listing Site", amount: "#{Rails.configuration.prices[:basic_listing]}"}}
+          
       .modal-footer
         = link_to "https://www.stripe.com", target: "_blank" do
           =image_tag("big.png")

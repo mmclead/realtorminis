@@ -12,7 +12,7 @@
 // This global variable will hold s3 file credentials for files until it's time to submit them
 var s3_upload_hash = {};
 
-$(function() {
+$(document).on('page:load ready', function () {
   var listing_id = $('#current_id').data('id');
   var photo_count = parseInt($('#current_id').data('photo-count'));
   // hit the controller for info when the file comes in
@@ -66,6 +66,9 @@ $(function() {
           },
           function(data) {
             $('#listing_photos tbody').append(tmpl('template-uploaded', data));
+            $(".delete-photo").on("ajax:success", function (e, data, status, xhr) {
+              $(this).parents('tr').addClass('danger').fadeOut(1500);
+            });
           },
           'json'
       );

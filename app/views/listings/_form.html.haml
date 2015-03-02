@@ -1,7 +1,7 @@
 = simple_form_for [@user, @listing], html: {id: 'edit_listing_form'} do |f|
   %h2 
     Listing Details
-    = f.submit 'Save', {class: 'btn btn-default btn-sm', id: 'submit_listing_button'}
+    = f.submit 'Save Listing', {class: 'btn btn-default btn-primary', id: 'submit_listing_button'}
     = f.hidden_field :preview, value: true
 
   = error_explanation @listing 

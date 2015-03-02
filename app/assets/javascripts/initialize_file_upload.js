@@ -1,5 +1,4 @@
-var ready;
-ready = function () {
+$(document).on('page:load ready', function () {
   // Initialize the jQuery File Upload widget:
   if ($('#fileupload')) {
     var listing_id = $('#current_id').data('id');
@@ -61,5 +60,4 @@ ready = function () {
       emptyResult: 'Empty file upload result'
     };
   }
-}
-$(document).on('page:load ready', ready);
+});

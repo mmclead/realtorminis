@@ -10,7 +10,7 @@ Realtorminis::Application.routes.draw do
   get "/pricing", to: 'page#pricing', as: 'pricing'
   get "/contact", to: 'page#contact', as: 'contact'
   
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations" }
 
   resources :users do
     resource :profile
