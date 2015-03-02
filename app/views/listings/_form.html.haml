@@ -1,5 +1,5 @@
 = simple_form_for [@user, @listing], html: {id: 'edit_listing_form'} do |f|
-  %h2 
+  %h2.floating-header{data: {spy: "affix", offset: {top:"200", bottom:"00"}}} 
     Listing Details
     = f.submit 'Save Listing', {class: 'btn btn-default btn-primary', id: 'submit_listing_button'}
     = f.hidden_field :preview, value: true

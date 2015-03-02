@@ -15,12 +15,18 @@
           %a{:href => "#about"} About
         %li
           %a{:href => "#contact"} Contact
-        %li
-          %button.btn.btn-green.navbar-btn{type: "button", data: {toggle: "modal", target: "#user_signup_form"}}
-            Sign up
-        %li
-          %button.btn.btn-link.navbar-btn{type: "button", data: {toggle: "modal", target: "#user_signin_form"}}
-            Login
+        - if user_signed_in?
+          %li
+            = link_to user_listings_path(current_user) do
+              Back to Listings
+              %i.ion-arrow-right-c
+        - else
+          %li
+            %button.btn.btn-green.navbar-btn{type: "button", data: {toggle: "modal", target: "#user_signup_form"}}
+              Sign up
+          %li
+            %button.btn.btn-link.navbar-btn{type: "button", data: {toggle: "modal", target: "#user_signin_form"}}
+              Login
 
 / ********** HEADER **********
 / %section#home
