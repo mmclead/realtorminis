@@ -5,13 +5,8 @@
   %meta(name="viewport" content="width=device-width, initial-scale=1.0")
   = csrf_meta_tags 
   = javascript_include_tag '//code.jquery.com/jquery-1.11.2.min.js'
-  = javascript_include_tag '//code.jquery.com/ui/1.11.3/jquery-ui.min.js'
   = javascript_include_tag 'external'
   
-
-  /[if lt IE 9]
-    = javascript_include_tag "//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"
-    = javascript_include_tag "//oss.maxcdn.com/respond/1.4.2/respond.min.js"
   %title= yield :title
 %body
   = yield

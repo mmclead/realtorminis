@@ -32,8 +32,8 @@
           Site Link: 
           - if listing.active
             = link_to "//#{listing.full_web_address}", class: 'listing-link btn btn-link', target: "_blank" do
-              = listing.full_web_address
               %i.glyphicon.glyphicon-export
+              %span.listing-link= listing.full_web_address
           - else 
             %span.btn.btn-link N/A
       .row
