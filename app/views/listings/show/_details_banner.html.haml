@@ -1,19 +1,35 @@
-%nav.navbar.navbar-default.square
+%nav.navbar.navbar-default.square#details_banner
   .container
-    %ul.nav-justified.nav.lead
-      %li
-        Price
-        %br
-        %strong= number_to_currency(@listing.price, precision: 0)
-      %li
-        Bedrooms
-        %br
-        %strong= @listing.bedrooms
-      %li
-        Bathrooms
-        %br
-        %strong= number_to_human @listing.bathrooms, strip_insignificant_zeros: true
-      %li
-        Sq Ft
-        %br
-        %strong= number_with_delimiter @listing.sq_ft
+    .row
+      .col-xs-6
+        %ul.nav-justified.nav.lead
+          %li
+            .hidden-xs
+              Price
+              %br
+            %strong= number_to_currency(@listing.price, precision: 0)
+          %li
+            .hidden-xs
+              Sq Ft
+              %br
+            %strong.inline
+              = number_with_delimiter @listing.sq_ft
+              .visible-xs sq ft
+      .col-xs-6
+        %ul.nav-justified.nav.lead
+          %li
+            .hidden-xs
+              Bedrooms
+              %br
+            %strong.inline
+              = @listing.bedrooms
+              .visible-xs Bed
+
+          %li
+            .hidden-xs
+              Bathrooms
+              %br
+            %strong.inline
+              = number_to_human @listing.bathrooms, strip_insignificant_zeros: true
+              .visible-xs Bath
+          
