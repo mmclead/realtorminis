@@ -1,6 +1,12 @@
 - if @listing.video_link.present?
-  #video_container.embed-responsive.embed-responsive-16by9
-    = @listing.video_link_html
+  .hidden-xs
+    #video_container
+      .desktop-video
+        = @listing.video_link_html
+  .visible-xs
+    #video_container
+      .phone-video
+        = @listing.video_link_html
 
 - elsif @key_photo.present?
   #key_photo_container.img-thumbnail
