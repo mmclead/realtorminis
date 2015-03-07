@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150217050704) do
+ActiveRecord::Schema.define(version: 20150307071021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,6 +161,17 @@ ActiveRecord::Schema.define(version: 20150217050704) do
   add_index "credits", ["account_id"], name: "index_credits_on_account_id", using: :btree
   add_index "credits", ["purchaseable_type", "purchaseable_id"], name: "index_credits_on_purchaseable_type_and_purchaseable_id", using: :btree
 
+  create_table "domain_names", force: :cascade do |t|
+    t.integer  "listing_id"
+    t.string   "name"
+    t.string   "source"
+    t.date     "expiration_date"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "domain_names", ["listing_id"], name: "index_domain_names_on_listing_id", using: :btree
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",           limit: 255, null: false
     t.integer  "sluggable_id",               null: false
@@ -273,4 +284,5 @@ ActiveRecord::Schema.define(version: 20150217050704) do
 
   add_foreign_key "accounts", "users"
   add_foreign_key "credits", "accounts"
+  add_foreign_key "domain_names", "listings"
 end

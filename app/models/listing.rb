@@ -4,6 +4,7 @@ class Listing < ActiveRecord::Base
   belongs_to :user
   has_many :photos
   has_one :site
+  has_many :domain_names
 
   scope :active, -> { where(active: true) }
   scope :deleted, -> { where(deleted: true) }

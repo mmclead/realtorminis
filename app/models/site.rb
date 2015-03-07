@@ -1,6 +1,6 @@
 class Site < ActiveRecord::Base
 
-  include AwsS3Connection
+  include AwsConnection
 
   belongs_to :listing
   belongs_to :user
