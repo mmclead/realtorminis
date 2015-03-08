@@ -2,7 +2,7 @@ require 'aws/s3'
 
 class Photo < ActiveRecord::Base
 
-  include AwsS3Connection
+  include AwsConnection
 
   belongs_to :listing
 

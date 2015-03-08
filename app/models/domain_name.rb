@@ -1,5 +1,6 @@
 class DomainName < ActiveRecord::Base
   AVAILABILITY_VALUES = ['AVAILABLE']
+  COMPLETE_STATUS = 'COMPLETE'
   belongs_to :listing
   store_accessor :details, :operation_id, :status
 
@@ -19,11 +20,13 @@ class DomainName < ActiveRecord::Base
     self.status = r53domains.GetOperationDetail(operation_id: self.operation_id)
   end
 
-
   def route_domain_to_listing_site
     return false unless domain_is_purchased?
-  end
+    SiteManifest.add_site_to_manifest self
+    
 
+    #
+  end
 
   def domain_is_available? domain_name, client = nil
     client ||= route53DomainsResource("#{ENV['AWS_SITE_BUCKET_REGION']}")
@@ -31,13 +34,14 @@ class DomainName < ActiveRecord::Base
     domain_availability = r53domains.check_dmain_availability(domain_name: domain_name).availability
     AVAILABILITY_VALUES.include? domain_availability
   end
-
-  private 
+ 
   def domain_is_purchased? client = nil
     return true if status.status == "COMPLETE"
     client ||= route53DomainsResource("#{ENV['AWS_SITE_BUCKET_REGION']}")
-
-    self.status = client.GetOperationDetail(operation_id: self.operation_id)
-    status.status == "COMPLETE"
+    new_status = client.GetOperationDetail(operation_id: self.operation_id) rescue "ERROR"
+    self.update(status: new_status)
+    status.status == COMPLETE_STATUS
   end
+
+
 end
