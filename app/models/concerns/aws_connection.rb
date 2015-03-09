@@ -11,6 +11,10 @@ module AwsConnection
       @route53Domains ||= Aws::Route53Domains::Client.new(region: region_name)
     end
 
+    def route53Resource(region_name)
+      @route53 ||= Aws::Route53::Client.new(region: region_name)
+    end
+
     def public_bucket_policy_json(site_bucket)
       {'Version' => '2012-10-17',
         'Statement' => [{

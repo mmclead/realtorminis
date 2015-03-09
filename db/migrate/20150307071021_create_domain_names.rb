@@ -1,10 +1,12 @@
 class CreateDomainNames < ActiveRecord::Migration
   def change
     create_table :domain_names do |t|
+      enable_extension "hstore"
       t.references :listing, index: true
       t.string :name
       t.string :source
       t.date :expiration_date
+      t.hstore :details
 
       t.timestamps null: false
     end

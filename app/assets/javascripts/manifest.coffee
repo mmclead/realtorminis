@@ -1,5 +1,5 @@
-site_code_location = document.getElementsByName(window.location.hostname)[0].value
-console.log site_code_location
+site_name = window.location.hostname.match(/(w{3}\.)?(.*)/)[2]
+site_code_location = "http://testing-sites.realtorminis.com/custom_domains/"+window.location.hostname+".html"
 
 siteReq = new XMLHttpRequest()
 

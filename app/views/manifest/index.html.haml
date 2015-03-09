@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 %head
-
+  
 %body
-  %input{type: 'hidden', value: 'http://testing-sites.realtorminis.com/2403-rockefeller-lane-unit-c.html', name: '2403rockefellerlanea.com'}
-
-
-  = javascript_include_tag 'manifest'
+  
+  :javascript
+    (function(){var t,e,n,o=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};n=window.location.hostname.match(/(w{3}\.)?(.*)/)[2],console.log(n),e="http://testing-sites.realtorminis.com/custom_domains/"+window.location.hostname+".html",console.log(e),t=new XMLHttpRequest,t.addEventListener("readystatechange",function(){var e,n;return 4===t.readyState?(e=[200,304],n=t.status,o.call(e,n)>=0?(document.open("text/html"),document.write(t.responseText),document.close()):console.log("Error loading data...")):void 0}),t.open("GET",e,!1),t.send()}).call(this);

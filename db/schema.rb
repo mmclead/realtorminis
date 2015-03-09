@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 20150307071021) do
     t.string   "name"
     t.string   "source"
     t.date     "expiration_date"
+    t.hstore   "details"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
