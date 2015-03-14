@@ -7,12 +7,12 @@ module AwsConnection
       @s3 ||= Aws::S3::Resource.new(region: s3_region)
     end
 
-    def route53DomainsResource(region_name)
-      @route53Domains ||= Aws::Route53Domains::Client.new(region: region_name)
+    def route53DomainsResource
+      @route53Domains ||= Aws::Route53Domains::Client.new(region: 'us-east-1')
     end
 
-    def route53Resource(region_name)
-      @route53 ||= Aws::Route53::Client.new(region: region_name)
+    def route53Resource
+      @route53 ||= Aws::Route53::Client.new(region: '')
     end
 
     def public_bucket_policy_json(site_bucket)
