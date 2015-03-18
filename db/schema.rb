@@ -174,10 +174,10 @@ ActiveRecord::Schema.define(version: 20150307071021) do
   add_index "domain_names", ["listing_id"], name: "index_domain_names_on_listing_id", using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
-    t.string   "slug",           limit: 255, null: false
-    t.integer  "sluggable_id",               null: false
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
     t.string   "sluggable_type", limit: 50
-    t.string   "scope",          limit: 255
+    t.string   "scope"
     t.datetime "created_at"
   end
 
@@ -201,7 +201,7 @@ ActiveRecord::Schema.define(version: 20150307071021) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active",                        default: false
-    t.string   "slug",              limit: 255
+    t.string   "slug"
     t.datetime "published_at"
     t.boolean  "deleted"
     t.text     "video_link"
