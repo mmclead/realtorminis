@@ -4,6 +4,7 @@ class DomainName < ActiveRecord::Base
   DNS_IN_SYNC = 'INSYNC'
 
   include AwsConnection
+  include PurchaseableModel
 
   belongs_to :listing
   validates :name, presence: true, uniqueness: true, format: { with: /([0-9a-z_-]+\.)+(be|biz|ca|ch|club|co.uk|com|de|eu|fr|info|link|me.uk|net|mobi|nl|org|org.uk)/, message: 'unsupported TLD (the .com part)'}
@@ -11,10 +12,10 @@ class DomainName < ActiveRecord::Base
 
   before_create :set_caller_reference
 
-
   def purchase_domain_from_route53
     r53domains = route53DomainsResource
     return false unless domain_is_available?(name, r53domains)
+    return false unless self.is_paid_for?
 
     registered_domain = r53domains.register_domain(
       domain_name: name,
@@ -27,7 +28,7 @@ class DomainName < ActiveRecord::Base
       privacy_protect_registrant_contact: true,
       privacy_protect_tech_contact: true,
     )
-    self.operation_id =registered_domain.operation_id
+    self.operation_id = registered_domain.operation_id
     self.status = r53domains.GetOperationDetail(operation_id: self.operation_id)
   end
 
