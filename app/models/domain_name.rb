@@ -48,7 +48,7 @@ class DomainName < ActiveRecord::Base
     dns_response = r53.change_resource_record_sets(
       hosted_zone_id: details[:hosted_zone_id],
       change_batch: {
-        comment: "adding cname for domain to direct to custom-sites.realtorminis.com",
+        comment: "adding cname for domain to direct to custom sites endpoint",
         changes: [
           {
             action: "CREATE",
@@ -57,7 +57,7 @@ class DomainName < ActiveRecord::Base
               type: 'CNAME',
               resource_records: [
                 {
-                  value: "custom-sites.realtorminis.com.s3-website-us-west-2.amazonaws.com"
+                  value: "#{ENV['CUSTOM_SITE_NAME']}"
                 }
               ]
             }
