@@ -9,12 +9,12 @@ class Listing < ActiveRecord::Base
   scope :active, -> { where(active: true) }
   scope :deleted, -> { where(deleted: true) }
   scope :not_deleted, -> { where(deleted: [false, nil]) }
+  
   extend FriendlyId
   friendly_id :address, use: :slugged
   include PurchaseableModel
 
   attr_accessor :site_code
-
 
   before_save (:delete_site), if: :deleting_active_listing? 
 
@@ -66,6 +66,10 @@ class Listing < ActiveRecord::Base
         src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD6yANsGxi84DBW8ZlGcS1Ka-fh8MCS-Q8&q=#{full_address}">
       </iframe>
     ]
+  end
+
+  def purchase_description
+    "Real estate listing site"
   end
 
   def deleting_active_listing?

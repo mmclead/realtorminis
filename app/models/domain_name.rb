@@ -12,7 +12,9 @@ class DomainName < ActiveRecord::Base
 
   before_create :set_caller_reference
 
-  def purchase_domain_from_route53
+  after_create :purchase_domain
+
+  def register_domain_with_route53
     r53domains = route53DomainsResource
     return false unless domain_is_available?(name, r53domains)
     return false unless self.is_paid_for?
@@ -29,11 +31,11 @@ class DomainName < ActiveRecord::Base
       privacy_protect_tech_contact: true,
     )
     self.operation_id = registered_domain.operation_id
-    self.status = r53domains.GetOperationDetail(operation_id: self.operation_id)
+    self.status = r53domains.get_operation_detail(operation_id: self.operation_id)
   end
 
   def route_domain_to_listing_site
-    return false unless domain_is_purchased?
+    return false unless domain_is_registered?
     r53 = route53Resource
     zone_response = r53.create_hosted_zone(
       name: name,
@@ -89,12 +91,21 @@ class DomainName < ActiveRecord::Base
     AVAILABILITY_VALUES.include? domain_availability
   end
  
-  def domain_is_purchased? client = nil
-    return true if status.status == "COMPLETE"
+  def domain_is_registered? client = nil
+    return false unless self.is_paid_for?
+    return true if status == COMPLETE_STATUS
     client ||= route53DomainsResource
-    new_status = client.GetOperationDetail(operation_id: self.operation_id) rescue "ERROR"
+    new_status = client.get_operation_detail(operation_id: self.operation_id).status rescue "ERROR"
     self.update(status: new_status)
-    status.status == COMPLETE_STATUS
+    status == COMPLETE_STATUS
+  end
+
+  def purchase_description
+    "Custom Domain Name"
+  end
+
+  def purchase_domain
+
   end
 
   private

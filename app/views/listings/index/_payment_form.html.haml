@@ -14,7 +14,7 @@
             .text-center
               %label.amount.lead
                 %span
-                  = "Yours forever for only $#{(ENV['BASIC_LISTING_PRICE'].to_i/100)}"
+                  = "Yours forever for only $#{(Rails.configuration.prices[:basic_listing].to_i/100)}"
               %br    
               %script{src: "https://checkout.stripe.com/checkout.js", class: "stripe-button", data: {key: "#{Rails.configuration.stripe[:publishable_key]}", email: "#{current_user.email}", name: "#{cms_snippet_content("store-name").html_safe }", panel: {label: "#{cms_snippet_content("basic-listing-purchase-form-cta").html_safe }"}, label: "#{cms_snippet_content("basic-listing-purchase-cta").html_safe }", description: "Single Listing Site", amount: "#{Rails.configuration.prices[:basic_listing]}"}}
               

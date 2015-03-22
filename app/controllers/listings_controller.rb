@@ -40,14 +40,13 @@ class ListingsController < ApplicationController
 
   def update
     if listing_params[:active] == "true"
-      charge_customer_with_stripe(Rails.configuration.prices[:basic_listing], params, @listing) unless @listing.is_paid_for?
+      charge_customer_with_stripe(Rails.configuration.prices[:basic_listing], @listing.purchase_description, params, @listing) unless @listing.is_paid_for?
       render_and_set_site_code
       begin
         @listing.publish! 
       rescue
         @listing.errors[:publish] = "was not successful"
       end
-      
     end
     respond_to do |format|
       if @listing.update_attributes(listing_params)

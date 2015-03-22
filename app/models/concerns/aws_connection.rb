@@ -12,7 +12,7 @@ module AwsConnection
     end
 
     def route53Resource
-      @route53 ||= Aws::Route53::Client.new(region: '')
+      @route53 ||= Aws::Route53::Client.new(region: "#{ENV['AWS_SITE_BUCKET_REGION']}")
     end
 
     def public_bucket_policy_json(site_bucket)
