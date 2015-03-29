@@ -25,17 +25,15 @@
               = image_tag(image_url("#{@cdn_url}/#{listing.key_photo}"), class: 'img-responsive pull-right key_photo')
             .visible-xs
               = image_tag(image_url("#{@cdn_url}/#{listing.key_photo}"), class: 'img-responsive')
+      %hr
+      .row
+        .col-sm-12
+          = render partial: 'listings/index/custom_domains', locals: {listing: listing}
           
       %hr
       .row
         .col-sm-12
-          Site Link: 
-          - if listing.active
-            = link_to "//#{listing.full_web_address}", class: 'listing-link btn btn-link', target: "_blank" do
-              %i.glyphicon.glyphicon-export
-              %span.listing-link= listing.full_web_address
-          - else 
-            %span.btn.btn-link N/A
+          
       .row
         .col-sm-12
           = render partial: 'listing_actions_buttons', locals: {listing: listing}

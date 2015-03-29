@@ -16,8 +16,13 @@ Realtorminis::Application.routes.draw do
       get :payment_details
     end
     resources :listings
-    resources :sites
+    resources :domain_names, only: [:create]
     resources :credits
+  end
+
+  
+  resources :domain_names, only: [] do
+    get :check_availability, on: :collection
   end
 
   resources :listings do

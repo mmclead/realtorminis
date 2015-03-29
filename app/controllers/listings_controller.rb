@@ -11,6 +11,7 @@ class ListingsController < ApplicationController
 
   def index 
     @listings = @listings.not_deleted.order(updated_at: :desc)
+    @supported_tlds = DomainName::SUPPORTED_TLDS
   end
 
   def show

@@ -29,7 +29,6 @@ class CreditsController < ApplicationController
 
   rescue Stripe::CardError => e
     flash[:alert] = e.message
-    debugger
     redirect_to user_listings_path(@user)
   end
 

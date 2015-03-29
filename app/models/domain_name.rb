@@ -6,13 +6,12 @@ class DomainName < ActiveRecord::Base
   include AwsConnection
   include PurchaseableModel
 
+  SUPPORTED_TLDS = %w[com org net mobi info link be biz ca ch club co.uk de eu fr me.uk nl org.uk]
   belongs_to :listing
   validates :name, presence: true, uniqueness: true, format: { with: /([0-9a-z_-]+\.)+(be|biz|ca|ch|club|co.uk|com|de|eu|fr|info|link|me.uk|net|mobi|nl|org|org.uk)/, message: 'unsupported TLD (the .com part)'}
   store_accessor :details, :operation_id, :status, :caller_reference, :dns_status
 
   before_create :set_caller_reference
-
-  after_create :purchase_domain
 
   def register_domain_with_route53
     r53domains = route53DomainsResource
@@ -87,6 +86,7 @@ class DomainName < ActiveRecord::Base
 
   def domain_is_available? domain_name = self.name, client = nil
     client ||= route53DomainsResource
+    puts domain_name
     domain_availability = client.check_domain_availability(domain_name: domain_name).availability
     AVAILABILITY_VALUES.include? domain_availability
   end
@@ -102,10 +102,6 @@ class DomainName < ActiveRecord::Base
 
   def purchase_description
     "Custom Domain Name"
-  end
-
-  def purchase_domain
-
   end
 
   private
