@@ -10,8 +10,6 @@ class Listing < ActiveRecord::Base
   scope :deleted, -> { where(deleted: true) }
   scope :not_deleted, -> { where(deleted: [false, nil]) }
   
-  extend FriendlyId
-  friendly_id :address, use: :slugged
   include PurchaseableModel
 
   attr_accessor :site_code

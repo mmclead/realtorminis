@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
 
-  load_and_authorize_resource :listing, :find_by => :slug
+  load_and_authorize_resource :listing
 
   # GET /photos
   # GET /photos.json
@@ -68,7 +68,7 @@ class PhotosController < ApplicationController
     uid = @listing.address.parameterize + "-#{params[:count]}" + File.extname(params[:filename])
 
     render json: {
-      key: "listings/#{@listing.slug}/photos/#{uid}",
+      key: "listings/#{@listing.id}/photos/#{uid}",
       success_action_redirect: "/"
     }
   end

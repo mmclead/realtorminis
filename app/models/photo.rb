@@ -28,7 +28,7 @@ class Photo < ActiveRecord::Base
       'type' => file_content_type,
       'size' => file_size,
       'image' => self.is_image?,
-      'delete_url' => Rails.application.routes.url_helpers.listing_photo_path(listing.slug, self, :format => :json),
+      'delete_url' => Rails.application.routes.url_helpers.listing_photo_path(listing.id, self, :format => :json),
       'delete_type' => "DELETE"
     }
   end

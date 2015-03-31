@@ -1,5 +1,4 @@
 class CreditsController < ApplicationController
-  load_and_authorize_resource :user
   respond_to :html
 
   def new
@@ -21,15 +20,12 @@ class CreditsController < ApplicationController
     )
 
     @listing = Listing.find(params[:listing_id])
-
-    Credit.create(account_id: @user.account.id, purchaseable: @listing, purchased_at: Time.now, spent_at: Time.now, payment_details: charge.to_h)
-    
-    patch user_listing_path(@user, listing, {listing:{active: true}})
-    # redirect_to user_listings_path(@user)
+    Credit.create(account_id: current_user.account.id, purchaseable: @listing, purchased_at: Time.now, spent_at: Time.now, payment_details: charge.to_h)
+    patch listing_path(listing, {listing:{active: true}})
 
   rescue Stripe::CardError => e
     flash[:alert] = e.message
-    redirect_to user_listings_path(@user)
+    redirect_to listings_path
   end
 
 end

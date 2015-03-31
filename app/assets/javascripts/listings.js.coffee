@@ -1,7 +1,7 @@
 ready = ->
 
   $(".enable_listing_button").on 'click', () ->
-    $('#listing_purchase_form').attr("action", "/users/"+$(this).data('userId')+"/listings/"+$(this).data('listingId'))
+    $('#listing_purchase_form').attr("action", "/listings/"+$(this).data('listingId'))
     $('#listing_purchase_form').find('#listing_id').val($(this).data('listingId'))
 
   $(".publish_button").on "ajax:success", (e, data, status, xhr) ->
@@ -9,7 +9,7 @@ ready = ->
   .on "ajax:error", (e, xhr, status, error) ->
     alert error
 
-  $("#listing_web_address").on "change", (e) ->
+  $("#listing_web_address").on "keyup", (e) ->
     $(this).val( $(this).val().replace(/\W/g, "-").toLowerCase() )
     path = $("#name_checker").attr("href").split("=")[0]
     $("#name_checker").attr("href", "#{path}=#{$(this).val()}")

@@ -10,9 +10,9 @@
       Realtor Minis
   .navbar-collapse.collapse#main-nav
     %ul.nav.navbar-nav
-      %li{class: "#{'active' if current_page? user_path(current_user)}"}= link_to "Profile", user_path(current_user)
-      %li{class: "#{'active' if is_under? 'listing' }"}= link_to "Listings", user_listings_path(current_user)
-      %li{class: "#{'active' if is_under? 'account' }"}= link_to "Account", user_account_path(current_user)
+      %li{class: "#{'active' if current_page? current_user}"}= link_to "Profile", current_user
+      %li{class: "#{'active' if is_under? 'listing' }"}= link_to "Listings", listings_path
+      %li{class: "#{'active' if is_under? 'account' }"}= link_to "Account", account_path
     %ul.nav.navbar-nav.navbar-right
       - if user_signed_in?
         %li

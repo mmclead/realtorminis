@@ -1,10 +1,10 @@
 %div{id: "listing_actions_buttons_#{listing.id}"}
 
   = active_status(listing)  
-  =link_to 'Preview', [@user,listing], {class: 'btn btn-default'}
-  =link_to 'Edit', edit_user_listing_path(@user, listing), {class: 'btn btn-default'}
+  =link_to 'Preview', listing, {class: 'btn btn-default'}
+  =link_to 'Edit', edit_listing_path(listing), {class: 'btn btn-default'}
 
   - if listing.active
-    = link_to 'Deactivate', user_listing_path(@user, listing, {listing: {active: false}}), method: :patch, id: 'deactivate_button', class: 'btn btn-link btn-small', data: { confirm: t('listings.index.confirm_listing_deactivation')}
+    = link_to 'Deactivate', listing_path(listing, {listing: {active: false}}), method: :patch, id: 'deactivate_button', class: 'btn btn-link btn-small', data: { confirm: t('listings.index.confirm_listing_deactivation')}
   - else
-    = link_to 'Remove Listing', [@user,listing], method: :delete, data: {confirm: t('listings.index.confirm_delete')}
+    = link_to 'Remove Listing', listing, method: :delete, data: {confirm: t('listings.index.confirm_delete')}

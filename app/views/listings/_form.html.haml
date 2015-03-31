@@ -1,4 +1,4 @@
-= simple_form_for [@user, @listing], html: {id: 'edit_listing_form'} do |f|
+= simple_form_for @listing, html: {id: 'edit_listing_form'} do |f|
   %h2.floating-header{data: {spy: "affix", offset: {top:"200", bottom:"00"}}} 
     Listing Details
     = f.submit 'Save Listing', {class: 'btn btn-default btn-primary', id: 'submit_listing_button'}
@@ -10,7 +10,7 @@
     .col-md-12
       = label_tag 'listing[web_address]', "#{ENV['AWS_SITE_BUCKET']}\\ "
       = text_field_tag 'listing[web_address]', @listing.web_address, id: "listing_web_address", size: 40
-      = link_to "Check Availability", check_availability_listings_path(address: ""), remote: true, format: :json, class: "btn btn-default btn-xs", id: 'name_checker'
+      = link_to "Check Availability", {controller: 'listings', action: 'check_availability', address: ""}, remote: true, format: :json, class: "btn btn-default btn-xs", id: 'name_checker'
 
   .row
     .col-md-12

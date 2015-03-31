@@ -17,7 +17,7 @@
           %a{:href => "#contact"} Contact
         - if user_signed_in?
           %li
-            = link_to user_listings_path(current_user) do
+            = link_to listings_path do
               Back to Listings
               %i.ion-arrow-right-c
         - else

@@ -11,7 +11,11 @@ class Ability
       can :manage, User, id: user.id
       cannot :index, User
       can :manage, Listing, user_id: user.id
+      can :manage, Site, user_id: user.id
       can :manage, Photo, listing: {user_id: user.id}
+      can :manage, Account, user_id: user.id
+      can :manage, Credit, user_id: user.id
+      can :manage, DomainName, listing: {user_id: user.id}
       
 
     end

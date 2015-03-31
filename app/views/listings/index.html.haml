@@ -1,6 +1,6 @@
 %h1 
   Current Listings
-  = link_to 'New Listing', new_user_listing_path(@user), class: "btn btn-primary"
+  = link_to 'New Listing', new_listing_path, class: "btn btn-primary"
 
 .row
   - @listings.each do |listing|

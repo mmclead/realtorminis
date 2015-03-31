@@ -3,9 +3,8 @@ class ListingsController < ApplicationController
   include PurchaseableControllerHelper
 
   respond_to :json
-  # before_filter :find_listing_by_slug
-  load_and_authorize_resource :user
-  load_and_authorize_resource through: :user, shallow: true, :find_by => :slug
+  load_and_authorize_resource shallow: true, except: [:check_availability]
+  skip_load_and_authorize_resource only: [:check_availability]
   before_filter :set_content_location, only: [:show, :index]
   before_filter :set_profile, :set_web_address, only: [:show]
 
@@ -22,10 +21,10 @@ class ListingsController < ApplicationController
 
   def create
     @listing = Listing.new(listing_params)
-    @listing.user = @user
+    @listing.user = current_user
     respond_to do |format|
       if @listing.save
-        format.html { redirect_to [@user, @listing], notice: 'Listing was successfully created.' }
+        format.html { redirect_to @listing, notice: 'Listing was successfully created.' }
         format.json { render action: 'show', status: :created, location: @listing }
       else
         format.html { render action: 'new' }
@@ -35,7 +34,6 @@ class ListingsController < ApplicationController
   end
 
   def edit
-    # @photos = @listing.photos
     @photo_count = Photo.unscoped.where(listing_id: @listing.id).count
   end
 
@@ -52,9 +50,9 @@ class ListingsController < ApplicationController
     respond_to do |format|
       if @listing.update_attributes(listing_params)
         if params[:preview] == true
-          format.html { redirect_to [@user,@listing], notice: 'Listing was successfully updated.' }
+          format.html { redirect_to @listing, notice: 'Listing was successfully updated.' }
         else
-          format.html { redirect_to user_listings_path(@user), notice: 'Listing was successfully updated.' }
+          format.html { redirect_to listings_path, notice: 'Listing was successfully updated.' }
         end
         format.json { head :no_content }
         format.js { active_status(@listing) }

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html, :json, :js
 
-  before_filter :set_user, :get_or_set_profile
+  before_filter :get_or_set_profile
 
   def show
     @profile_attributes = @user.profile.profile_hash
@@ -22,10 +22,6 @@ class UsersController < ApplicationController
   end
 
  private
-
-  def set_user
-    @user = current_user
-  end
 
   def get_or_set_profile
     @user.create_profile unless @user.profile

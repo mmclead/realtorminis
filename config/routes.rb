@@ -10,16 +10,14 @@ Realtorminis::Application.routes.draw do
   
   devise_for :users, :controllers => { :registrations => "registrations" }
 
-  resources :users do
-    resource :profile
-    resource :account, only: [:show] do
-      get :payment_details
-    end
-    resources :listings
-    resources :domain_names, only: [:create]
-    resources :credits
-  end
+  resources :users
 
+  resource :profile
+  resource :account, only: [:show] do
+    get :payment_details
+  end
+  resources :domain_names, only: [:create]
+  resources :credits
   
   resources :domain_names, only: [] do
     get :check_availability, on: :collection

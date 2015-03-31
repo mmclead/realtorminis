@@ -7,5 +7,5 @@
 .clearfix
 .row-fluid
   .col-md-12
-    = link_to 'Preview Listing', [@user,@listing], {class: 'btn btn-default'}
-    = link_to 'Back to All Listings', user_listings_path(@user), {class: 'btn btn-default'}
+    = link_to 'Preview Listing', @listing, {class: 'btn btn-default'}
+    = link_to 'Back to All Listings', listings_path, {class: 'btn btn-default'}
