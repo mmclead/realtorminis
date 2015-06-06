@@ -23,7 +23,7 @@ class DomainNamesController < ApplicationController
       available = domain_name.domain_is_available? 
     rescue StandardError => e
       available = false
-      logger.warn "Could not check_availability for domain #{domain_name.name}", e
+      logger.warn "Could not check_availability for domain #{domain_name.name}, #{e.message}"
     end
     render json: {available: available}
   end
