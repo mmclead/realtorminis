@@ -21,6 +21,7 @@ Realtorminis::Application.routes.draw do
   
   resources :domain_names, only: [] do
     get :check_availability, on: :collection
+    get :check_status, on: :member
   end
 
   resources :listings do

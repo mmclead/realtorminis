@@ -12,6 +12,11 @@
         = form_tag domain_names_path, method: :post, id: 'domain_name_purchase_form', class: 'form-inline' do
           = hidden_field_tag 'domain_name[listing_id]'
           = hidden_field_tag 'domain_name[name]'
+          %article
+            .text-center
+              %label.amount.lead
+                %p
+                  All you have to do is choose.
           .text-center
             .form-group
               .input-group
@@ -20,20 +25,19 @@
                 .input-group-addon 
                   = select_tag 'tld', options_for_select(@supported_tlds), id: "domain_name_tld", class: 'form-control'
             = link_to "Check Availability", check_availability_domain_names_path(name: ""), remote: true, format: :json, class: "btn btn-primary", id: 'domain_name_checker'
-            
-
 
           %article#payment_form
             .text-center
               %label.amount.lead
-                %span
-                  All you have to do is choose.
+                %p
                   Your custom domain name will automatically be set up for you.
+                %p
+                  For only 
                   = cms_snippet_content("purchase-custom-domain-body").html_safe 
-
                   = "$#{(Rails.configuration.prices[:custom_domain].to_i/100)}"
-              %br    
-              %script{src: "https://checkout.stripe.com/checkout.js", class: "stripe-button", data: {key: "#{Rails.configuration.stripe[:publishable_key]}", email: "#{current_user.email}", name: "#{cms_snippet_content("store-name").html_safe }", panel: {label: "#{cms_snippet_content("custom-domain-purchase-form-cta").html_safe }"}, label: "#{cms_snippet_content("custom-domain-purchase-cta").html_safe }", description: "Custom Domain Name", amount: "#{Rails.configuration.prices[:custom_domain]}"}}
+              %br
+              .payment_button_hider    
+                %script{src: "https://checkout.stripe.com/checkout.js", class: "stripe-button", data: {key: "#{Rails.configuration.stripe[:publishable_key]}", email: "#{current_user.email}", name: "#{cms_snippet_content("store-name").html_safe }", panel: {label: "#{cms_snippet_content("custom-domain-purchase-form-cta").html_safe }"}, label: "#{cms_snippet_content("custom-domain-purchase-cta").html_safe }", description: "Custom Domain Name", amount: "#{Rails.configuration.prices[:custom_domain]}"}}
                  
       .modal-footer
         = link_to "https://www.stripe.com", target: "_blank" do

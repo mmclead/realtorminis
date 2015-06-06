@@ -4,9 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :set_user
-  
+
   def after_sign_in_path_for(resource_or_scope)
-    current_user
+    listings_path
   end
 
   def set_user
@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    url = user_signed_in? ? current_user : root_url
+    url = user_signed_in? ? listings_path : root_url
     redirect_to url, :alert => exception.message.present? ? exception.message : "You don't have permission for that."
   end
 

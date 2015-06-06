@@ -23,19 +23,22 @@ ready = ->
 
   $(".add_custom_domain").on 'click', () ->
     $('#domain_name_purchase_form').find('#domain_name_listing_id').val($(this).data('listingId'))
+    $('.stripe-button-el').hide()
 
-  $("#domain_name_domain").on "keyup", (e) ->
-    $('#domain_name_name').val( $('#domain_name_domain').val() + '.' + $('#domain_name_tld').val() )
-    path = $("#domain_name_checker").attr("href").split("=")[0]
-    $("#domain_name_checker").attr("href", "#{path}=#{$('#domain_name_name').val()}")
+  $("#domain_name_domain").on "keyup", (e) ->    
     $("#domain_name_checker").text("Check Availability").removeClass("btn-warning btn-success disabled")
+    $('.stripe-button-el').hide()
 
   $("#domain_name_tld").on "change", (e) ->
+    $("#domain_name_checker").text("Check Availability").removeClass("btn-warning btn-success disabled")
+    $('.stripe-button-el').hide()
+
+
+  $("#domain_name_checker").on 'click', () ->
+    $('#domain_name_domain').val( $('#domain_name_domain').val().replace(/\W/g, "-").toLowerCase() )
     $('#domain_name_name').val( $('#domain_name_domain').val() + '.' + $('#domain_name_tld').val() )
     path = $("#domain_name_checker").attr("href").split("=")[0]
     $("#domain_name_checker").attr("href", "#{path}=#{$('#domain_name_name').val()}")
-    $("#domain_name_checker").text("Check Availability").removeClass("btn-warning btn-success disabled")
-
 
   $("#domain_name_checker").on "ajax:beforeSend", (e, xhr, settings) ->
     $(this).text("Checking...").addClass("disabled")
@@ -43,8 +46,10 @@ ready = ->
   $("#domain_name_checker").on "ajax:complete", (e, data, status, xhr) ->
     if JSON.parse(data.responseText).available == true
       $(this).text("Available!").addClass("btn-success disabled")
+      $('.stripe-button-el').show()
     else
       $(this).text("Not Available").addClass("btn-warning disabled")
+      
 
 $(document).on('page:load ready', ready)
   

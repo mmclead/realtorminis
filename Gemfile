@@ -9,7 +9,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'jbuilder', '~> 1.2'
 
 gem 'devise'
 gem 'cancancan'
@@ -21,7 +20,6 @@ gem 'fog', '~>1.24.0'
 gem 'unf'
 gem 'aws-s3', github: 'fnando/aws-s3'
 gem 'aws-sdk', '~> 2'
-gem 'httparty', '~> 0.13'
 gem "stripe", :github => 'stripe/stripe-ruby'
 gem 's3_cors_fileupload'
 gem 'simple_form'
@@ -30,10 +28,13 @@ gem 'comfortable_mexican_sofa', '~> 1.12.0'
 gem 'kaminari'
 gem 'auto_html'
 
+gem 'mandrill-api'
+
 gem 'pg'
 gem 'puma'
 gem "rack-timeout"
 gem 'newrelic_rpm'
+gem 'sucker_punch', '~> 1.0'
 
 gem 'rails_12factor', group: :production
 
@@ -48,11 +49,9 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'byebug'
-end
-
-group :test do
   gem 'webmock'
 end
+
 
 
 # Use ActiveModel has_secure_password

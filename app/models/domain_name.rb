@@ -9,14 +9,24 @@ class DomainName < ActiveRecord::Base
   SUPPORTED_TLDS = %w[com org net mobi info link be biz ca ch club co.uk de eu fr me.uk nl org.uk]
   belongs_to :listing
   validates :name, presence: true, uniqueness: true, format: { with: /([0-9a-z_-]+\.)+(be|biz|ca|ch|club|co.uk|com|de|eu|fr|info|link|me.uk|net|mobi|nl|org|org.uk)/, message: 'unsupported TLD (the .com part)'}
-  store_accessor :details, :operation_id, :status, :caller_reference, :dns_status
+  store_accessor :details, :operation_id, :domain_status, :caller_reference, :dns_status, :status
 
   before_create :set_caller_reference
+  before_create :set_status_to_new
+
+  enum status: [
+    :selected, :registered_name, :routed_domain_name, 
+    :complete, :registered_name_failed, :routed_domain_name_failed
+  ]
+
+  def set_status_to_new
+    self.status = :selected
+  end
 
   def register_domain_with_route53
     r53domains = route53DomainsResource
-    return false unless domain_is_available?(name, r53domains)
     return false unless self.is_paid_for?
+    return false unless domain_is_available?(name, r53domains)
 
     registered_domain = r53domains.register_domain(
       domain_name: name,
@@ -30,11 +40,17 @@ class DomainName < ActiveRecord::Base
       privacy_protect_tech_contact: true,
     )
     self.operation_id = registered_domain.operation_id
-    self.status = r53domains.get_operation_detail(operation_id: self.operation_id)
+    self.domain_status = r53domains.get_operation_detail(operation_id: self.operation_id)
+    self.save
   end
 
   def route_domain_to_listing_site
-    return false unless domain_is_registered?
+    return false unless self.is_paid_for?
+    unless domain_is_registered?
+      self.registered_name_failed!
+      return false
+    end
+
     r53 = route53Resource
     zone_response = r53.create_hosted_zone(
       name: name,
@@ -76,12 +92,19 @@ class DomainName < ActiveRecord::Base
         ]
       }
     )
+    self.save
   end
 
   def dns_is_complete? r53 = nil
     r53 ||= route53Resource
     response = r53.get_change(id: details[:hosted_zone_id])
-    DNS_IN_SYNC == response.change_info['status']
+
+    if DNS_IN_SYNC == response.change_info['status']
+      self.routed_domain_name!
+      true
+    else
+      false
+    end
   end
 
   def domain_is_available? domain_name = self.name, client = nil
@@ -93,11 +116,19 @@ class DomainName < ActiveRecord::Base
  
   def domain_is_registered? client = nil
     return false unless self.is_paid_for?
-    return true if status == COMPLETE_STATUS
+    return true if domain_status == COMPLETE_STATUS
     client ||= route53DomainsResource
-    new_status = client.get_operation_detail(operation_id: self.operation_id).status rescue "ERROR"
-    self.update(status: new_status)
-    status == COMPLETE_STATUS
+    new_status = client.get_operation_detail(operation_id: self.operation_id).domain_status rescue "ERROR"
+    completed = domain_status == COMPLETE_STATUS
+    
+    if completed
+      self.domain_status = new_status
+      self.registered_name! 
+    else
+      self.update(domain_status: new_status)
+    end
+
+    completed
   end
 
   def purchase_description

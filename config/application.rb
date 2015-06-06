@@ -29,5 +29,7 @@ module Realtorminis
     }
 
 
+    SuckerPunch.logger = Logger.new('sucker_punch.log')
+
   end
 end

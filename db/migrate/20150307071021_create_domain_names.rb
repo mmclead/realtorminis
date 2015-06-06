@@ -7,6 +7,7 @@ class CreateDomainNames < ActiveRecord::Migration
       t.string :source
       t.date :expiration_date
       t.hstore :details
+      t.integer :status
 
       t.timestamps null: false
     end
