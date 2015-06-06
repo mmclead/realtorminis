@@ -1,3 +1,5 @@
+require 'mandrill'
+
 class DomainName < ActiveRecord::Base
   AVAILABILITY_VALUES = ['AVAILABLE']
   COMPLETE_STATUS = 'COMPLETE'
@@ -11,8 +13,7 @@ class DomainName < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true, format: { with: /([0-9a-z_-]+\.)+(be|biz|ca|ch|club|co.uk|com|de|eu|fr|info|link|me.uk|net|mobi|nl|org|org.uk)/, message: 'unsupported TLD (the .com part)'}
   store_accessor :details, :operation_id, :domain_status, :caller_reference, :dns_status, :status
 
-  before_create :set_caller_reference
-  before_create :set_status_to_new
+  before_create :set_caller_reference, :set_status_to_new
 
   enum status: [
     :selected, :registered_name, :routed_domain_name, 
@@ -23,11 +24,39 @@ class DomainName < ActiveRecord::Base
     self.status = :selected
   end
 
+  def email_operations
+    mandrill = Mandrill::API.new Rails.configuration.mandrill[:api_key]
+
+    template_name = "custom-domain-purchased"
+
+    template_content = [
+      {"content"=>"#{name}", "name"=>"domain_name"},
+      {"content"=>"#{status}", "name"=>"domain_name_status"},
+      {"content"=>"#{listing.full_address}", "name"=>"listing_address"},
+      {"content"=>"#{listing.key_photo}", "name"=>"key_photo"},
+    ]
+    message = {
+      "subject" => "Your domain #{name} is ready",
+      "to"=>
+        [{"email"=>ENV['support_email'],
+            "type"=>"to",
+            "name"=>"RM Support for #{listing.user.profile.name}"}]
+    }
+
+    async = false
+
+    begin
+      result = mandrill.messages.send_template template_name, template_content, message, async
+    rescue Mandrill::Error => e
+      logger.error "A mandrill error occurred: #{e.class} - #{e.message}"
+    end
+  end
+
   def register_domain_with_route53
     r53domains = route53DomainsResource
     return false unless self.is_paid_for?
     return false unless domain_is_available?(name, r53domains)
-
+    debugger
     registered_domain = r53domains.register_domain(
       domain_name: name,
       duration_in_years: 1,
@@ -52,6 +81,7 @@ class DomainName < ActiveRecord::Base
     end
 
     r53 = route53Resource
+    debugger
     zone_response = r53.create_hosted_zone(
       name: name,
       caller_reference: caller_reference
@@ -109,8 +139,8 @@ class DomainName < ActiveRecord::Base
 
   def domain_is_available? domain_name = self.name, client = nil
     client ||= route53DomainsResource
-    puts domain_name
     domain_availability = client.check_domain_availability(domain_name: domain_name).availability
+    logger.info "Availability of #{domain_name} is : #{domain_availability}"
     AVAILABILITY_VALUES.include? domain_availability
   end
  

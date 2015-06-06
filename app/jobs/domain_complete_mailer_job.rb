@@ -8,7 +8,7 @@ class DomainCompleteMailerJob
       domain_name.complete!
       mandrill = Mandrill::API.new Rails.configuration.mandrill[:api_key]
 
-      template_name = "custom_domain_complete"
+      template_name = "custom-domain-complete"
 
       template_content = [
         {"content"=>"#{domain_name.name}", "name"=>"domain_name"},
@@ -17,7 +17,7 @@ class DomainCompleteMailerJob
         {"content"=>"#{domain_name.listing.key_photo}", "name"=>"key_photo"},
       ]
       message = {
-        "subject" => "Your domain #{domain_name.name} is ready",
+        "subject" => "Custom domain #{domain_name.name} purchased",
         "to"=>
           [{"email"=>"#{domain_name.listing.user.email}",
               "type"=>"to",

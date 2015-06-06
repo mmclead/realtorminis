@@ -9,6 +9,7 @@ class DomainNamesController < ApplicationController
     @domain_name = @listing.domain_names.build(domain_name_params)
     if @domain_name.save
       charge_customer_with_stripe(Rails.configuration.prices[:custom_domain], @domain_name.purchase_description, params, @domain_name)
+      @domain_name.email_operations
       DomainRegistrationJob.new.async.perform(@domain_name.id)
       redirect_to listings_path, notice: 'Custom Domain Name added.'
     else
