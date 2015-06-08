@@ -1,13 +1,17 @@
-Site Links: 
+%h5 Site Links: 
+
 - if listing.active
+  %ul.custom-domain-list.list-group
+    - listing.domain_names.each do |domain_name|
+      = render partial: 'listings/index/domain_name', locals: {domain_name: domain_name}
+    %li.list-group-item
+      %ins Default Link: 
+      %br
+      = link_to listing.full_web_address, "//#{listing.full_web_address}", class: 'listing-link btn btn-link', target: "_blank"
+
   %button.btn.btn-primary.add_custom_domain{type: "button", data: {toggle: "modal", target: "#add_new_custom_domain_modal", listing_id: "#{listing.id}", user_id: "#{@user.id}"}}
     Add new Custom Domain
-  
-  - listing.domain_names.each do |domain_name|
-    =render partial: 'listings/index/domain_name', local: {domain_name: domain_name}
     
-  = link_to "//#{listing.full_web_address}", class: 'listing-link btn btn-link', target: "_blank" do
-    %i.glyphicon.glyphicon-export
-    %span.listing-link= listing.full_web_address
+  
 - else 
   %span.btn.btn-link N/A

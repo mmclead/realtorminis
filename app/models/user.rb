@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :listings, dependent: :destroy, inverse_of: :user
   has_many :sites, dependent: :destroy, through: :listings
+  has_many :domain_names, through: :listings
   has_one :profile, dependent: :destroy, inverse_of: :user, autosave: true
   has_many :sub_profiles, class_name: "Profile", dependent: :destroy, inverse_of: :user
   has_one :account, dependent: :destroy, inverse_of: :user, autosave: true

@@ -16,20 +16,43 @@
     %table.table
       %thead
         %tr
-          %th Web Address
+          %th Address
           %th Active Status
           %th First Published On
           %th Payment Details
       %tbody
         - @sites.each do |site|
           %tr
-            %td= site.custom_url
+            %td= site.listing.full_address
             %td= site.active_status.html_safe
             %td= site.created_at.to_formatted_s(:long) 
             %td
               - if site.listing.reciept_credit
-                %button.btn.btn-primary.payment_details_button{type: "button", data: {toggle: "modal", target: "#payment_details_modal", listing_id: "#{site.listing.id}"}}
+                %button.btn.btn-primary.payment_details_button{type: "button", data: {toggle: "modal", target: "#payment_details_modal", purchased_item: 'listing', purchased_item_id: "#{site.listing.id}"}}
                   See Details
+
+  .row#domain_names
+    .col-sm-12
+      %h3 Custom Domain Names
+      %table.table
+        %thead
+          %tr
+            %th Name
+            %th Listing
+            %th Status
+            %th Purchased on
+            %th Payment Details
+        %tbody
+          - @domain_names.each do |domain_name|
+            %tr
+              %td= domain_name.name
+              %td= domain_name.listing.full_address
+              %td= domain_name.status.humanize
+              %td= domain_name.created_at.to_formatted_s(:long) 
+              %td
+                - if domain_name.reciept_credit
+                  %button.btn.btn-primary.payment_details_button{type: "button", data: {toggle: "modal", target: "#payment_details_modal", purchased_item: 'domain_name', purchased_item_id: "#{domain_name.id}"}}
+                    See Details
 
 
 = render partial: 'payment_details_modal'

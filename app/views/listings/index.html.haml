@@ -2,9 +2,10 @@
   Current Listings
   = link_to 'New Listing', new_listing_path, class: "btn btn-primary"
 
-.row
-  - @listings.each do |listing|
-    = render partial: "listings/index/listing", locals: {listing: listing}
+= @listings.each_slice(2) do |listings_set|
+  .row
+    - listings_set.each do |listing|
+      = render partial: "listings/index/listing", locals: {listing: listing}
 
 = render partial: 'listings/index/listing_payment_form'
 = render partial: 'listings/index/domain_payment_form'

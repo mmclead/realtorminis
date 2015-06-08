@@ -8,15 +8,16 @@ class DomainName < ActiveRecord::Base
   include AwsConnection
   include PurchaseableModel
 
-  SUPPORTED_TLDS = %w[com org net mobi info link be biz ca ch club co.uk de eu fr me.uk nl org.uk]
   belongs_to :listing
+
+  SUPPORTED_TLDS = %w[com org net mobi info link be biz ca ch club co.uk de eu fr me.uk nl org.uk]
   validates :name, presence: true, uniqueness: true, format: { with: /([0-9a-z_-]+\.)+(be|biz|ca|ch|club|co.uk|com|de|eu|fr|info|link|me.uk|net|mobi|nl|org|org.uk)/, message: 'unsupported TLD (the .com part)'}
   store_accessor :details, :operation_id, :domain_status, :caller_reference, :dns_status, :status
 
   before_create :set_caller_reference, :set_status_to_new
 
   enum status: [
-    :selected, :registered_name, :routed_domain_name, 
+    :selected, :purchased, :registered_name, :routed_domain_name, 
     :complete, :registered_name_failed, :routed_domain_name_failed
   ]
 
@@ -36,7 +37,7 @@ class DomainName < ActiveRecord::Base
       {"content"=>"#{listing.key_photo}", "name"=>"key_photo"},
     ]
     message = {
-      "subject" => "Your domain #{name} is ready",
+      "subject" => "User #{listing.user.profile.name} added domain #{name}, current status: ",
       "to"=>
         [{"email"=>ENV['support_email'],
             "type"=>"to",
