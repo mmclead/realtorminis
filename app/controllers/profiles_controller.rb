@@ -14,7 +14,6 @@ class ProfilesController < ApplicationController
   def update
     @profile = @user.profile
     @profile.update_attributes(profile_params)
-    debugger
     respond_with @profile
   end
 

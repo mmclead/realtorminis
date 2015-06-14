@@ -4,6 +4,7 @@ class Site < ActiveRecord::Base
 
   belongs_to :listing
   belongs_to :user
+  has_many :domain_names, through: :listing
 
   validates_presence_of :listing
   validates_presence_of :site_code
@@ -19,15 +20,16 @@ class Site < ActiveRecord::Base
     end
   end
 
-  def upload_to_aws
+  def upload_to_aws(domain_name=nil)
+    domain_name ||= listing.web_address
     s3 = s3Resource("#{ENV['AWS_SITE_BUCKET_REGION']}")
     site_bucket = get_bucket(s3, "#{ENV['AWS_SITE_BUCKET']}")
 
-    site = site_bucket.object("#{listing.web_address}.html")
-    # logger.info ("deleting #{site.inspect}")
+    site = site_bucket.object("#{domain_name}.html")
+    logger.info ("deleting #{site.key}")
     site.delete()
     site.put(body: site_code, cache_control: "must-revalidate" )
-    # logger.info ("pushing new site to : #{site.key}")
+    logger.info ("pushing new site to : #{site.key}")
     self.bucket = site_bucket.name
     self.custom_url = site.key
     self.active = true
@@ -36,9 +38,10 @@ class Site < ActiveRecord::Base
   def destroy
     s3 = s3Resource("#{ENV['AWS_SITE_BUCKET_REGION']}")
     site_bucket = get_bucket(s3, "#{ENV['AWS_SITE_BUCKET']}")
-
-    site = site_bucket.object("#{listing.id}.html")
-    site.delete()
+    (domain_names.all.map(&:name) + [listing.web_address]).flatten.each do |url|
+      site = site_bucket.object("#{url}.html")
+      site.delete()
+    end
     self.update_column(:active, false)
   end
 

@@ -39,7 +39,7 @@ class DomainName < ActiveRecord::Base
     message = {
       "subject" => "User #{listing.user.profile.name} added domain #{name}, current status: ",
       "to"=>
-        [{"email"=>ENV['support_email'],
+        [{"email"=>ENV['SUPPORT_EMAIL'],
             "type"=>"to",
             "name"=>"RM Support for #{listing.user.profile.name}"}]
     }
@@ -57,7 +57,6 @@ class DomainName < ActiveRecord::Base
     r53domains = route53DomainsResource
     return false unless self.is_paid_for?
     return false unless domain_is_available?(name, r53domains)
-    debugger
     registered_domain = r53domains.register_domain(
       domain_name: name,
       duration_in_years: 1,
@@ -70,7 +69,7 @@ class DomainName < ActiveRecord::Base
       privacy_protect_tech_contact: true,
     )
     self.operation_id = registered_domain.operation_id
-    self.domain_status = r53domains.get_operation_detail(operation_id: self.operation_id)
+    self.domain_status = r53domains.get_operation_detail(operation_id: self.operation_id).status
     self.save
   end
 
@@ -82,7 +81,6 @@ class DomainName < ActiveRecord::Base
     end
 
     r53 = route53Resource
-    debugger
     zone_response = r53.create_hosted_zone(
       name: name,
       caller_reference: caller_reference
@@ -154,6 +152,7 @@ class DomainName < ActiveRecord::Base
     
     if completed
       self.domain_status = new_status
+      self.listing.site.upload_to_aws(name)
       self.registered_name! 
     else
       self.update(domain_status: new_status)

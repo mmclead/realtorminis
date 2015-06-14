@@ -7,5 +7,4 @@
       %strong= domain_name.status.humanize
   - else
     = link_to "//#{domain_name.name}", class: 'listing-link btn btn-link', target: "_blank" do
-      %i.glyphicon.glyphicon-export
       %span.listing-link= domain_name.name

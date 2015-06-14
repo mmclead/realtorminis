@@ -1,7 +1,6 @@
 class DomainRoutingJob
   include SuckerPunch::Job
 
-
   def perform(domain_name_id)
     ActiveRecord::Base.connection_pool.with_connection do
       domain_name = DomainName.find(domain_name_id)

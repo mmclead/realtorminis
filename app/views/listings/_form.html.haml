@@ -9,7 +9,7 @@
   .row
     .col-md-12
       = label_tag 'listing[web_address]', "#{ENV['AWS_SITE_BUCKET']}\\ "
-      = text_field_tag 'listing[web_address]', @listing.web_address, id: "listing_web_address", size: 40
+      = text_field_tag 'listing[web_address]', @listing.web_address, id: "listing_web_address", size: 40, data: {current_address: @listing.web_address}
       = link_to "Check Availability", {controller: 'listings', action: 'check_availability', address: ""}, remote: true, format: :json, class: "btn btn-default btn-xs", id: 'name_checker'
 
   .row

@@ -7,7 +7,7 @@ class DomainRegistrationJob
       domain_name.register_domain_with_route53
       count = 0
 
-      while check_is_false and count < Rails.configuration.timeouts[:registration_attempts]
+      while domain_is_being_processed? and count < Rails.configuration.timeouts[:registration_attempts]
         count+=1
         logger.info "Checking dns status #{count} times"
         sleep(Rails.configuration.timeouts[:registration_sleep_time])
@@ -17,7 +17,7 @@ class DomainRegistrationJob
     end
   end
 
-  def check_is_false
+  def domain_is_being_processed?
     if Rails.env.development? or Rails.env.test?
       [ false, false, false, false, false, false, true ].sample
     else

@@ -9,14 +9,14 @@ ready = ->
   .on "ajax:error", (e, xhr, status, error) ->
     alert error
 
-  $("#listing_web_address").on "keyup", (e) ->
+  $("#listing_web_address").on "change", (e) ->
     $(this).val( $(this).val().replace(/\W/g, "-").toLowerCase() )
     path = $("#name_checker").attr("href").split("=")[0]
     $("#name_checker").attr("href", "#{path}=#{$(this).val()}")
     $("#name_checker").text("Check Availability").removeClass("btn-warning btn-success disabled")
 
   $("#name_checker").on "ajax:complete", (e, data, status, xhr) ->
-    if JSON.parse(data.responseText).available == true
+    if (JSON.parse(data.responseText).available == true) || $("#listing_web_address").val() == $("#listing_web_address").data('currentAddress')
       $(this).text("Available!").addClass("btn-success disabled")
     else
       $(this).text("Not Available").addClass("btn-warning disabled")
