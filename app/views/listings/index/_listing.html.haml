@@ -25,6 +25,8 @@
               = image_tag(image_url("#{@cdn_url}/#{listing.key_photo}"), class: 'img-responsive pull-right key_photo')
             .visible-xs
               = image_tag(image_url("#{@cdn_url}/#{listing.key_photo}"), class: 'img-responsive')
+          - else
+            =link_to 'Add Photos', edit_listing_path(listing), {class: 'btn btn-default btn-primary'}
       %hr
       .row
         .col-sm-12

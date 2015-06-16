@@ -20,19 +20,17 @@ class Site < ActiveRecord::Base
     end
   end
 
-  def upload_to_aws(domain_name=nil)
-    domain_name ||= listing.web_address
+  def upload_to_aws
     s3 = s3Resource("#{ENV['AWS_SITE_BUCKET_REGION']}")
     site_bucket = get_bucket(s3, "#{ENV['AWS_SITE_BUCKET']}")
 
-    site = site_bucket.object("#{domain_name}.html")
-    logger.info ("deleting #{site.key}")
-    site.delete()
-    site.put(body: site_code, cache_control: "must-revalidate" )
-    logger.info ("pushing new site to : #{site.key}")
+    site_key = push_site_to listing.web_address, site_bucket
+
     self.bucket = site_bucket.name
-    self.custom_url = site.key
+    self.custom_url = site_key
     self.active = true
+
+    publish_custom_domains site_bucket
   end
 
   def destroy
@@ -43,6 +41,26 @@ class Site < ActiveRecord::Base
       site.delete()
     end
     self.update_column(:active, false)
+  end
+
+  def publish_custom_domains site_bucket=nil
+    unless site_bucket
+      s3 = s3Resource("#{ENV['AWS_SITE_BUCKET_REGION']}")
+      site_bucket = get_bucket(s3, "#{ENV['AWS_SITE_BUCKET']}")
+    end
+
+    domain_names.each do |custom_domain_name|
+      push_site_to custom_domain_name.name, site_bucket if custom_domain_name.is_paid_for?
+    end
+  end
+
+  def push_site_to custom_name, site_bucket
+    site = site_bucket.object("#{custom_name}.html")
+    site.delete()
+    logger.info ("deleting #{site.key}")
+    site.put(body: site_code, cache_control: "must-revalidate" )
+    logger.info ("pushing new site to : #{site.key}")
+    site.key
   end
 
  private

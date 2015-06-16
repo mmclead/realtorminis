@@ -4,9 +4,11 @@
     = s3_cors_fileupload_form_tag :id => 'fileupload'
   
   %hr
-  %h2 Listing Photos
-  #sort_success_message.alert.alert-success
-  #sort_failure_message.alert.alert-danger
+  %h2 
+    Listing Photos
+    %small
+      #sort_success_message
+      #sort_failure_message
   %table#listing_photos.table.table-striped
     %tbody
 

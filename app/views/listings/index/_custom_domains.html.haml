@@ -1,6 +1,5 @@
-%h5 Site Links: 
-
 - if listing.active
+  %h5 Site Links: 
   %ul.custom-domain-list.list-group
     - listing.domain_names.each do |domain_name|
       =render partial: 'listings/index/domain_name', locals: {domain_name: domain_name}
@@ -12,6 +11,3 @@
   %button.btn.btn-primary.add_custom_domain{type: "button", data: {toggle: "modal", target: "#add_new_custom_domain_modal", listing_id: "#{listing.id}", user_id: "#{@user.id}"}}
     Add new Custom Domain
     
-  
-- else 
-  %span.btn.btn-link N/A

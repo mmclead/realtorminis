@@ -37,7 +37,7 @@ class DomainName < ActiveRecord::Base
       {"content"=>"#{listing.key_photo}", "name"=>"key_photo"},
     ]
     message = {
-      "subject" => "User #{listing.user.profile.name} added domain #{name}, current status: ",
+      "subject" => "User #{listing.user.email} added domain #{name}, current status: ",
       "to"=>
         [{"email"=>ENV['SUPPORT_EMAIL'],
             "type"=>"to",
@@ -149,10 +149,8 @@ class DomainName < ActiveRecord::Base
     client ||= route53DomainsResource
     new_status = client.get_operation_detail(operation_id: self.operation_id).domain_status rescue "ERROR"
     completed = domain_status == COMPLETE_STATUS
-    
     if completed
       self.domain_status = new_status
-      self.listing.site.upload_to_aws(name)
       self.registered_name! 
     else
       self.update(domain_status: new_status)

@@ -2,14 +2,15 @@ class DomainRoutingJob
   include SuckerPunch::Job
 
   def perform(domain_name_id)
+
     ActiveRecord::Base.connection_pool.with_connection do
       domain_name = DomainName.find(domain_name_id)
       domain_name.route_domain_to_listing_site
       count = 0
       
-      while check_is_false and count < Rails.configuration.timeouts[:routing_attempts]
+      while check_is_false and count < Rails.configuration.timeouts[:routing_attempts].to_i
         count+=1
-        logger.info "Checking dns status #{count} times"
+        SuckerPunch.logger.info "Checking dns status #{count} times"
         sleep(Rails.configuration.timeouts[:routing_sleep_time])
       end
 

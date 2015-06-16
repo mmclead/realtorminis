@@ -9,7 +9,7 @@ ready = ->
   .on "ajax:error", (e, xhr, status, error) ->
     alert error
 
-  $("#listing_web_address").on "change", (e) ->
+  $("#listing_web_address").on "blur", (e) ->
     $(this).val( $(this).val().replace(/\W/g, "-").toLowerCase() )
     path = $("#name_checker").attr("href").split("=")[0]
     $("#name_checker").attr("href", "#{path}=#{$(this).val()}")

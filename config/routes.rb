@@ -8,7 +8,7 @@ Realtorminis::Application.routes.draw do
 
   get "/manifest", to: 'manifest#index', as: 'manifest'
   
-  devise_for :users, :controllers => { :registrations => "registrations" }
+  devise_for :users
 
   resources :users
 

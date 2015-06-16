@@ -1,6 +1,8 @@
 $(document).on('page:load ready', function () {
+
+
   // Initialize the jQuery File Upload widget:
-  if ($('#fileupload')) {
+  if ($('#fileupload') && $('#fileupload').length > 0) {
     var listing_id = $('#current_id').data('id');
     bucketUrl = $('#current_id').data('bucket');
     $('#fileupload').attr('action', bucketUrl);
