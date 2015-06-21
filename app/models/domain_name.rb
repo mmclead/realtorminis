@@ -37,7 +37,7 @@ class DomainName < ActiveRecord::Base
       {"content"=>"#{listing.key_photo}", "name"=>"key_photo"},
     ]
     message = {
-      "subject" => "User #{listing.user.email} added domain #{name}, current status: ",
+      "subject" => "User #{listing.user.email} added domain #{name}, current status: #{status}",
       "to"=>
         [{"email"=>ENV['SUPPORT_EMAIL'],
             "type"=>"to",
@@ -64,9 +64,6 @@ class DomainName < ActiveRecord::Base
       admin_contact: Rails.configuration.domains[:admin_contact],
       registrant_contact: Rails.configuration.domains[:registrant_contact],
       tech_contact: Rails.configuration.domains[:tech_contact],
-      privacy_protect_admin_contact: true,
-      privacy_protect_registrant_contact: true,
-      privacy_protect_tech_contact: true,
     )
     self.operation_id = registered_domain.operation_id
     self.domain_status = r53domains.get_operation_detail(operation_id: self.operation_id).status
