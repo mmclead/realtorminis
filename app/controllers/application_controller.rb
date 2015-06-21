@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :set_user
+  before_filter :must_be_logged_in, :set_user
 
   def after_sign_in_path_for(resource_or_scope)
     if current_user.profile_hash.empty?
@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
 
   def set_user
     @user = current_user
+  end
+
+  def must_be_logged_in
+    redirect_to root_url unless user_signed_in?
   end
 
   rescue_from CanCan::AccessDenied do |exception|

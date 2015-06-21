@@ -33,4 +33,6 @@ Realtorminis::Application.routes.draw do
       post :sort_photos, :on => :collection
     end   
   end
+
+  get '*unmatched_route', to: 'page#home'
 end
