@@ -8,7 +8,7 @@ class DomainRegistrationJob
       domain_name.register_domain_with_route53
       count = 0
 
-      while domain_is_being_processed? and count < Rails.configuration.timeouts[:registration_attempts].to_i
+      while domain_is_being_processed?(domain_name) and count < Rails.configuration.timeouts[:registration_attempts].to_i
         count+=1
         SuckerPunch.logger.info "Checking dns status #{count} times"
         sleep(Rails.configuration.timeouts[:registration_sleep_time])
@@ -18,7 +18,7 @@ class DomainRegistrationJob
     end
   end
 
-  def domain_is_being_processed?
+  def domain_is_being_processed?(domain_name)
     if Rails.env.development? or Rails.env.test?
       [ false, false, false, false, false, false, true ].sample
     else
