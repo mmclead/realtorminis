@@ -21,7 +21,7 @@ module PurchaseableControllerHelper
         purchaseable: purchaseable_object, 
         purchased_at: Time.now, 
         spent_at: Time.now, 
-        payment_details: charge.to_h
+        payment_details: charge.to_hash
       )
     end
   end
