@@ -2,7 +2,7 @@ require 'mandrill'
 
 class DomainName < ActiveRecord::Base
   AVAILABILITY_VALUES = ['AVAILABLE']
-  COMPLETE_STATUS = 'COMPLETE'
+  COMPLETE_STATUS = 'SUCCESSFUL'
   DNS_IN_SYNC = 'INSYNC'
 
   include AwsConnection
@@ -144,8 +144,8 @@ class DomainName < ActiveRecord::Base
     return false unless self.is_paid_for?
     return true if domain_status == COMPLETE_STATUS
     client ||= route53DomainsResource
-    new_status = client.get_operation_detail(operation_id: self.operation_id).domain_status rescue "ERROR"
-    completed = domain_status == COMPLETE_STATUS
+    new_status = client.get_operation_detail(operation_id: self.operation_id).status rescue "ERROR"
+    completed = (new_status == COMPLETE_STATUS)
     if completed
       self.domain_status = new_status
       self.registered_name! 
