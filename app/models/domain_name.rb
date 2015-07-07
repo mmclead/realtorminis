@@ -82,25 +82,26 @@ class DomainName < ActiveRecord::Base
       name: name,
       caller_reference: caller_reference
     )
+    logger.info "created hosted zone"
     self.details[:hosted_zone_id] = zone_response.hosted_zone['id']
     self.details[:hosted_zone_name] = zone_response.hosted_zone['name']
     self.dns_status = zone_response.change_info['status']
 
-    dns_response = r53.change_resource_record_sets(
+    dns_response = r53.change_resource_record_sets({
       hosted_zone_id: details[:hosted_zone_id],
       change_batch: {
         comment: "adding cname for domain to direct to custom sites endpoint",
         changes: [
           {
-            action: "CREATE",
+            action: 'CREATE',
             resource_record_set: {
-              name: name,
-              type: 'CNAME',
-              resource_records: [
-                {
-                  value: "#{ENV['CUSTOM_SITE_NAME']}"
-                }
-              ]
+              name: "#{name}",
+              type: 'A',
+              alias_target: {
+                hosted_zone_id: details[:hosted_zone_id],
+                dns_name: "#{ENV['CUSTOM_SITE_NAME']}",
+                evaluate_target_health: true
+              }
             }
           },
           {
@@ -110,14 +111,14 @@ class DomainName < ActiveRecord::Base
               type: 'A',
               alias_target: {
                 hosted_zone_id: details[:hosted_zone_id],
-                dns_name: name,
+                dns_name: "#{ENV['CUSTOM_SITE_NAME']}",
                 evaluate_target_health: false
               }
             }
           }
         ]
       }
-    )
+    })
     self.save
   end
 

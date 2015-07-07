@@ -19,10 +19,6 @@ class DomainRegistrationJob
   end
 
   def domain_is_being_processed?(domain_name)
-    if Rails.env.development? or Rails.env.test?
-      [ false, false, false, false, false, false, true ].sample
-    else
-      !domain_name.domain_is_registered?
-    end
+    !domain_name.domain_is_registered?
   end
 end
