@@ -12,6 +12,7 @@ class DomainNamesController < ApplicationController
       charge_customer_with_stripe(Rails.configuration.prices[:custom_domain], @domain_name.purchase_description, params, @domain_name)
       @domain_name.purchased!
       @listing.site.publish_custom_domains
+      
       DomainRegistrationJob.new.async.perform(@domain_name.id)
       redirect_to listings_path, notice: 'Custom Domain Name added.'
     else

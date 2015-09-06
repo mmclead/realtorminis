@@ -29,7 +29,8 @@ class DomainName < ActiveRecord::Base
     self.status = :selected
   end
 
-  def email_operations
+  def email_operations(subject=nil)
+    subject ||= "User #{listing.user.email} added domain #{name}, current status: #{status}"
     mandrill = Mandrill::API.new Rails.configuration.mandrill[:api_key]
 
     template_name = "custom-domain-purchased"
@@ -41,7 +42,7 @@ class DomainName < ActiveRecord::Base
       {"content"=>"#{listing.key_photo}", "name"=>"key_photo"},
     ]
     message = {
-      "subject" => "User #{listing.user.email} added domain #{name}, current status: #{status}",
+      "subject" => subject,
       "to"=>
         [{"email"=>ENV['SUPPORT_EMAIL'],
             "type"=>"to",
@@ -130,8 +131,6 @@ class DomainName < ActiveRecord::Base
     self.save!
   end
 
-
-          
   def dns_is_complete? r53 = nil
     r53 ||= route53Resource
     response = r53.get_change(id: details[:hosted_zone_id])

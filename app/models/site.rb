@@ -31,6 +31,9 @@ class Site < ActiveRecord::Base
     self.active = true
 
     publish_custom_domains site_bucket
+    logger.info "pushed to site_bucket"
+    publish_custom_domains_custom_buckets
+    logger.info "pushed site to custome buckets"
   end
 
   def destroy
@@ -44,6 +47,11 @@ class Site < ActiveRecord::Base
   end
 
   def publish_custom_domains site_bucket=nil
+    publish_custom_domains_to_site_bucket site_bucket    
+    publish_custom_domains_custom_buckets
+  end
+
+  def publish_custom_domains_to_site_bucket site_bucket=nil
     unless site_bucket
       s3 = s3Resource("#{ENV['AWS_SITE_BUCKET_REGION']}")
       site_bucket = get_bucket(s3, "#{ENV['AWS_SITE_BUCKET']}")
@@ -53,6 +61,18 @@ class Site < ActiveRecord::Base
       push_site_to custom_domain_name.name, site_bucket if custom_domain_name.is_paid_for?
     end
   end
+
+  def publish_custom_domains_custom_buckets
+    domain_names.each do |custom_domain_name|
+      if custom_domain_name.is_paid_for?
+        s3 = s3Resource("#{ENV['AWS_SITE_BUCKET_REGION']}")
+        site_bucket = get_bucket(s3, custom_domain_name.name)
+
+        push_site_to custom_domain_name.name, site_bucket 
+      end
+    end
+  end
+
 
   def push_site_to custom_name, site_bucket
     site = site_bucket.object("#{custom_name}.html")
