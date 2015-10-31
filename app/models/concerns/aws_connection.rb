@@ -7,6 +7,10 @@ module AwsConnection
       @s3 ||= Aws::S3::Resource.new(region: s3_region)
     end
 
+    def cfResource
+      @cf ||= Aws::CloudFront::Client.new(region: 'us-west-2')
+    end
+
     def route53DomainsResource
       @route53Domains ||= Aws::Route53Domains::Client.new(region: 'us-east-1')
     end

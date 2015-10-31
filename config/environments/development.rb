@@ -2,10 +2,10 @@ require 'webmock'
 include WebMock::API
 
 Realtorminis::Application.configure do
-  WebMock.disable_net_connect!(:allow_localhost => true, :allow => [/mandrillapp.com/, /api.stripe.com/, /s3-us-west-2.amazonaws.com/, /s3-us-west-1.amazonaws.com/ ])
+  WebMock.disable_net_connect!(:allow_localhost => true, :allow => [/mandrillapp.com/, /api.stripe.com/, /s3-us-west-2.amazonaws.com/, /s3-us-west-1.amazonaws.com/])
 
 
-  #succesful test domain name registration
+  # succesful test domain name registration
   stub_request(:post, "https://route53domains.us-east-1.amazonaws.com/").
     with(:body => "{\"DomainName\":\"test.com\"}",
          :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'', 'Content-Type'=>'application/x-amz-json-1.1', 'Host'=>'route53domains.us-east-1.amazonaws.com','X-Amz-Target'=>'Route53Domains_v20140515.CheckDomainAvailability'}).

@@ -5,6 +5,10 @@ class DomainName < ActiveRecord::Base
   COMPLETE_STATUS = 'SUCCESSFUL'
   DNS_IN_SYNC = 'INSYNC'
 
+  ALIAS_TARGET_HOSTED_ZONE_ID = 'Z2FDTNDATAQYW2'
+  ALIAS_TARGET_DNS_NAME = "dantpuzcw717s.cloudfront.net."
+  CLOUD_FRONT_ID = 'E2J16G1BIAGO7S'
+
   include AwsConnection
   include PurchaseableModel
 
@@ -77,17 +81,16 @@ class DomainName < ActiveRecord::Base
       return false
     end
 
-    r53 = route53Resource
-    zone_response = r53.create_hosted_zone(
-      name: name,
-      caller_reference: caller_reference
-    )
-    logger.info "created hosted zone"
-    self.details[:hosted_zone_id] = zone_response.hosted_zone['id']
-    self.details[:hosted_zone_name] = zone_response.hosted_zone['name']
-    self.dns_status = zone_response.change_info['status']
+    hosted_zone = route53Resource.list_hosted_zones_by_name({dns_name: name}).hosted_zones.first
+    logger.info "found hosted zone : #{hosted_zone}"
+    self.details[:hosted_zone_id] = hosted_zone['id'].split('/').last
+    self.details[:hosted_zone_name] = hosted_zone['name']
+    self.dns_status = 'zone_created'
+    self.save!
 
-    dns_response = r53.change_resource_record_sets({
+    add_new_aliases_to_cloud_front
+
+    dns_response = route53Resource.change_resource_record_sets({
       hosted_zone_id: details[:hosted_zone_id],
       change_batch: {
         comment: "adding cname for domain to direct to custom sites endpoint",
@@ -95,11 +98,11 @@ class DomainName < ActiveRecord::Base
           {
             action: 'CREATE',
             resource_record_set: {
-              name: "#{name}",
+              name: details[:hosted_zone_name],
               type: 'A',
               alias_target: {
-                hosted_zone_id: details[:hosted_zone_id],
-                dns_name: "#{ENV['CUSTOM_SITE_NAME']}",
+                hosted_zone_id: ALIAS_TARGET_HOSTED_ZONE_ID,
+                dns_name: ALIAS_TARGET_DNS_NAME,
                 evaluate_target_health: true
               }
             }
@@ -107,21 +110,23 @@ class DomainName < ActiveRecord::Base
           {
             action: 'CREATE',
             resource_record_set: {
-              name: "www.#{name}",
+              name: "www.#{details[:hosted_zone_name]}",
               type: 'A',
               alias_target: {
-                hosted_zone_id: details[:hosted_zone_id],
-                dns_name: "#{ENV['CUSTOM_SITE_NAME']}",
-                evaluate_target_health: false
+                hosted_zone_id: ALIAS_TARGET_HOSTED_ZONE_ID,
+                dns_name: ALIAS_TARGET_DNS_NAME,
+                evaluate_target_health: true
               }
             }
           }
         ]
       }
     })
-    self.save
+    self.save!
   end
 
+
+          
   def dns_is_complete? r53 = nil
     r53 ||= route53Resource
     response = r53.get_change(id: details[:hosted_zone_id])
@@ -162,6 +167,26 @@ class DomainName < ActiveRecord::Base
   end
 
   private
+
+  def add_new_aliases_to_cloud_front
+    cf_distro = cfResource.get_distribution({id: CLOUD_FRONT_ID})
+
+    current_aliases = cf_distro.distribution.distribution_config.aliases.items
+    new_aliases_list = current_aliases + ["#{details[:hosted_zone_name]}", "www.#{details[:hosted_zone_name]}"]
+    
+
+    ##TODO MISSING REQUIRED FIELDS
+    cfResource.update_distribution({
+      id: CLOUD_FRONT_ID,
+      distribution_config: {
+        caller_reference: caller_reference,
+        aliases: {
+          quantity: new_aliases_list.size,
+          items: new_aliases_list
+        }
+      }
+    })
+  end
 
   def set_caller_reference
     self.caller_reference = SecureRandom.uuid

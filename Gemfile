@@ -18,7 +18,6 @@ gem 'carrierwave', '~>0.10.0'
 gem 'mini_magick'
 gem 'fog', '~>1.24.0'
 gem 'unf'
-gem 'aws-s3', github: 'fnando/aws-s3'
 gem 'aws-sdk', '~> 2'
 gem "stripe", :github => 'stripe/stripe-ruby'
 gem 's3_cors_fileupload'
@@ -49,7 +48,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'byebug'
-  gem 'webmock'
+  gem 'webmock', require: false
 end
 
 
