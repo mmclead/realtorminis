@@ -88,8 +88,13 @@ class DomainName < ActiveRecord::Base
     self.dns_status = 'zone_created'
     self.save!
 
-    add_new_aliases_to_cloud_front
-
+    begin
+      add_new_aliases_to_cloud_front 
+      logger.info "Added aliases to cloudfront"
+    rescue StandardError => cf_error
+      logger.error "Failed to add Aliases to CloudFront due to : #{cf_error.inspect}"
+    end
+    
     dns_response = route53Resource.change_resource_record_sets({
       hosted_zone_id: details[:hosted_zone_id],
       change_batch: {
@@ -173,18 +178,13 @@ class DomainName < ActiveRecord::Base
 
     current_aliases = cf_distro.distribution.distribution_config.aliases.items
     new_aliases_list = current_aliases + ["#{details[:hosted_zone_name]}", "www.#{details[:hosted_zone_name]}"]
+    new_aliases_hash = { quantity: new_aliases_list.size, items: new_aliases_list }
     
-
     ##TODO MISSING REQUIRED FIELDS
-    cfResource.update_distribution({
+    resp = cfResource.update_distribution({
       id: CLOUD_FRONT_ID,
-      distribution_config: {
-        caller_reference: caller_reference,
-        aliases: {
-          quantity: new_aliases_list.size,
-          items: new_aliases_list
-        }
-      }
+      if_match: cf_distro.etag,
+      distribution_config: cf_distro.distribution.distribution_config.to_h.merge({aliases: new_aliases_hash})
     })
   end
 
