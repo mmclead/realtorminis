@@ -4,7 +4,7 @@ class DomainCompleteMailerJob
 
   def perform(domain_name_id)
     ActiveRecord::Base.connection_pool.with_connection do
-      domain_name = DomainName.find(domain_name_id)
+      domain_name = CustomDomainName.find(domain_name_id)
       domain_name.complete!
       mandrill = Mandrill::API.new Rails.configuration.mandrill[:api_key]
 

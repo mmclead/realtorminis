@@ -4,7 +4,7 @@ class DomainRegistrationJob
   def perform(domain_name_id)
     # SuckerPunch.logger = Logger.new('sucker_punch.log')
     ActiveRecord::Base.connection_pool.with_connection do
-      domain_name = DomainName.find(domain_name_id)
+      domain_name = CustomDomainName.find(domain_name_id)
       domain_name.register_domain_with_route53
       count = 0
 

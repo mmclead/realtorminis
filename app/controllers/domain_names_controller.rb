@@ -21,7 +21,7 @@ class DomainNamesController < ApplicationController
   end
 
   def check_availability
-    domain_name = DomainName.new(name: params[:name])
+    domain_name = CustomDomainName.new(name: params[:name])
     render json: {available: false} and return unless domain_name.valid?
     begin
       available = domain_name.domain_is_available? 
@@ -33,7 +33,7 @@ class DomainNamesController < ApplicationController
   end
 
   def check_status 
-    domain_name = DomainName.find(params[:id])
+    domain_name = CustomDomainName.find(params[:id])
     render partial: "#{domain_name.status}_partial" and return
   end
 

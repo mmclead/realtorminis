@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe DomainName, :type => :model do
+RSpec.describe CustomDomainName, :type => :model do
   it {should validate_uniqueness_of :name}
 
   let(:domain_name) {FactoryGirl.build(:domain_name)}

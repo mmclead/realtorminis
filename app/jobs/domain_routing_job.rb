@@ -4,7 +4,7 @@ class DomainRoutingJob
   def perform(domain_name_id)
 
     ActiveRecord::Base.connection_pool.with_connection do
-      domain_name = DomainName.find(domain_name_id)
+      domain_name = CustomDomainName.find(domain_name_id)
       domain_name.route_domain_to_listing_site
       count = 0
       

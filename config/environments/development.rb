@@ -7,20 +7,20 @@ Realtorminis::Application.configure do
 
   # succesful test domain name registration
   stub_request(:post, "https://route53domains.us-east-1.amazonaws.com/").
-    with(:body => "{\"DomainName\":\"test.com\"}",
+    with(:body => "{\"CustomDomainName\":\"test.com\"}",
          :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'', 'Content-Type'=>'application/x-amz-json-1.1', 'Host'=>'route53domains.us-east-1.amazonaws.com','X-Amz-Target'=>'Route53Domains_v20140515.CheckDomainAvailability'}).
     to_return(:status => 200, :body => "{\"Availability\":\"AVAILABLE\"}", :headers => {})
 
 
   stub_request(:post, "https://route53domains.us-east-1.amazonaws.com/").
-  with(:body => "{\"DomainName\":\"test.com\",\"DurationInYears\":1,\"AutoRenew\":false,\"AdminContact\":{\"FirstName\":\"Mason\",\"LastName\":\"McLead\",\"ContactType\":\"COMPANY\",\"OrganizationName\":\"RealtorMinis\",\"AddressLine1\":\"2403 Rockefeller Lane \",\"AddressLine2\":\"Unit A\",\"City\":\"Redondo Beach\",\"State\":\"CA\",\"CountryCode\":\"US\",\"ZipCode\":\"90278\",\"PhoneNumber\":\"+13109621144\",\"Email\":\"mason@realtorminis.com\"},\"RegistrantContact\":{\"FirstName\":\"Mason\",\"LastName\":\"McLead\",\"ContactType\":\"COMPANY\",\"OrganizationName\":\"RealtorMinis\",\"AddressLine1\":\"2403 Rockefeller Lane \",\"AddressLine2\":\"Unit A\",\"City\":\"Redondo Beach\",\"State\":\"CA\",\"CountryCode\":\"US\",\"ZipCode\":\"90278\",\"PhoneNumber\":\"+13109621144\",\"Email\":\"mason@realtorminis.com\"},\"TechContact\":{\"FirstName\":\"Mason\",\"LastName\":\"McLead\",\"ContactType\":\"COMPANY\",\"OrganizationName\":\"RealtorMinis\",\"AddressLine1\":\"2403 Rockefeller Lane \",\"AddressLine2\":\"Unit A\",\"City\":\"Redondo Beach\",\"State\":\"CA\",\"CountryCode\":\"US\",\"ZipCode\":\"90278\",\"PhoneNumber\":\"+13109621144\",\"Email\":\"mason@realtorminis.com\"},\"PrivacyProtectAdminContact\":true,\"PrivacyProtectRegistrantContact\":true,\"PrivacyProtectTechContact\":true}",
+  with(:body => "{\"CustomDomainName\":\"test.com\",\"DurationInYears\":1,\"AutoRenew\":false,\"AdminContact\":{\"FirstName\":\"Mason\",\"LastName\":\"McLead\",\"ContactType\":\"COMPANY\",\"OrganizationName\":\"RealtorMinis\",\"AddressLine1\":\"2403 Rockefeller Lane \",\"AddressLine2\":\"Unit A\",\"City\":\"Redondo Beach\",\"State\":\"CA\",\"CountryCode\":\"US\",\"ZipCode\":\"90278\",\"PhoneNumber\":\"+13109621144\",\"Email\":\"mason@realtorminis.com\"},\"RegistrantContact\":{\"FirstName\":\"Mason\",\"LastName\":\"McLead\",\"ContactType\":\"COMPANY\",\"OrganizationName\":\"RealtorMinis\",\"AddressLine1\":\"2403 Rockefeller Lane \",\"AddressLine2\":\"Unit A\",\"City\":\"Redondo Beach\",\"State\":\"CA\",\"CountryCode\":\"US\",\"ZipCode\":\"90278\",\"PhoneNumber\":\"+13109621144\",\"Email\":\"mason@realtorminis.com\"},\"TechContact\":{\"FirstName\":\"Mason\",\"LastName\":\"McLead\",\"ContactType\":\"COMPANY\",\"OrganizationName\":\"RealtorMinis\",\"AddressLine1\":\"2403 Rockefeller Lane \",\"AddressLine2\":\"Unit A\",\"City\":\"Redondo Beach\",\"State\":\"CA\",\"CountryCode\":\"US\",\"ZipCode\":\"90278\",\"PhoneNumber\":\"+13109621144\",\"Email\":\"mason@realtorminis.com\"},\"PrivacyProtectAdminContact\":true,\"PrivacyProtectRegistrantContact\":true,\"PrivacyProtectTechContact\":true}",
        :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'', 'Content-Type'=>'application/x-amz-json-1.1', 'Host'=>'route53domains.us-east-1.amazonaws.com', 'X-Amz-Target'=>'Route53Domains_v20140515.RegisterDomain'}).
   to_return(:status => 200, :body => "{\"OperationId\":\"1234567890\"}", :headers => {})
 
   stub_request(:post, "https://route53domains.us-east-1.amazonaws.com/").
   with(:body => "{\"OperationId\":\"1234567890\"}",
     :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'', 'Content-Type'=>'application/x-amz-json-1.1', 'Host'=>'route53domains.us-east-1.amazonaws.com','X-Amz-Target'=>'Route53Domains_v20140515.GetOperationDetail'}).
-  to_return(:status => 200, :body => "{\"DomainName\":\"test.com\",\"OperationId\":\"1234567890\",\"Status\":\"SUCCESSFUL\"}", :headers => {})
+  to_return(:status => 200, :body => "{\"CustomDomainName\":\"test.com\",\"OperationId\":\"1234567890\",\"Status\":\"SUCCESSFUL\"}", :headers => {})
 
 
   

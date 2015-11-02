@@ -15,7 +15,7 @@ class Ability
       can :manage, Photo, listing: {user_id: user.id}
       can :manage, Account, user_id: user.id
       can :manage, Credit, user_id: user.id
-      can :manage, DomainName, listing: {user_id: user.id}
+      can :manage, CustomDomainName, listing: {user_id: user.id}
       
 
     end
