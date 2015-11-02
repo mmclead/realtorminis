@@ -16,10 +16,10 @@ Realtorminis::Application.routes.draw do
   resource :account, only: [:show] do
     get :payment_details
   end
-  resources :domain_names, only: [:create]
+  resources :custom_domain_names, only: [:create], as: "domain_names"
   resources :credits
   
-  resources :domain_names, only: [] do
+  resources :custom_domain_names, only: [], as: "domain_names" do
     get :check_availability, on: :collection
     get :check_status, on: :member
   end

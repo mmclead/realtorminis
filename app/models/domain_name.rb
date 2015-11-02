@@ -26,6 +26,10 @@ class CustomDomainName < ActiveRecord::Base
     :complete, :registered_name_failed, :routed_domain_name_failed
   ]
 
+  def relation_delegate_class(*args)
+    @model.relation_delegate_class(*args)
+  end
+
   def set_status_to_new
     self.status = :selected
   end

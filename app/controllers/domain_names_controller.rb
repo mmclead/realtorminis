@@ -1,4 +1,4 @@
-class DomainNamesController < ApplicationController
+class CustomDomainNamesController < ApplicationController
   load_and_authorize_resource :user
   before_filter :set_listing, only: [:create]
   respond_to :js, :json
@@ -6,7 +6,7 @@ class DomainNamesController < ApplicationController
   include PurchaseableControllerHelper
 
   def create
-    @domain_name = @listing.domain_names.build(domain_name_params)
+    @domain_name = @listing.custom_domain_names.build(domain_name_params)
     if @domain_name.save
       @domain_name.email_operations
       charge_customer_with_stripe(Rails.configuration.prices[:custom_domain], @domain_name.purchase_description, params, @domain_name)

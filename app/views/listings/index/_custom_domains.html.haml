@@ -1,7 +1,7 @@
 - if listing.active
   %h5 Site Links: 
   %ul.custom-domain-list.list-group
-    - listing.domain_names.each do |domain_name|
+    - listing.custom_domain_names.each do |domain_name|
       =render partial: 'listings/index/domain_name', locals: {domain_name: domain_name}
     %li.list-group-item
       %ins Default Link: 
