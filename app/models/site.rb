@@ -39,7 +39,7 @@ class Site < ActiveRecord::Base
   def destroy
     s3 = s3Resource("#{ENV['AWS_SITE_BUCKET_REGION']}")
     site_bucket = get_bucket(s3, "#{ENV['AWS_SITE_BUCKET']}")
-    (domain_names.all.map(&:name) + [listing.web_address]).flatten.each do |url|
+    (custom_domain_names.all.map(&:name) + [listing.web_address]).flatten.each do |url|
       site = site_bucket.object("#{url}.html")
       site.delete()
     end
@@ -57,13 +57,13 @@ class Site < ActiveRecord::Base
       site_bucket = get_bucket(s3, "#{ENV['AWS_SITE_BUCKET']}")
     end
 
-    domain_names.each do |custom_domain_name|
+    custom_domain_names.each do |custom_domain_name|
       push_site_to custom_domain_name.name, site_bucket if custom_domain_name.is_paid_for?
     end
   end
 
   def publish_custom_domains_custom_buckets
-    domain_names.each do |custom_domain_name|
+    custom_domain_names.each do |custom_domain_name|
       if custom_domain_name.is_paid_for?
         s3 = s3Resource("#{ENV['AWS_SITE_BUCKET_REGION']}")
         site_bucket = get_bucket(s3, custom_domain_name.name)
