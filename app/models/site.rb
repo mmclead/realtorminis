@@ -4,7 +4,7 @@ class Site < ActiveRecord::Base
 
   belongs_to :listing
   belongs_to :user
-  has_many :domain_names, through: :listing
+  has_many :custom_domain_names, through: :listing
 
   validates_presence_of :listing
   validates_presence_of :site_code
