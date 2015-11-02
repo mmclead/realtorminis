@@ -1,7 +1,7 @@
 require 'mandrill'
 class CustomDomainName < ActiveRecord::Base
 
-  table_name = 'domain_names'
+  self.table_name = "domain_names"
   AVAILABILITY_VALUES = ['AVAILABLE']
   COMPLETE_STATUS = 'SUCCESSFUL'
   DNS_IN_SYNC = 'INSYNC'
