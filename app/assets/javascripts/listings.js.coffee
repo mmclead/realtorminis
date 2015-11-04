@@ -4,9 +4,14 @@ ready = ->
     $('#listing_purchase_form').attr("action", "/listings/"+$(this).data('listingId'))
     $('#listing_purchase_form').find('#listing_id').val($(this).data('listingId'))
 
-  $(".publish_button").on "ajax:success", (e, data, status, xhr) ->
+  $(".publish_button").on "ajax:send", (xhr) ->
+    $(this).data("original_text", $(this).text())
+    $(this).text($(this).data("loading-text"))
+    $(this).addClass('btn-primary')
+  .on "ajax:success", (e, data, status, xhr) ->
     $(this).parents('.listing-item').replaceWith(data)
   .on "ajax:error", (e, xhr, status, error) ->
+    $(this).text($(this).data("original-text"))
     alert error
 
   $("#listing_web_address").on "blur", (e) ->

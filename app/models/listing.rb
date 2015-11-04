@@ -31,17 +31,17 @@ class Listing < ActiveRecord::Base
   end
 
   def publish!
-    #build my has_one associated site
-    unless site_code.empty?
-      if self.site
-        self.site.update(site_code: site_code)
-      else
-        build_site(site_code: site_code, listing_id: self.id).save
-      end
-      self.published_at = Time.now + 5.seconds
-      self.active = true
-      self.save!
+    return false if site_code.empty?
+    
+    if site.present?
+      site.update(site_code: site_code)
+    else
+      build_site(site_code: site_code, listing_id: self.id).save
     end
+    self.published_at = Time.now + 5.seconds
+    site.publish_custom_domains
+    self.active = true
+    self.save!
   end
 
   def full_address
