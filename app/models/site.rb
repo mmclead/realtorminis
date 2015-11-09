@@ -31,9 +31,7 @@ class Site < ActiveRecord::Base
     self.active = true
 
     publish_custom_domains site_bucket
-    logger.info "pushed to site_bucket"
-    publish_custom_domains_custom_buckets
-    logger.info "pushed site to custome buckets"
+    logger.info "pushed to site_bucket and custom domains"
   end
 
   def destroy
