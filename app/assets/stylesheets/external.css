@@ -10,3 +10,8 @@
  *
  *= require_tree ./marketing_site/
  */
+
+.navbar-brand>img {
+  height: 40px;
+  margin-top: -10px;
+}
