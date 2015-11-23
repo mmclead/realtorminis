@@ -34,7 +34,12 @@
         %br
         = cms_snippet_content('home-services-details').html_safe
       .col-md-5.col-sm-4
-        = image_tag image_url("small-phone.png"), class: 'img-responsive aligncenter', width: '317'
+        = link_to 'http://www.realtorministest.com', target: "_blank" do
+          = image_tag image_url("small-phone.png"), class: 'img-responsive aligncenter', width: '317'
+        .centered
+          = link_to "See Demo", 'http://www.realtorministest.com', target: "_blank", class: "btn btn-md btn-green"
+
+
 %section#about
 #g
   .container
