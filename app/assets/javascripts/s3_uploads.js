@@ -65,7 +65,7 @@ $(document).on('page:load ready', function () {
             authenticity_token: $('meta[name=csrf-token]').attr('content')
           },
           function(data) {
-            $('#listing_photos tbody').prepend(tmpl('template-uploaded', data));
+            $('#listing_photos tbody').append(tmpl('template-uploaded', data));
             $(".delete-photo").on("ajax:success", function (e, data, status, xhr) {
               $(this).parents('tr').addClass('danger').fadeOut(1500);
             });

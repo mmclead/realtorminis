@@ -18,7 +18,7 @@ ready = ->
     $(this).val( $(this).val().replace(/\W/g, "-").toLowerCase() )
     path = $("#name_checker").attr("href").split("=")[0]
     $("#name_checker").attr("href", "#{path}=#{$(this).val()}")
-    $("#name_checker").text("Check Availability").removeClass("btn-warning btn-success disabled")
+    $("#name_checker").text("Check Site Name Availability").removeClass("btn-warning btn-success disabled")
 
   $("#name_checker").on "ajax:complete", (e, data, status, xhr) ->
     if (JSON.parse(data.responseText).available == true) || $("#listing_web_address").val() == $("#listing_web_address").data('currentAddress')

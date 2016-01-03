@@ -16,7 +16,11 @@ class Listing < ActiveRecord::Base
 
   before_save (:delete_site), if: :deleting_active_listing? 
 
-  validates_presence_of :address, :city, :state, :title, :price, :bedrooms, :bathrooms, :sq_ft, :short_description, :description
+  validates_presence_of :address, :city, :state, 
+                        :title, :price, :bedrooms, 
+                        :bathrooms, :sq_ft, :short_description, 
+                        :description, 
+                        on: :update, if: :activating_listing?
   validates_uniqueness_of :web_address, allow_nil: true
 
   auto_html_for :video_link do
@@ -68,6 +72,10 @@ class Listing < ActiveRecord::Base
 
   def purchase_description
     "Real estate listing site"
+  end
+
+  def activating_listing?
+    active_changed?(from: false, to: true) || active_changed?(from: nil, to: true)
   end
 
   def deleting_active_listing?

@@ -7,6 +7,7 @@ class ListingsController < ApplicationController
   skip_load_and_authorize_resource only: [:check_availability]
   before_filter :set_content_location, only: [:show, :index]
   before_filter :set_profile, :set_web_address, only: [:show]
+  before_filter :un_delete_listing, only: [:update]
 
   def index 
     @listings = @listings.not_deleted.order(updated_at: :desc)
@@ -18,6 +19,9 @@ class ListingsController < ApplicationController
     render 'show', id: @listing.id, layout: "preview_listing"
   end
 
+  def new
+    @listing = current_user.listings.create!(deleted: true)
+  end
 
   def create
     @listing = Listing.new(listing_params)
@@ -38,6 +42,7 @@ class ListingsController < ApplicationController
   end
 
   def update
+
     if listing_params[:active] == "true"
       charge_customer_with_stripe(Rails.configuration.prices[:basic_listing], @listing.purchase_description, params, @listing) unless @listing.is_paid_for?
       render_and_set_site_code
@@ -115,8 +120,17 @@ class ListingsController < ApplicationController
   def set_content_location
     @cdn_url = ENV['AWS_CDN_NAME']
   end
+
+  def un_delete_listing
+    #we default create a new listing with deleted set to true
+    #this undeletes it on subsequent updates
+    params[:listing][:deleted] = false if params[:listing][:deleted].nil?
+  end
     
   def listing_params
-    params.require(:listing).permit(:address, :city, :state, :zip, :title, :price, :video_link, :bedrooms, :bathrooms, :sq_ft, :sold, :short_description, :description, :web_address, :user, :user_id, :active)
+    params.require(:listing).permit(:address, :city, :state, 
+      :zip, :title, :price, :video_link, :bedrooms, :bathrooms, 
+      :sq_ft, :sold, :short_description, :description, :web_address, 
+      :user, :user_id, :active, :deleted)
   end
 end

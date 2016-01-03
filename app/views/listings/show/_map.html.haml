@@ -1,7 +1,7 @@
-.panel.panel-default
+#map_panel.panel.panel-default
   .panel-heading
     %h2
       Map
-  .panel-body.text-center.lead
-    .embed-responsive.embed-responsive-4by3#map_container
+  .panel-body.text-center
+    #map_container.embed-responsive.embed-responsive-16by9
       = @listing.map_from_address.html_safe

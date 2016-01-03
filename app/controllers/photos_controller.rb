@@ -65,7 +65,7 @@ class PhotosController < ApplicationController
 
   # used for s3_uploader
   def generate_key
-    uid = @listing.address.parameterize + "-#{params[:count]}" + File.extname(params[:filename])
+    uid = listing_address.parameterize + "-#{params[:count]}" + File.extname(params[:filename])
 
     render json: {
       key: "listings/#{@listing.id}/photos/#{uid}",
@@ -74,6 +74,14 @@ class PhotosController < ApplicationController
   end
 
   private
+
+    def listing_address
+      if @listing.address.present? 
+        @listing.address
+      else
+        "listing-#{@listing.id}"
+      end
+    end
     
     def photo_params
       params.require(:photo).permit(:url, :bucket, :key, :listing_id, :file_content_type, :file_size, :order)

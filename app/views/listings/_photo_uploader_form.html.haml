@@ -12,7 +12,7 @@
   %table#listing_photos.table.table-striped
     %tbody
 
-#current_id{data: {id: "#{@listing.id}", photo_count: "#{@photo_count}", bucket: "#{ENV['AWS_BUCKET_URL_FOR_UPLOADS']}"}}
+#current_id{data: {id: "#{@listing.id}", photo_count: "#{@photo_count || 0}", bucket: "#{ENV['AWS_BUCKET_URL_FOR_UPLOADS']}"}}
 
 .javascript-templates
   = render 'photos/template_upload'
